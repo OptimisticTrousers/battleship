@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 const createGameBoard = () => {
     const gameBoard = {
         A: [
@@ -136,16 +137,18 @@ const createGameBoard = () => {
         gameBoard[column][row].hit = true
     }
 
-    const checkIfAllShipsHaveSunk = () => Object.values(gameBoard)
+    const checkIfAllShipsHaveSunk = () =>
+        Object.values(gameBoard)
             .flat()
             .every((position) => {
-                if(position.ship === false) return true
-                if(position.ship === true && position.hit === true) return true
+                if (position.ship === false) return true
+                if (position.ship === true && position.hit === true) return true
 
-                return false;
+                return false
             })
 
-    const hasLastAttackHitShip = (column, row) => gameBoard[column][row].ship === true
+    const hasLastAttackHitShip = (column, row) =>
+        gameBoard[column][row].ship === true
 
     return {
         sinkAllShips,
@@ -155,4 +158,4 @@ const createGameBoard = () => {
     }
 }
 
-module.exports = createGameBoard;
+module.exports = createGameBoard

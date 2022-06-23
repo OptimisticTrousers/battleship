@@ -8,5 +8,5 @@
         "sourceType": "module"
     },
     "rules": {},
-    "extends": ["airbnb-base", "prettier"]
+    "extends": ["airbnb-base", "eslint:recommended", "prettier"]
 }
