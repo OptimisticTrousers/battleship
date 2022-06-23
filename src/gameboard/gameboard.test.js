@@ -3,7 +3,7 @@ const createGameBoard = require('./gameboard')
 
 describe('gameboard factory function', () => {
     test('if the receiveAttack function hits a ship', () => {
-        expect(createGameBoard().receiveAttack('A1').HasLastAttackHitShip('A1')).toBe(true)
+        expect(createGameBoard().receiveAttack('A1').hasLastAttackHitShip('A1')).toBe(true)
     })
     test('if the receiveAttack function does not hit a ship', () => {
 
