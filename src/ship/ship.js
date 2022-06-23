@@ -5,9 +5,9 @@ const createShip = (length) => {
 
     const getStatus = () => status
 
-    const hit = (index) => {
-        if (index < length) {
-            status[index] = 'damaged'
+    const hit = (position) => {
+        if (position < length) {
+            status[position] = 'damaged'
         }
     }
 
