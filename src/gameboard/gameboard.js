@@ -149,4 +149,11 @@ const createGameBoard = () => {
 
     const hasLastAttackHitShip = (column, row) =>
         gameBoard[column][row].ship === true
+
+        return {
+            sinkAllShips,
+            receiveAttack,
+            checkIfAllShipsHaveSunk,
+            hasLastAttackHitShip
+        }
 }
