@@ -125,12 +125,28 @@ const createGameBoard = () => {
     const sinkAllShips = () => {
         const [columns, data] = Object.entries(gameBoard)
 
-        columns[data].forEach(column => {
-            if(column.ship === true) column.hit = true;
+        columns[data].forEach((column) => {
+            if (column.ship === true) column.hit = true
         })
     }
 
     const receiveAttack = (column, row) => {
-        gameBoard.column[row].hit = true
+        gameBoard[column][row].hit = true
     }
+
+    const checkIfAllShipsHaveSunk = () => {
+
+        Object.entries(gameBoard).flat().every((position) => {
+            if(position.ship === true) {
+                if(position.hit === true){
+                    return true
+                }
+            }
+            return false
+        })
+
+    }
+
+    const hasLastAttackHitShip = (column, row) =>
+        gameBoard[column][row].ship === true
 }
