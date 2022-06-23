@@ -3,13 +3,10 @@
         "browser": true,
         "es2021": true
     },
-    "extends": [
-        "airbnb-base"
-    ],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "rules": {
-    }
+    "rules": {},
+    "extends": ["airbnb-base", "prettier"]
 }
