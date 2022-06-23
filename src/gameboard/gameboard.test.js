@@ -19,4 +19,9 @@ describe('gameboard factory function', () => {
         gameBoard.sinkAllShips()
         expect(gameBoard.checkIfAllShipsHaveSunk()).toBe(true)
     })
+    test('if all of the ships have not sunk', () => {
+
+        const gameBoard = createGameBoard()
+        expect(gameBoard.checkIfAllShipsHaveSunk()).toBe(false)
+    })
 })
