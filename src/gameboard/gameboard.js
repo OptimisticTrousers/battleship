@@ -129,4 +129,8 @@ const createGameBoard = () => {
             if(column.ship === true) column.hit = true;
         })
     }
+
+    const receiveAttack = (column, row) => {
+        gameBoard.column[row].hit = true
+    }
 }
