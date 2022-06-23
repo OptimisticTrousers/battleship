@@ -121,4 +121,12 @@ const createGameBoard = () => {
             { hit: false, ship: false },
         ],
     }
+
+    const sinkAllShips = () => {
+        const [columns, data] = Object.entries(gameBoard)
+
+        columns[data].forEach(column => {
+            if(column.ship === true) column.hit = true;
+        })
+    }
 }
