@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const createPlayer = require('./player')
 
 describe('player factory function', () => {

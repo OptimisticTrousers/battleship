@@ -126,6 +126,7 @@ const createGameBoard = () => {
         const [columns, data] = Object.entries(gameBoard)
 
         columns[data].forEach((column) => {
+            // eslint-disable-next-line no-param-reassign
             if (column.ship === true) column.hit = true
         })
     }
@@ -135,25 +136,27 @@ const createGameBoard = () => {
     }
 
     const checkIfAllShipsHaveSunk = () => {
-
-        Object.entries(gameBoard).flat().every((position) => {
-            if(position.ship === true) {
-                if(position.hit === true){
-                    return true
+        Object.entries(gameBoard)
+            .flat()
+            .every((position) => {
+                if (position.ship === true) {
+                    if (position.hit === true) {
+                        return true
+                    }
                 }
-            }
-            return false
-        })
-
+                return false
+            })
     }
 
     const hasLastAttackHitShip = (column, row) =>
         gameBoard[column][row].ship === true
 
-        return {
-            sinkAllShips,
-            receiveAttack,
-            checkIfAllShipsHaveSunk,
-            hasLastAttackHitShip
-        }
+    return {
+        sinkAllShips,
+        receiveAttack,
+        checkIfAllShipsHaveSunk,
+        hasLastAttackHitShip,
+    }
 }
+
+module.exports = createGameBoard;
