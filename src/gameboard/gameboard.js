@@ -123,33 +123,29 @@ const createGameBoard = () => {
     }
 
     const sinkAllShips = () => {
-        const [columns, data] = Object.entries(gameBoard)
-
-        columns[data].forEach((column) => {
-            // eslint-disable-next-line no-param-reassign
-            if (column.ship === true) column.hit = true
-        })
+        Object.values(gameBoard)
+            .flat()
+            .forEach((position) => {
+                if (position.ship === true) {
+                    position.hit = true
+                }
+            })
     }
 
     const receiveAttack = (column, row) => {
         gameBoard[column][row].hit = true
     }
 
-    const checkIfAllShipsHaveSunk = () => {
-        Object.entries(gameBoard)
+    const checkIfAllShipsHaveSunk = () => Object.values(gameBoard)
             .flat()
             .every((position) => {
-                if (position.ship === true) {
-                    if (position.hit === true) {
-                        return true
-                    }
-                }
-                return false
-            })
-    }
+                if(position.ship === false) return true
+                if(position.ship === true && position.hit === true) return true
 
-    const hasLastAttackHitShip = (column, row) =>
-        gameBoard[column][row].ship === true
+                return false;
+            })
+
+    const hasLastAttackHitShip = (column, row) => gameBoard[column][row].ship === true
 
     return {
         sinkAllShips,

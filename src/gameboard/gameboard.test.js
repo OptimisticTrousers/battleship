@@ -3,14 +3,20 @@ const createGameBoard = require('./gameboard')
 
 describe('gameboard factory function', () => {
     test('if the receiveAttack function hits a ship', () => {
-        expect(createGameBoard().receiveAttack('A', 1).hasLastAttackHitShip('A', 1)).toBe(true)
+        const gameBoard = createGameBoard()
+        gameBoard.receiveAttack('A', 3)
+        expect(gameBoard.hasLastAttackHitShip('A', 3)).toBe(true)
     })
     test('if the receiveAttack function does not hit a ship', () => {
 
-        expect(createGameBoard().receiveAttack('A', 1).hasLastAttackHitShip('A', 1)).toBe(false)
+        const gameBoard = createGameBoard()
+        gameBoard.receiveAttack('A', 1)
+        expect(gameBoard.hasLastAttackHitShip('A', 1)).toBe(false)
     })
     test('if all of the ships have sunk', () => {
 
-        expect(createGameBoard().sinkAllShips().checkIfAllShipsHaveSunk()).toBe(true)
+        const gameBoard = createGameBoard()
+        gameBoard.sinkAllShips()
+        expect(gameBoard.checkIfAllShipsHaveSunk()).toBe(true)
     })
 })
