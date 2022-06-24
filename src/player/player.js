@@ -4,7 +4,7 @@ const createPlayer = () => {
     const board = createGameBoard()
 
     const attack = (column, row, player) => {
-        player.getBoard()[column][row].hit = true
+        player.getBoard().receiveAttack(column, row)
     }
 
     const getBoard = () => board
