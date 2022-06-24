@@ -1,29 +1,42 @@
+const createShip = require('../ship/ship')
+
 /* eslint-disable no-param-reassign */
 const createGameBoard = () => {
     const gameBoard = Array(10)
         .fill({ hasBeenHit: false, isShip: false })
         .map(() => Array(10).fill({ hasBeenHit: false, isShip: false }))
 
+    const ships = [
+        createShip(5),
+        createShip(4),
+        createShip(3),
+        createShip(3),
+        createShip(2),
+    ]
+
+    let shipFits
+
+    const getShips = () => ships
+
     const placeShip = (column, row, direction, ship) => {
         const shipLength = ship.getLength()
         if (direction === 'vertical') {
             for (let i = 0; i < shipLength; i += 1) {
-                if (column + i < gameBoard[column].length) {
+                if (column + shipLength < gameBoard[column].length) {
                     gameBoard[column][row + i] = ship
-                    return true
+                    shipFits = true
                 }
             }
-            return false
         }
         if (direction === 'horizontal') {
             for (let i = 0; i < shipLength; i += 1) {
-                if (column + i < gameBoard[column].length) {
+                if (column + shipLength < gameBoard[column].length) {
                     gameBoard[column + i][row] = ship
-                    return true
+                    shipFits = true
                 }
             }
-            return false
         }
+        shipFits = false
     }
 
     const makeRandomCoordinates = () => {
@@ -33,17 +46,23 @@ const createGameBoard = () => {
         const randomRow = Math.floor(Math.random() * 10)
         return { randomColumn, randomRow, randomDirection }
     }
-    const randomBoard = ([ships]) => {
+
+    const randomlyPlaceShips = () => {
         ships.map((ship) => {
-            while (placeShip(...makeRandomCoordinates(), ship) === false) {
-                placeShip(...makeRandomCoordinates(), ship)
-            }
+            const { randomColumn, randomRow, randomDirection } =
+                makeRandomCoordinates()
+            placeShip(randomColumn, randomRow, randomDirection, ship)
         })
     }
 
     const populateBoard = (playerShips) => {
-        playerShips.map((ship) => {
-            placeShip(...ship)
+        playerShips.map((playerShip) => {
+            placeShip(
+                playerShip.column,
+                playerShip.row,
+                playerShip.direction,
+                playerShip.ship
+            )
         })
     }
 
@@ -66,13 +85,14 @@ const createGameBoard = () => {
         gameBoard[column][row].isShip === true
 
     return {
+        getShips,
         receiveAttack,
         checkIfAllShipsHaveSunk,
         hasLastAttackHitShip,
         getShotLocation,
         placeShip,
         populateBoard,
-        randomBoard,
+        randomlyPlaceShips,
     }
 }
 
