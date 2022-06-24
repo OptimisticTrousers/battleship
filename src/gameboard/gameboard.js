@@ -123,6 +123,25 @@ const createGameBoard = () => {
         ],
     }
 
+    const populateBoard = () => {}
+
+    const placeShip = (column, row, ship, direction) => {}
+
+    const shipFit = (column, row, ship, direction) => {
+
+        if (direction === 'vertical') {
+            for (let i = 0; i < ship.getLength(); i += 1) {
+                gameBoard[column][row + i] = ship
+            }
+        }
+        else if(direction === 'horizontal'){
+            for (let i = 0; i < ship.getLength(); i += 1) {
+                gameBoard[column + i][row] = ship
+            }
+        }
+    }
+
+
     const sinkAllShips = () => {
         Object.values(gameBoard)
             .flat()
