@@ -47,14 +47,6 @@ const createGameBoard = () => {
         })
     }
 
-    const sinkAllShips = () => {
-        gameBoard.flat().forEach((position) => {
-            if (position.isShip === true) {
-                position.hasBeenHit = true
-            }
-        })
-    }
-
     const getShotLocation = (column, row) => gameBoard[column][row]
 
     const receiveAttack = (column, row) => {
@@ -74,7 +66,6 @@ const createGameBoard = () => {
         gameBoard[column][row].isShip === true
 
     return {
-        sinkAllShips,
         receiveAttack,
         checkIfAllShipsHaveSunk,
         hasLastAttackHitShip,
