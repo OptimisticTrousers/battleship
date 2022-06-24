@@ -5,14 +5,14 @@ const createPlayer = (name, player = 'human') => {
 
     const board = createGameBoard()
 
-    const makeRandomMove = () => {
+    const makeRandomMoveAgainstPlayer = (enemy) => {
         if (player === 'AI') {
             const columns = 'ABCDEFGHIJ'
             const randomColumn =
                 columns[Math.floor(Math.random() * columns.length)]
             const randomRow = Math.floor(Math.random() * columns.length)
 
-            board.receiveAttack(randomColumn, randomRow)
+            enemy.getBoard().receiveAttack(randomColumn, randomRow)
         }
     }
     const attack = (column, row, { getBoard: enemyBoard }) => {
@@ -30,7 +30,7 @@ const createPlayer = (name, player = 'human') => {
         getName,
         attack,
         getBoard,
-        makeRandomMove,
+        makeRandomMoveAgainstPlayer,
     }
 }
 
