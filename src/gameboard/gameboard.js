@@ -66,16 +66,12 @@ const createGameBoard = () => {
             return false
         })
 
-    const hasLastAttackHitShip = (column, row) =>
-        gameBoard[column][row].isShip === true
-
     const getShotLocation = (column, row) => gameBoard[column][row]
 
     return {
         getShotLocation,
         receiveAttack,
         checkIfAllShipsHaveSunk,
-        hasLastAttackHitShip,
         placeShip,
         randomlyPlaceShips,
     }
