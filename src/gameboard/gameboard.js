@@ -4,32 +4,41 @@ const createGameBoard = () => {
         .fill({ hasBeenHit: false, isShip: false })
         .map(() => Array(10).fill({ hasBeenHit: false, isShip: false }))
 
-    const randomBoard = () => {}
-
-    const placeShip = (column, row, ship, direction) => {
-
+    const placeShip = (column, row, direction, ship) => {
         const shipLength = ship.getLength()
         if (direction === 'vertical') {
             for (let i = 0; i < shipLength; i += 1) {
-                if(column + i < gameBoard[column].length){
-
+                if (column + i < gameBoard[column].length) {
                     gameBoard[column][row + i] = ship
-                }
-                else{
-                    return 'Cannot fit ship at these coordinates'
+                    return true
                 }
             }
-        } else if (direction === 'horizontal') {
-            for (let i = 0; i < shipLength; i += 1) {
-                if(column + i < gameBoard[column].length){
-
-                    gameBoard[column + i][row] = ship
-                }
-                else{
-                    return 'Cannot fit ship at these coordinates'
-                }
-            }
+            return false
         }
+        if (direction === 'horizontal') {
+            for (let i = 0; i < shipLength; i += 1) {
+                if (column + i < gameBoard[column].length) {
+                    gameBoard[column + i][row] = ship
+                    return true
+                }
+            }
+            return false
+        }
+    }
+
+    const makeRandomCoordinates = () => {
+        const randomDirection =
+            Math.floor(Math.random() * 2) === 0 ? 'vertical' : 'horizontal'
+        const randomColumn = Math.floor(Math.random() * 10)
+        const randomRow = Math.floor(Math.random() * 10)
+        return { randomColumn, randomRow, randomDirection }
+    }
+    const randomBoard = ([ships]) => {
+        ships.map((ship) => {
+            while (placeShip(...makeRandomCoordinates(), ship) === false) {
+                placeShip(...makeRandomCoordinates(), ship)
+            }
+        })
     }
 
     const populateBoard = (playerShips) => {
@@ -72,6 +81,7 @@ const createGameBoard = () => {
         getShotLocation,
         placeShip,
         populateBoard,
+        randomBoard,
     }
 }
 
