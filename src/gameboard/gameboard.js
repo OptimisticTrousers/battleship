@@ -14,15 +14,12 @@ const createGameBoard = () => {
         createShip(2),
     ]
 
-    let shipFits = false
-
     const placeShip = (column, row, direction, ship) => {
         const shipLength = ship.getLength()
         if (direction === 'vertical') {
             for (let i = 0; i < shipLength; i += 1) {
                 if (column + shipLength < gameBoard[column].length) {
                     gameBoard[column][row + i] = ship
-                    shipFits = true
                 }
             }
         }
@@ -30,11 +27,9 @@ const createGameBoard = () => {
             for (let i = 0; i < shipLength; i += 1) {
                 if (column + shipLength < gameBoard[column].length) {
                     gameBoard[column + i][row] = ship
-                    shipFits = true
                 }
             }
         }
-        shipFits = false
     }
 
     const makeRandomCoordinates = () => {
