@@ -2,23 +2,29 @@
 const createPlayer = require('./player')
 
 describe('player factory function', () => {
-        const computer = createPlayer()
-        const player = createPlayer()
+        const computer = createPlayer('Computer', 'AI')
+        const player = createPlayer('Human')
+        const computerBoard = computer.getBoard()
+        const playerBoard = player.getBoard()
     test('testing if the player can shoot the enemy', () => {
         player.attack('A', 2, computer)
-        expect(computer.getBoard().hasLastAttackHitShip('A', 2)).toBe(true)
+        expect(computerBoard.hasLastAttackHitShip('A', 2)).toBe(true)
     })
     test('testing if the player missed the enemy', () => {
         player.attack('A', 7, computer)
-        expect(computer.getBoard().hasLastAttackHitShip('A', 7)).toBe(false)
+        expect(computerBoard.hasLastAttackHitShip('A', 7)).toBe(false)
     })
     test('testing if the computer can shoot the player', () => {
         computer.attack('B', 9, player)
-        expect(computer.getBoard().hasLastAttackHitShip('B', 9)).toBe(true)
+        expect(playerBoard.hasLastAttackHitShip('B', 9)).toBe(true)
+    })
+    test('testing if the computer can make a random move', () => {
+        const coordinates = computer.makeRandomMoveAgainstPlayer(computer, player)
+        expect(playerBoard.getShotLocation(coordinates.randomColumn, coordinates.randomRow).hit).toBe(true)
     })
     test('testing if the computer missed the player', () => {
         computer.attack('A', 1, player)
-        expect(computer.getBoard().hasLastAttackHitShip('A', 1)).toBe(false)
+        expect(computerBoard.hasLastAttackHitShip('A', 1)).toBe(false)
     })
     test('testing if the player can shoot a spot on the gameboard that has already been shot', () => {
         player.attack('J', 9, computer)
