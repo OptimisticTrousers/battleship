@@ -133,6 +133,8 @@ const createGameBoard = () => {
             })
     }
 
+    const getShotLocation = (column, row) => gameBoard[column][row]
+
     const receiveAttack = (column, row) => {
         gameBoard[column][row].hit = true
     }
@@ -155,6 +157,7 @@ const createGameBoard = () => {
         receiveAttack,
         checkIfAllShipsHaveSunk,
         hasLastAttackHitShip,
+        getShotLocation,
     }
 }
 
