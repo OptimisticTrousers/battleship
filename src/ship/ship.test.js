@@ -16,10 +16,10 @@ describe('ship factory function', () => {
             'unhit',
         ])
     })
-    test('checking if the ship has sunk without having gotten hit', () => {
+    test('the ship has sunk without having gotten hit', () => {
         expect(createShip(2).isSunk() === false)
     })
-    test('checking if the ship sinks when all positions are hit', () => {
+    test('the ship sinks when all positions are hit', () => {
         const ship = createShip(2)
         ship.hit(1)
         ship.hit(2)
