@@ -123,6 +123,8 @@ const createGameBoard = () => {
         ],
     }
 
+    const checkIfHasBeenShot = () => hasBeenShot
+
     const sinkAllShips = () => {
         Object.values(gameBoard)
             .flat()
