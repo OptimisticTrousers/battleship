@@ -10,6 +10,7 @@ const createPlayer = (name, mode = 'default') => {
             const columns = 'ABCDEFGHIJ'
             const randomColumn =
                 columns[Math.floor(Math.random() * columns.length)]
+                // using columns.length for randomRow because there are the same # of rows as columns
             const randomRow = Math.floor(Math.random() * columns.length)
 
             player.attack(randomColumn, randomRow, enemy)
