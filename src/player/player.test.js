@@ -3,8 +3,6 @@ const createPlayer = require('./player')
 
 describe('player factory function', () => {
     test('testing if the player can shoot the enemy', () => {
-        const computer = createPlayer()
-        const player = createPlayer()
         player.attack('A', 3, computer)
         expect(computer.getBoard().hasLastAttackHitShip('A', 3)).toBe(true)
     })
