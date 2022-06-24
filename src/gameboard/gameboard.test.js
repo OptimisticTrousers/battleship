@@ -14,21 +14,19 @@ describe('gameboard factory function', () => {
     test('randomly place ships all over the board', () => {
         const gameBoard = createGameBoard()
         const coordinates = gameBoard.randomlyPlaceShips()
-        let hasCorrectlyPlacedShipsRandomly = false 
+        let hasCorrectlyPlacedShipsRandomly = true
         // eslint-disable-next-line no-restricted-syntax
         for (let i = 0; i < coordinates.length; i += 1) {
             if (
                 gameBoard.getShotLocation(
                     coordinates[i].randomColumn,
                     coordinates[i].randomRow
-                ).isShip === true
+                ).isShip === false
             ) {
-                hasCorrectlyPlacedShipsRandomly = true
+                hasCorrectlyPlacedShipsRandomly =false  
                 // eslint-disable-next-line no-continue
-                continue;
+               break
             }
-            hasCorrectlyPlacedShipsRandomly = false
-            break;
         }
         expect(hasCorrectlyPlacedShipsRandomly).toBe(true)
     })

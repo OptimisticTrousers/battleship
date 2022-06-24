@@ -14,6 +14,17 @@ const createGameBoard = () => {
         createShip(2),
     ]
 
+    const checkIfAllShipsHaveSunk = () =>
+        gameBoard.flat().every((position) => {
+            if (position.isShip === false) return true
+            if (position.isShip === true && position.hasBeenHit === true)
+                return true
+
+            return false
+        })
+
+    const getShotLocation = (column, row) => gameBoard[column][row]
+
     const placeShip = (column, row, direction, ship) => {
         const shipLength = ship.getLength()
         if (direction === 'vertical') {
@@ -22,8 +33,7 @@ const createGameBoard = () => {
                     gameBoard[column][row + i] = ship
                 }
             }
-        }
-        if (direction === 'horizontal') {
+        } else if (direction === 'horizontal') {
             for (let i = 0; i < shipLength; i += 1) {
                 if (column + shipLength < gameBoard[column].length) {
                     gameBoard[column + i][row] = ship
@@ -42,29 +52,22 @@ const createGameBoard = () => {
 
     const randomlyPlaceShips = () => {
         const arrayOfCoordinates = []
-        for (let i = 0; i < 5; i += 1) {
+        for (let i = 0; i < ships.length; i += 1) {
             const { randomColumn, randomRow, randomDirection } =
                 makeRandomCoordinates()
             placeShip(randomColumn, randomRow, randomDirection, ships[i])
-            arrayOfCoordinates.push({randomColumn, randomRow})
+            if (getShotLocation(randomColumn, randomRow).isShip === true) {
+                arrayOfCoordinates.push({ randomColumn, randomRow })
+            } else {
+                i -= 1
+            }
         }
-        return arrayOfCoordinates;
+        return arrayOfCoordinates
     }
 
     const receiveAttack = (column, row) => {
         gameBoard[column][row].hasBeenHit = true
     }
-
-    const checkIfAllShipsHaveSunk = () =>
-        gameBoard.flat().every((position) => {
-            if (position.isShip === false) return true
-            if (position.isShip === true && position.hasBeenHit === true)
-                return true
-
-            return false
-        })
-
-    const getShotLocation = (column, row) => gameBoard[column][row]
 
     return {
         getShotLocation,
