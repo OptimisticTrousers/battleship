@@ -53,17 +53,6 @@ const createGameBoard = () => {
         })
     }
 
-    const populateBoard = (playerShips) => {
-        playerShips.map((playerShip) => {
-            placeShip(
-                playerShip.column,
-                playerShip.row,
-                playerShip.direction,
-                playerShip.ship
-            )
-        })
-    }
-
     const receiveAttack = (column, row) => {
         gameBoard[column][row].hasBeenHit = true
     }
