@@ -15,29 +15,33 @@ describe('player factory function', () => {
         const computer = createPlayer('Computer')
         const player = createPlayer('Human')
         const computerBoard = computer.getBoard()
-        player.attack(0, 7, computer)
-        expect(computerBoard.getShotLocation(0, 7).isShip).toBe(false)
+        const [column, row] = [0, 7]
+        player.attack(column, row, computer)
+        expect(computerBoard.getShotLocation(column, row).isShip).toBe(false)
     })
     test('the computer can shoot the player', () => {
         const computer = createPlayer('Computer')
         const player = createPlayer('Human')
         const playerBoard = player.getBoard()
-        playerBoard.placeShip(5, 3, 'horizontal', createShip(5))
-        computer.attack(5, 3, player)
-        expect(playerBoard.getShotLocation(5, 3).hasBeenHit).toBe(true)
+        const [column, row] = [5, 3]
+        playerBoard.placeShip(column, row, 'horizontal', createShip(5))
+        computer.attack(column, row, player)
+        expect(playerBoard.getShotLocation(column, row).hasBeenHit).toBe(true)
     })
     test('the computer missed the player', () => {
         const computer = createPlayer('Computer')
         const player = createPlayer('Human')
         const computerBoard = computer.getBoard()
-        computer.attack(0, 1, player)
-        expect(computerBoard.getShotLocation(0, 1).hasBeenHit).toBe(false)
+        const [column, row] = [0, 1]
+        computer.attack(column, row, player)
+        expect(computerBoard.getShotLocation(column, row).hasBeenHit).toBe(false)
     })
     test('the player can shoot a spot on the gameboard that has already been shot', () => {
         const computer = createPlayer('Computer')
         const player = createPlayer('Human')
-        player.attack(9, 9, computer)
-        expect(player.attack(9, 9, computer)).toBe(
+        const [column, row] = [9, 9]
+        player.attack(column, row, computer)
+        expect(player.attack(column, row, computer)).toBe(
             'You have already hit this spot!'
         )
     })
