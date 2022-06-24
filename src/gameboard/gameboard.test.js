@@ -9,26 +9,17 @@ describe('gameboard factory function', () => {
         gameBoard.placeShip(1, 1, 'vertical', createShip(3));
         expect(gameBoard.getShotLocation(1, 1).isShip).toBe(true)
     })
-    test('last attack hit ship', () => {
-        const gameBoard = createGameBoard()
-        gameBoard.placeShip(0, 0, 'vertical', createShip(2))
-        expect(gameBoard.getShotLocation(0, 1).getStatus().find((element) => element === 'hit')).toBe(true)
-    })
-    test('last attack did not hit ship', () => {
-        const gameBoard = createGameBoard()
-        expect(gameBoard.getShotLocation(0, 1).getStatus().find((element) => element === 'hit')).toBe(false)
-    })
     test('the receiveAttack function hits a ship', () => {
         const gameBoard = createGameBoard()
         gameBoard.placeShip(0, 3, 'vertical', createShip(3))
         gameBoard.receiveAttack(0, 3)
-        expect(gameBoard.hasLastAttackHitShip(0, 3)).toBe(true)
+        expect(gameBoard.getShotLocation(0, 3).hasBeenHit).toBe(true)
     })
     test('the receiveAttack function does not hit a ship', () => {
         const gameBoard = createGameBoard()
         gameBoard.placeShip(0, 3, 'vertical', createShip(3))
-        gameBoard.receiveAttack(0, 2)
-        expect(gameBoard.hasLastAttackHitShip(0, 2)).toBe(false)
+        gameBoard.receiveAttack(9, 9)
+        expect(gameBoard.getShotLocation(0, 3).hasBeenHit).toBe(false)
     })
     test('all of the ships have sunk', () => {
 

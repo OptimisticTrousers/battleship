@@ -19,6 +19,7 @@ const createShip = (length) => {
         hit,
         getLength,
         getStatus,
+        hasBeenHit: false,
         isShip: true,
     }
 }
