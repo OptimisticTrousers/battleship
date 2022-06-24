@@ -2,21 +2,40 @@
 const createGameBoard = () => {
     const gameBoard = Array(10)
         .fill({ hasBeenHit: false, isShip: false })
-        .map((cell) => Array(10).fill({ hasBeenHit: false, isShip: false }))
-    const populateBoard = () => {}
+        .map(() => Array(10).fill({ hasBeenHit: false, isShip: false }))
 
-    const placeShip = (column, row, ship, direction) => {}
+    const randomBoard = () => {}
 
-    const shipFit = (column, row, ship, direction) => {
+    const placeShip = (column, row, ship, direction) => {
+
+        const shipLength = ship.getLength()
         if (direction === 'vertical') {
-            for (let i = 0; i < ship.getLength(); i += 1) {
-                gameBoard[column][row + i] = ship
+            for (let i = 0; i < shipLength; i += 1) {
+                if(column + i < gameBoard[column].length){
+
+                    gameBoard[column][row + i] = ship
+                }
+                else{
+                    return 'Cannot fit ship at these coordinates'
+                }
             }
         } else if (direction === 'horizontal') {
-            for (let i = 0; i < ship.getLength(); i += 1) {
-                gameBoard[column + i][row] = ship
+            for (let i = 0; i < shipLength; i += 1) {
+                if(column + i < gameBoard[column].length){
+
+                    gameBoard[column + i][row] = ship
+                }
+                else{
+                    return 'Cannot fit ship at these coordinates'
+                }
             }
         }
+    }
+
+    const populateBoard = (playerShips) => {
+        playerShips.map((ship) => {
+            placeShip(...ship)
+        })
     }
 
     const sinkAllShips = () => {
@@ -51,7 +70,8 @@ const createGameBoard = () => {
         checkIfAllShipsHaveSunk,
         hasLastAttackHitShip,
         getShotLocation,
-        shipFit,
+        placeShip,
+        populateBoard,
     }
 }
 
