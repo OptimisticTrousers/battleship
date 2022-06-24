@@ -2,13 +2,14 @@
 const createPlayer = require('./player')
 
 describe('player factory function', () => {
+    test('the player can shoot the enemy', () => {
         const computer = createPlayer('Computer', 'AI')
         const player = createPlayer('Human')
         const computerBoard = computer.getBoard()
         const playerBoard = player.getBoard()
-    test('the player can shoot the enemy', () => {
-        player.attack('A', 2, computer)
-        expect(computerBoard.hasLastAttackHitShip('A', 2)).toBe(true)
+        playerBoard.placeShip(0, 2)
+        player.attack(0, 2, computer)
+        expect(computerBoard.getShotLocation(0, 2).hasBeenHit).toBe(true)
     })
     test('the player missed the enemy', () => {
         player.attack('A', 7, computer)
