@@ -7,9 +7,10 @@ describe('gameboard factory function', () => {
         const gameBoard = createGameBoard()
 
         const ship = createShip(3)
-        gameBoard.placeShip(0, 0, 'vertical', ship)
+        const [column, row] = [0, 0]
+        gameBoard.placeShip(column, row, 'vertical', ship)
 
-        expect(gameBoard.getShotLocation(0, 0)).toEqual(ship)
+        expect(gameBoard.getShotLocation(column, row)).toEqual(ship)
     })
     test('randomly place ships all over the board', () => {
         const gameBoard = createGameBoard()
@@ -32,20 +33,22 @@ describe('gameboard factory function', () => {
     })
     test('the placeShip function works', () => {
         const gameBoard = createGameBoard()
-        gameBoard.placeShip(1, 1, 'vertical', createShip(3))
-        expect(gameBoard.getShotLocation(1, 1).isShip).toBe(true)
+        const [column, row] = [1, 1]
+        gameBoard.placeShip(column, row, 'vertical', createShip(3))
+        expect(gameBoard.getShotLocation(column, row).isShip).toBe(true)
     })
     test('the receiveAttack function hits a ship', () => {
         const gameBoard = createGameBoard()
-        gameBoard.placeShip(0, 3, 'vertical', createShip(3))
-        gameBoard.receiveAttack(0, 3)
-        expect(gameBoard.getShotLocation(0, 3).hasBeenHit).toBe(true)
+        const [column, row] = [0, 3]
+        gameBoard.placeShip(column, row, 'vertical', createShip(3))
+        gameBoard.receiveAttack(column, row)
+        expect(gameBoard.getShotLocation(column, row).hasBeenHit).toBe(true)
     })
     test('the receiveAttack function does not hit a ship', () => {
         const gameBoard = createGameBoard()
-        gameBoard.placeShip(0, 3, 'vertical', createShip(3))
-        gameBoard.receiveAttack(9, 9)
-        expect(gameBoard.getShotLocation(0, 3).hasBeenHit).toBe(undefined)
+        const [column, row] = [9, 9]
+        gameBoard.receiveAttack(column, row)
+        expect(gameBoard.getShotLocation(column, row).hasBeenHit).toBe(undefined)
     })
     test('all of the ships have sunk', () => {
         const gameBoard = createGameBoard()
@@ -53,7 +56,8 @@ describe('gameboard factory function', () => {
     })
     test('all of the ships have not sunk', () => {
         const gameBoard = createGameBoard()
-        gameBoard.placeShip(0, 3, 'vertical', createShip(3))
+        const [column, row] = [0, 3]
+        gameBoard.placeShip(column, row, 'vertical', createShip(3))
         expect(gameBoard.checkIfAllShipsHaveSunk()).toBe(false)
     })
 })
