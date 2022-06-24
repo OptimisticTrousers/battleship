@@ -46,11 +46,14 @@ const createGameBoard = () => {
     }
 
     const randomlyPlaceShips = () => {
+        const arrayOfCoordinates = []
         for (let i = 0; i < 5; i += 1) {
             const { randomColumn, randomRow, randomDirection } =
                 makeRandomCoordinates()
             placeShip(randomColumn, randomRow, randomDirection, ships[i])
+            arrayOfCoordinates.push({randomColumn, randomRow})
         }
+        return arrayOfCoordinates;
     }
 
     const receiveAttack = (column, row) => {
