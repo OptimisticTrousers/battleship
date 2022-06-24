@@ -39,13 +39,13 @@ describe('gameboard factory function', () => {
         const gameBoard = createGameBoard()
         gameBoard.placeShip(0, 3, 'vertical', createShip(3))
         gameBoard.receiveAttack(0, 3)
-        expect(gameBoard.getShotLocation(0, 3).getStatus().find((element) => element === 'hit')).toBe('hit')
+        expect(gameBoard.getShotLocation(0, 3).hasBeenHit).toBe(true)
     })
     test('the receiveAttack function does not hit a ship', () => {
         const gameBoard = createGameBoard()
         gameBoard.placeShip(0, 3, 'vertical', createShip(3))
         gameBoard.receiveAttack(9, 9)
-        expect(gameBoard.getShotLocation(0, 3).getStatus().find((element) => element === 'hit')).toBe(undefined)
+        expect(gameBoard.getShotLocation(0, 3).hasBeenHit).toBe(undefined)
     })
     test('all of the ships have sunk', () => {
         const gameBoard = createGameBoard()
