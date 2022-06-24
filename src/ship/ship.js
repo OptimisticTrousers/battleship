@@ -11,13 +11,16 @@ const createShip = (length) => {
         }
     }
 
+    const isShip = () => true
+
     const isSunk = () => status.every((position) => position === 'damaged')
 
     return {
         isSunk,
         hit,
         getLength,
-        getStatus
+        getStatus,
+        isShip,
     }
 }
 
