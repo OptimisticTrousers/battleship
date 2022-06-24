@@ -1,48 +1,44 @@
 /* eslint-disable no-undef */
+const createShip = require('../ship/ship')
 const createPlayer = require('./player')
 
 describe('player factory function', () => {
     test('the player can shoot the enemy', () => {
-        const computer = createPlayer('Computer', 'AI')
+        const computer = createPlayer('Computer')
         const player = createPlayer('Human')
         const computerBoard = computer.getBoard()
-        const playerBoard = player.getBoard()
-        playerBoard.placeShip(0, 2)
+        computerBoard.placeShip(0, 2, 'vertical', createShip(3))
         player.attack(0, 2, computer)
         expect(computerBoard.getShotLocation(0, 2).hasBeenHit).toBe(true)
     })
     test('the player missed the enemy', () => {
-        player.attack('A', 7, computer)
-        expect(computerBoard.hasLastAttackHitShip('A', 7)).toBe(false)
+        const computer = createPlayer('Computer')
+        const player = createPlayer('Human')
+        const computerBoard = computer.getBoard()
+        player.attack(0, 7, computer)
+        expect(computerBoard.getShotLocation(0, 7).isShip).toBe(false)
     })
     test('the computer can shoot the player', () => {
-        computer.attack('B', 9, player)
-        expect(playerBoard.hasLastAttackHitShip('B', 9)).toBe(true)
-    })
-    test('the computer can make a random move', () => {
-        const coordinates = computer.makeRandomMoveAgainstEnemy(computer, player)
-        expect(playerBoard.getShotLocation(coordinates.randomColumn, coordinates.randomRow).hit).toBe(true)
+        const computer = createPlayer('Computer')
+        const player = createPlayer('Human')
+        const playerBoard = player.getBoard()
+        playerBoard.placeShip(5, 3, 'horizontal', createShip(5))
+        computer.attack(5, 3, player)
+        expect(playerBoard.getShotLocation(5, 3).hasBeenHit).toBe(true)
     })
     test('the computer missed the player', () => {
-        computer.attack('A', 1, player)
-        expect(computerBoard.hasLastAttackHitShip('A', 1)).toBe(false)
+        const computer = createPlayer('Computer')
+        const player = createPlayer('Human')
+        const computerBoard = computer.getBoard()
+        computer.attack(0, 1, player)
+        expect(computerBoard.getShotLocation(0, 1).hasBeenHit).toBe(false)
     })
     test('the player can shoot a spot on the gameboard that has already been shot', () => {
-        player.attack('J', 9, computer)
-        expect(player.attack('J', 9, computer)).toBe('You have already hit this spot!')
-    })
-    test('the computer can shoot a spot on the gameboard that has already been shot', () => {
-        computer.attack('I', 0, player)
-        expect(computer.attack('I', 0, player)).toBe('You have already hit this spot!')
-    })
-    test('the user has a correctly intialized gameBoard', () => {
-        const playerGameBoard = player.getBoard()
-        expect(playerGameBoard).toEqual({
-            sinkAllShips: playerGameBoard.sinkAllShips,
-            receiveAttack: playerGameBoard.receiveAttack,
-            checkIfAllShipsHaveSunk: playerGameBoard.checkIfAllShipsHaveSunk,
-            hasLastAttackHitShip: playerGameBoard.hasLastAttackHitShip,
-            getShotLocation: playerGameBoard.getShotLocation,
-        })
+        const computer = createPlayer('Computer')
+        const player = createPlayer('Human')
+        player.attack(9, 9, computer)
+        expect(player.attack(9, 9, computer)).toBe(
+            'You have already hit this spot!'
+        )
     })
 })

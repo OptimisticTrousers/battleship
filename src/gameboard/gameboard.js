@@ -29,13 +29,13 @@ const createGameBoard = () => {
         const shipLength = ship.getLength()
         if (direction === 'vertical') {
             for (let i = 0; i < shipLength; i += 1) {
-                if (column + shipLength < gameBoard[column].length) {
+                if (column + shipLength < 10) {
                     gameBoard[column][row + i] = ship
                 }
             }
         } else if (direction === 'horizontal') {
             for (let i = 0; i < shipLength; i += 1) {
-                if (column + shipLength < gameBoard[column].length) {
+                if (row + shipLength < 10) {
                     gameBoard[column + i][row] = ship
                 }
             }
@@ -51,18 +51,18 @@ const createGameBoard = () => {
     }
 
     const randomlyPlaceShips = () => {
-        const arrayOfCoordinates = []
+        let shipDetails
         for (let i = 0; i < ships.length; i += 1) {
             const { randomColumn, randomRow, randomDirection } =
                 makeRandomCoordinates()
-            placeShip(randomColumn, randomRow, randomDirection, ships[i])
+            placeShip(randomColumn, randomRow, randomRow, ships[i])
             if (getShotLocation(randomColumn, randomRow).isShip === true) {
-                arrayOfCoordinates.push({ randomColumn, randomRow })
+                shipDetails.push({ randomColumn, randomRow, randomDirection })
             } else {
                 i -= 1
             }
         }
-        return arrayOfCoordinates
+        return shipDetails
     }
 
     const receiveAttack = (column, row) => {

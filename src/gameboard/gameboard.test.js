@@ -23,9 +23,9 @@ describe('gameboard factory function', () => {
                     coordinates[i].randomRow
                 ).isShip === false
             ) {
-                hasCorrectlyPlacedShipsRandomly =false  
+                hasCorrectlyPlacedShipsRandomly = false
                 // eslint-disable-next-line no-continue
-               break
+                break
             }
         }
         expect(hasCorrectlyPlacedShipsRandomly).toBe(true)
