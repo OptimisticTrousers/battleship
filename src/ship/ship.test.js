@@ -7,11 +7,14 @@ describe('ship factory function', () => {
     })
     test('damaging the ship using the hit() method', () => {
         const ship = createShip(5)
-        ship.hit(1)
-        expect(
-            ship.getStatus() ===
-                ['hit', 'undamaged', 'undamaged', 'undamaged', 'undamaged']
-        )
+        ship.hit(0)
+        expect(ship.getStatus()).toEqual([
+            'hit',
+            'unhit',
+            'unhit',
+            'unhit',
+            'unhit',
+        ])
     })
     test('checking if the ship has sunk without having gotten hit', () => {
         expect(createShip(2).isSunk() === false)

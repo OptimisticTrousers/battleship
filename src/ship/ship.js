@@ -1,5 +1,5 @@
 const createShip = (length) => {
-    const status = Array(length).fill('undamaged')
+    const status = Array(length).fill('unhit')
 
     const getLength = () => status.length
 
@@ -7,12 +7,12 @@ const createShip = (length) => {
 
     const hit = (position) => {
         if (position < length) {
-            status[position] = 'damaged'
+            status[position] = 'hit'
         }
     }
 
 
-    const isSunk = () => status.every((position) => position === 'damaged')
+    const isSunk = () => status.every((position) => position === 'hit')
 
     return {
         isSunk,
