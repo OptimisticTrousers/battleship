@@ -3,6 +3,8 @@ const createGameBoard = require('../gameboard/gameboard')
 const createPlayer = () => {
     const board = createGameBoard()
 
+    const getBoard = () => board
+
     const attack = (column, row, player) => {
         const enemyBoard = player.getBoard()
 
@@ -13,8 +15,6 @@ const createPlayer = () => {
 
         return 'You have already hit this spot!'
     }
-
-    const getBoard = () => board
 
     return {
         attack,
