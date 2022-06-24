@@ -3,12 +3,10 @@ const createGameBoard = require('../gameboard/gameboard')
 const createPlayer = () => {
     const board = createGameBoard()
 
-    const attack = (column, row, enemy) => {
+    const attack = (column, row, {getBoard: enemyBoard}) => {
 
-        const enemyBoard = enemy.getBoard()
-
-        if (enemyBoard.getShotLocation(column, row).hit === false) {
-            enemyBoard.receiveAttack(column, row)
+        if (enemyBoard().getShotLocation(column, row).hit === false) {
+            enemyBoard().receiveAttack(column, row)
             return "It's a hit!"
         }
 
