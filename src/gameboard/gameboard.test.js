@@ -3,6 +3,14 @@ const createGameBoard = require('./gameboard')
 const createShip = require('../ship/ship')
 
 describe('gameboard factory function', () => {
+    test('get location', () => {
+        const gameBoard = createGameBoard()
+
+        const ship = createShip(3)
+        gameBoard.placeShip(0, 0, 'vertical', ship)
+
+        expect(gameBoard.getShotLocation(0, 0)).toEqual(ship)
+    })
     test('the placeShip function works', () => {
 
         const gameBoard = createGameBoard()
