@@ -5,7 +5,7 @@ const createPlayer = (name, mode = 'default') => {
 
     const board = createGameBoard()
 
-    const makeRandomMoveAgainstPlayer = (player, enemy) => {
+    const makeRandomMoveAgainstEnemy = (player, enemy) => {
         if (mode === 'AI') {
             const columns = 'ABCDEFGHIJ'
             const randomColumn =
@@ -34,7 +34,7 @@ const createPlayer = (name, mode = 'default') => {
         getName,
         attack,
         getBoard,
-        makeRandomMoveAgainstPlayer,
+        makeRandomMoveAgainstEnemy,
     }
 }
 

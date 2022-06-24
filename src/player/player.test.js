@@ -19,7 +19,7 @@ describe('player factory function', () => {
         expect(playerBoard.hasLastAttackHitShip('B', 9)).toBe(true)
     })
     test('testing if the computer can make a random move', () => {
-        const coordinates = computer.makeRandomMoveAgainstPlayer(computer, player)
+        const coordinates = computer.makeRandomMoveAgainstEnemy(computer, player)
         expect(playerBoard.getShotLocation(coordinates.randomColumn, coordinates.randomRow).hit).toBe(true)
     })
     test('testing if the computer missed the player', () => {
