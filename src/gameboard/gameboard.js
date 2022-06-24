@@ -6,14 +6,6 @@ const createGameBoard = () => {
         .fill({ hasBeenHit: false, isShip: false })
         .map(() => Array(10).fill({ hasBeenHit: false, isShip: false }))
 
-    const ships = [
-        createShip(5),
-        createShip(4),
-        createShip(3),
-        createShip(3),
-        createShip(2),
-    ]
-
     let shipFits = false
 
     const placeShip = (column, row, direction, ship) => {
@@ -46,11 +38,13 @@ const createGameBoard = () => {
     }
 
     const randomlyPlaceShips = () => {
-        ships.map((ship) => {
+
+        for(let i = 0; i < 5; i++){
+
+        }
             const { randomColumn, randomRow, randomDirection } =
                 makeRandomCoordinates()
             placeShip(randomColumn, randomRow, randomDirection, ship)
-        })
     }
 
     const receiveAttack = (column, row) => {
@@ -71,16 +65,12 @@ const createGameBoard = () => {
 
     const getShotLocation = (column, row) => gameBoard[column][row]
 
-    const getShips = () => ships
-
     return {
-        getShips,
+        getShotLocation,
         receiveAttack,
         checkIfAllShipsHaveSunk,
         hasLastAttackHitShip,
-        getShotLocation,
         placeShip,
-        populateBoard,
         randomlyPlaceShips,
     }
 }
