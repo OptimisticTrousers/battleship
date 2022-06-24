@@ -21,9 +21,4 @@ const createPlayer = () => {
     }
 }
 
-const test = createPlayer()
-const computer = createPlayer()
-
-console.log(test.attack('A', 1, computer))
-
 module.exports = createPlayer
