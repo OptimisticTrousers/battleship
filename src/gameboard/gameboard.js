@@ -14,9 +14,7 @@ const createGameBoard = () => {
         createShip(2),
     ]
 
-    let shipFits
-
-    const getShips = () => ships
+    let shipFits = false
 
     const placeShip = (column, row, direction, ship) => {
         const shipLength = ship.getLength()
@@ -66,8 +64,6 @@ const createGameBoard = () => {
         })
     }
 
-    const getShotLocation = (column, row) => gameBoard[column][row]
-
     const receiveAttack = (column, row) => {
         gameBoard[column][row].hasBeenHit = true
     }
@@ -83,6 +79,10 @@ const createGameBoard = () => {
 
     const hasLastAttackHitShip = (column, row) =>
         gameBoard[column][row].isShip === true
+
+    const getShotLocation = (column, row) => gameBoard[column][row]
+
+    const getShips = () => ships
 
     return {
         getShips,
