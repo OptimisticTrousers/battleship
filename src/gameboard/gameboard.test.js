@@ -45,7 +45,7 @@ describe('gameboard factory function', () => {
         test('placing a ship horizontally', () => {
             const gameBoard = createGameBoard()
             const [column, row] = [1, 1]
-            gameBoard.placeShip(column, row, 'horizontally', createShip(3))
+            gameBoard.placeShip(column, row, 'horizontal', createShip(3))
             expect(gameBoard.getShotLocation(3, 1).isShip).toBe(true)
         })
     })
@@ -72,20 +72,20 @@ describe('gameboard factory function', () => {
     describe('#checkIfAllShipsHaveSunk', () => {
         test('all of the ships have sunk', () => {
             const gameBoard = createGameBoard()
-            expect(gameBoard.checkIfAllShipsHaveSunk()).toBe(true)
+            expect(gameBoard.checkIfAllShipsHaveSunk() === true).toBe(true)
         })
         test('a ship being hit, but not sunk', () => {
             const gameBoard = createGameBoard()
             const [column, row] = [0, 3]
             gameBoard.placeShip(column, row, 'vertical', createShip(3))
             gameBoard.receiveAttack(column, row)
-            expect(gameBoard.checkIfAllShipsHaveSunk()).toBe(false)
+            expect(gameBoard.checkIfAllShipsHaveSunk() === false).toBe(true)
         })
         test('all of the ships have not sunk', () => {
             const gameBoard = createGameBoard()
             const [column, row] = [0, 3]
             gameBoard.placeShip(column, row, 'vertical', createShip(3))
-            expect(gameBoard.checkIfAllShipsHaveSunk()).toBe(false)
+            expect(gameBoard.checkIfAllShipsHaveSunk() === false).toBe(true)
         })
     })
 })

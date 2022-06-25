@@ -22,11 +22,13 @@ describe('ship factory function', () => {
         test('hitting an index that is out of bounds for the ship', () => {
             const ship = createShip(5)
             ship.hit(5)
-            expect(
-                ship
-                    .getStatus()
-                    .toEqual(['unhit', 'unhit', 'unhit', 'unhit', 'unhit'])
-            )
+            expect(ship.getStatus()).toMatchObject([
+                'unhit',
+                'unhit',
+                'unhit',
+                'unhit',
+                'unhit',
+            ])
         })
     })
     describe('#getStatus', () => {
