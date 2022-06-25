@@ -1,9 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 html {
     height: 100%;
 }
+
 body {
     min-height: 100vh;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
         Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
         sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+main {
+    display: flex;
+    width: 70vw;
+    height: 90vh;
+    justify-content: space-evenly;
+}
+
+.player-board,
+.enemy-board {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    border: 3px solid green;
+}
+
+.cell {
+    width: 50px;
+    height: 50px;
+    border: 2px solid rgb(134, 154, 189);
+    display: inline-block;
 }
