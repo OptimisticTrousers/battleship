@@ -34,8 +34,7 @@ describe('ship factory function', () => {
     describe('#getStatus', () => {
         test('when the ship is not hit', () => {
             const ship = createShip(3)
-            expect(
-                ship.getStatus()).not.toContain('hit')
+            expect(ship.getStatus()).not.toContain('hit')
         })
     })
     describe('#isSunk', () => {

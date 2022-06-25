@@ -4,7 +4,7 @@ const createPlayer = require('./player')
 const createGameBoard = require('../gameboard/gameboard')
 
 describe('player factory function', () => {
-    describe('#getName' , () => {
+    describe('#getName', () => {
         test('returning the name of the player', () => {
             const player = createPlayer('bob')
             expect(player.getName()).toBe('bob')
@@ -33,7 +33,7 @@ describe('player factory function', () => {
         })
         test('the computer can shoot the player', () => {
             const computer = createPlayer('Computer')
-            const playerBoard= createGameBoard()
+            const playerBoard = createGameBoard()
             const [column, row] = [5, 3]
             playerBoard.placeShip(column, row, 'horizontal', createShip(5))
             computer.attack(column, row, playerBoard)

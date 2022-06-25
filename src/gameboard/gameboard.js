@@ -30,19 +30,19 @@ const createGameBoard = () => {
 
     const getShotLocation = (column, row) => gameBoard[column][row]
 
-    const placeShip = (column, row, direction, ship, board = gameBoard) => {
+    const placeShip = (column, row, direction, ship) => {
         const shipLength = ship.getLength()
         if (direction === 'vertical') {
             if (column + shipLength <= 10) {
                 for (let i = 0; i < shipLength; i += 1) {
-                    board[column][row + i] = ship
+                    gameBoard[column][row + i] = ship
                 }
                 return true
             }
         } else if (direction === 'horizontal') {
             if (row + shipLength <= 10) {
                 for (let i = 0; i < shipLength; i += 1) {
-                    board[column + i][row] = ship
+                    gameBoard[column + i][row] = ship
                 }
                 return true
             }
@@ -58,19 +58,19 @@ const createGameBoard = () => {
         return { randomColumn, randomRow, randomDirection }
     }
 
-    const randomlyPlaceShips = ({getBoard}) => {
+    const getBoard = () => gameBoard
+
+    const randomlyPlaceShips = () => {
         const shipDetails = []
         for (let i = 0; i < ships.length; i += 1) {
             const { randomColumn, randomRow, randomDirection } =
                 makeRandomCoordinates()
+            const ship = ships[i]
+            console.log(ship)
             if (
                 getShotLocation(randomColumn, randomRow).isShip === true ||
-                placeShip(
-                    randomColumn,
-                    randomRow,
-                    randomDirection,
-                    ships[i],
-                ) === false
+                placeShip(randomColumn, randomRow, randomDirection, ship) ===
+                    false
             ) {
                 i -= 1
             } else {
@@ -84,8 +84,6 @@ const createGameBoard = () => {
         gameBoard[column][row].hasBeenHit = true
     }
 
-    const getBoard = () => gameBoard
-
     return {
         getShotLocation,
         receiveAttack,
@@ -95,5 +93,8 @@ const createGameBoard = () => {
         getBoard,
     }
 }
+
+const bob = createGameBoard()
+bob.randomlyPlaceShips()
 
 module.exports = createGameBoard

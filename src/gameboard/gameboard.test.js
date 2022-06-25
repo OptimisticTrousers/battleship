@@ -11,13 +11,13 @@ describe('gameboard factory function', () => {
             const [column, row] = [0, 0]
             gameBoard.placeShip(column, row, 'vertical', ship)
 
-            expect(gameBoard.getShotLocation(column, row)).toEqual(ship)
+            expect(gameBoard.getShotLocation(column, row)).toMatchObject(ship)
         })
     })
     describe('#randomlyPlaceShips', () => {
         test('randomly place ships all over the board', () => {
             const gameBoard = createGameBoard()
-            const coordinates = gameBoard.randomlyPlaceShips(gameBoard)
+            const coordinates = gameBoard.randomlyPlaceShips()
             let hasCorrectlyPlacedShipsRandomly = true
             // eslint-disable-next-line no-restricted-syntax
             for (let i = 0; i < coordinates.length; i += 1) {
