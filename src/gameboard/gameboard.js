@@ -154,7 +154,4 @@ const createGameBoard = () => {
     }
 }
 
-const bob = createGameBoard()
-bob.randomlyPlaceShips()
-
 module.exports = createGameBoard
