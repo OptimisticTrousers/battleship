@@ -8,7 +8,7 @@ describe('ship factory function', () => {
         })
     })
     describe('#hit', () => {
-        test('#hit', () => {
+        test('hitting the first index of the ship', () => {
             const ship = createShip(5)
             ship.hit(0)
             expect(ship.getStatus()).toEqual([
@@ -19,9 +19,18 @@ describe('ship factory function', () => {
                 'unhit',
             ])
         })
+        test('hitting an index that is out of bounds for the ship', () => {
+            const ship = createShip(5)
+            ship.hit(5)
+            expect(
+                ship
+                    .getStatus()
+                    .toEqual(['unhit', 'unhit', 'unhit', 'unhit', 'unhit'])
+            )
+        })
     })
     describe('#getStatus', () => {
-        test('#getStatus', () => {
+        test('when the ship is not hit', () => {
             const ship = createShip(3)
             expect(
                 ship.getStatus().find((position) => position === 'unhit')
