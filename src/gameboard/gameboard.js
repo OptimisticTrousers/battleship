@@ -3,8 +3,8 @@ const createShip = require('../ship/ship')
 /* eslint-disable no-param-reassign */
 const createGameBoard = () => {
     const gameBoard = Array(10)
-        .fill({ hasBeenHit: false, isShip: false })
-        .map(() => Array(10).fill({ hasBeenHit: false, isShip: false }))
+        .fill({ hasBeenHit: false, isShip: false, offLimits: false})
+        .map(() => Array(10).fill({ hasBeenHit: false, isShip: false, offLimits: false }))
 
     const ships = [
         createShip(5),
@@ -37,6 +37,7 @@ const createGameBoard = () => {
                 for (let i = 0; i < shipLength; i += 1) {
                     gameBoard[column][row + i] = ship
                 }
+                gameBoard[column][row + shipLength].offLimits = true
                 return true
             }
         } else if (direction === 'horizontal') {
