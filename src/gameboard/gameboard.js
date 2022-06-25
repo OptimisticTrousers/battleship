@@ -36,15 +36,18 @@ const createGameBoard = () => {
             for (let i = 0; i < shipLength; i += 1) {
                 if (column + shipLength <= 10) {
                     gameBoard[column][row + i] = ship
+                    return true
                 }
             }
         } else if (direction === 'horizontal') {
             for (let i = 0; i < shipLength; i += 1) {
                 if (row + shipLength <= 10) {
                     gameBoard[column + i][row] = ship
+                    return true
                 }
             }
         }
+        return false
     }
 
     const makeRandomCoordinates = () => {
@@ -60,11 +63,18 @@ const createGameBoard = () => {
         for (let i = 0; i < ships.length; i += 1) {
             const { randomColumn, randomRow, randomDirection } =
                 makeRandomCoordinates()
-            placeShip(randomColumn, randomRow, randomDirection, ships[i])
-            if (getShotLocation(randomColumn, randomRow).isShip === true) {
-                shipDetails.push({ randomColumn, randomRow, randomDirection })
-            } else {
+            if (
+                getShotLocation(randomColumn, randomRow).isShip === true ||
+                placeShip(
+                    randomColumn,
+                    randomRow,
+                    randomDirection,
+                    ships[i]
+                ) === false
+            ) {
                 i -= 1
+            } else {
+                shipDetails.push({ randomColumn, randomRow, randomDirection })
             }
         }
         return shipDetails
