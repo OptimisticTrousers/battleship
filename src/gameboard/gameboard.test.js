@@ -46,9 +46,11 @@ describe('gameboard factory function', () => {
     })
     test('the receiveAttack function does not hit a ship', () => {
         const gameBoard = createGameBoard()
-        const [column, row] = [9, 9]
+        const [column, row] = [9, 8]
+        gameBoard.placeShip(column, row, 'vertical', createShip(2))
         gameBoard.receiveAttack(column, row)
-        expect(gameBoard.getShotLocation(column, row).hasBeenHit).toBe(undefined)
+        const shotLocation = gameBoard.getShotLocation(column, row)
+        expect(shotLocation.isShip === false && shotLocation.hasBeenHit === true).toBe(true)
     })
     test('all of the ships have sunk', () => {
         const gameBoard = createGameBoard()
