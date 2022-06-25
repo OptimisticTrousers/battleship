@@ -33,14 +33,14 @@ const createGameBoard = () => {
     const placeShip = (column, row, direction, ship) => {
         const shipLength = ship.getLength()
         if (direction === 'vertical') {
-            if (column + shipLength <= 10) {
+            if (row + shipLength <= 10) {
                 for (let i = 0; i < shipLength; i += 1) {
                     gameBoard[column][row + i] = ship
                 }
                 return true
             }
         } else if (direction === 'horizontal') {
-            if (row + shipLength <= 10) {
+            if (column + shipLength <= 10) {
                 for (let i = 0; i < shipLength; i += 1) {
                     gameBoard[column + i][row] = ship
                 }
@@ -66,7 +66,6 @@ const createGameBoard = () => {
             const { randomColumn, randomRow, randomDirection } =
                 makeRandomCoordinates()
             const ship = ships[i]
-            console.log(ship)
             if (
                 getShotLocation(randomColumn, randomRow).isShip === true ||
                 placeShip(randomColumn, randomRow, randomDirection, ship) ===

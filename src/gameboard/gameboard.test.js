@@ -50,22 +50,22 @@ describe('gameboard factory function', () => {
         })
     })
     describe('#receiveAttack', () => {
-        test('hitting a ship on gameBoard', () => {
+        test('hitting a ship on attack', () => {
             const gameBoard = createGameBoard()
             const [column, row] = [0, 3]
             gameBoard.placeShip(column, row, 'vertical', createShip(3))
             gameBoard.receiveAttack(column, row)
-            expect(gameBoard.getShotLocation(column, row).hasBeenHit).toBe(true)
+            const shotLocation = gameBoard.getShotLocation(column, row)
+            expect(shotLocation.hasBeenHit === true && shotLocation.isShip === true).toBe(true)
         })
-        test('missing a ship on gameBoard', () => {
+        test('missing a ship on attack', () => {
             const gameBoard = createGameBoard()
-            const [column, row] = [9, 8]
-            gameBoard.placeShip(column, row, 'vertical', createShip(2))
+            const [column, row] = [5, 0]
             gameBoard.receiveAttack(column, row)
             const shotLocation = gameBoard.getShotLocation(column, row)
             expect(
                 shotLocation.isShip === false &&
-                    shotLocation.hasBeenHit === true
+                    shotLocation.hasBeenHit === true 
             ).toBe(true)
         })
     })
