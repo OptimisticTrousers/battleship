@@ -1,10 +1,17 @@
+/* eslint-disable no-unused-expressions */
 const createShip = require('../ship/ship')
 
 /* eslint-disable no-param-reassign */
 const createGameBoard = () => {
     const gameBoard = Array(10)
-        .fill({ hasBeenHit: false, isShip: false, offLimits: false})
-        .map(() => Array(10).fill({ hasBeenHit: false, isShip: false, offLimits: false }))
+        .fill({ hasBeenHit: false, isShip: false, offLimits: false })
+        .map(() =>
+            Array(10).fill({
+                hasBeenHit: false,
+                isShip: false,
+                offLimits: false,
+            })
+        )
 
     const ships = [
         createShip(5),
@@ -30,6 +37,46 @@ const createGameBoard = () => {
 
     const getShotLocation = (column, row) => gameBoard[column][row]
 
+    const addOffLimitAreaForVerticallyPositionedShip = (
+        column,
+        row,
+        shipLength
+    ) => {
+        const top = gameBoard[column][row - 1]
+        const right = gameBoard[column + 1][row]
+        const bottom = gameBoard[column][row + shipLength]
+        const left = gameBoard[column - 1][row]
+        const topRight = gameBoard[column + 1][row - 1]
+        const topLeft = gameBoard[column - 1][row - 1]
+        const bottomRight = gameBoard[column + 1][row + shipLength]
+        const leftRight = gameBoard[column - 1][row + shipLength]
+
+        if (top) {
+            top.offLimits = true
+        }
+        if (right) {
+            right.offLimits = true
+        }
+        if (bottom) {
+            bottom.offLimits = true
+        }
+        if (left) {
+            left.offLimits = true
+        }
+        if (topRight) {
+            topRight.offLimits = true
+        }
+        if (topLeft) {
+            topLeft.offLimits = true
+        }
+        if (bottomRight) {
+            bottomRight.offLimits = true
+        }
+        if (leftRight) {
+            leftRight.offLimits = true
+        }
+    }
+
     const placeShip = (column, row, direction, ship) => {
         const shipLength = ship.getLength()
         if (direction === 'vertical') {
@@ -37,7 +84,11 @@ const createGameBoard = () => {
                 for (let i = 0; i < shipLength; i += 1) {
                     gameBoard[column][row + i] = ship
                 }
-                gameBoard[column][row + shipLength].offLimits = true
+                addOffLimitAreaForVerticallyPositionedShip(
+                    column,
+                    row,
+                    shipLength
+                )
                 return true
             }
         } else if (direction === 'horizontal') {
