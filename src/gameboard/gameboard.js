@@ -58,8 +58,6 @@ const createGameBoard = () => {
         return { randomColumn, randomRow, randomDirection }
     }
 
-    const getBoard = () => gameBoard
-
     const randomlyPlaceShips = () => {
         const shipDetails = []
         for (let i = 0; i < ships.length; i += 1) {
@@ -89,7 +87,6 @@ const createGameBoard = () => {
         checkIfAllShipsHaveSunk,
         placeShip,
         randomlyPlaceShips,
-        getBoard,
     }
 }
 
