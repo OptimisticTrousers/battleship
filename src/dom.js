@@ -4,6 +4,7 @@ const renderPlayerBoard = () => {
     const playerBoardArea = document.querySelector('div.player-board')
 
     const playerBoard = createGameBoard()
+    playerBoard.randomlyPlaceShips();
 
     for (let i = 0; i < 10; i += 1) {
         for (let j = 0; j < 10; j += 1) {
