@@ -1,6 +1,6 @@
 const createGameBoard = require('../gameboard/gameboard')
 
-const createPlayer = (name) => {
+const createPlayer = (name = 'player') => {
     const getName = () => name
 
     const board = createGameBoard()
