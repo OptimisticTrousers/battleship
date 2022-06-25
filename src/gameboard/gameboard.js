@@ -84,12 +84,15 @@ const createGameBoard = () => {
         gameBoard[column][row].hasBeenHit = true
     }
 
+    const getBoard = () => gameBoard
+
     return {
         getShotLocation,
         receiveAttack,
         checkIfAllShipsHaveSunk,
         placeShip,
         randomlyPlaceShips,
+        getBoard,
     }
 }
 
