@@ -37,18 +37,6 @@ const createGameBoard = () => {
 
     const getShotLocation = (column, row) => gameBoard[column][row]
 
-    const addOffLimitAreaForHorizontallyPositionedShip = (
-        column,
-        row,
-        shipLength
-    ) => {
-        const right = gameBoard[column + shipLength][row]
-
-        if (right) {
-            right.offLimits = true
-        }
-    }
-
     const addOffLimitAreaForShips = (column, row, shipLength) => {
         const top = gameBoard[column][row - 1]
         const left = gameBoard[column - 1][row]
@@ -77,12 +65,27 @@ const createGameBoard = () => {
         }
     }
 
+    const addOffLimitAreaForHorizontallyPositionedShip = (
+        column,
+        row,
+        shipLength
+    ) => {
+        const right = gameBoard[column + shipLength][row]
+        addOffLimitAreaForShips(column, row, shipLength)
+
+        if (right) {
+            right.offLimits = true
+        }
+    }
+
     const addOffLimitAreaForVerticallyPositionedShip = (
         column,
         row,
         shipLength
     ) => {
         const bottom = gameBoard[column][row + shipLength]
+
+        addOffLimitAreaForShips(column, row, shipLength)
 
         if (bottom) {
             bottom.offLimits = true
@@ -91,13 +94,11 @@ const createGameBoard = () => {
 
     const placeShip = (column, row, direction, ship) => {
         const shipLength = ship.getLength()
-        addOffLimitAreaForShips(column, row, shipLength)
         if (direction === 'vertical') {
             if (row + shipLength <= 10) {
                 for (let i = 0; i < shipLength; i += 1) {
                     gameBoard[column][row + i] = ship
                 }
-                addOffLimitAreaForVerticallyPositionedShip(column, row, shipLength)
                 return true
             }
         } else if (direction === 'horizontal') {
@@ -105,7 +106,6 @@ const createGameBoard = () => {
                 for (let i = 0; i < shipLength; i += 1) {
                     gameBoard[column + i][row] = ship
                 }
-                addOffLimitAreaForHorizontallyPositionedShip(column, row, shipLength)
                 return true
             }
         }
@@ -126,8 +126,10 @@ const createGameBoard = () => {
             const { randomColumn, randomRow, randomDirection } =
                 makeRandomCoordinates()
             const ship = ships[i]
+            const location = getShotLocation(randomColumn, randomRow)
             if (
-                getShotLocation(randomColumn, randomRow).isShip === true ||
+                location.isShip === true ||
+                location.offLimits === true ||
                 placeShip(randomColumn, randomRow, randomDirection, ship) ===
                     false
             ) {

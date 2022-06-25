@@ -1,3 +1,7 @@
-import renderPlayerBoard from "./dom";
+import renderPlayerBoard from './dom'
+import createGameBoard from './gameboard/gameboard'
 
-renderPlayerBoard()
+const playerBoard = createGameBoard()
+playerBoard.randomlyPlaceShips()
+
+renderPlayerBoard(playerBoard)
