@@ -15,13 +15,18 @@ const createGameBoard = () => {
     ]
 
     const checkIfAllShipsHaveSunk = () =>
-        gameBoard.flat().every((position) => {
-            if (position.isShip === false) return true
-            if (position.isShip === true && position.hasBeenHit === true)
-                return true
+        gameBoard.flat().every(
+            (position) => {
+                if (position.isShip === false) return true
+                if (position.isShip === true && position.hasBeenHit === true) {
+                    return position.getStatus().every((unit) => unit === 'hit')
+                }
+                return false
+            }
 
-            return false
-        })
+            // (position.isShip === false) ||
+            // (position.isShip === true && position.hasBeenHit === true)
+        )
 
     const getShotLocation = (column, row) => gameBoard[column][row]
 
@@ -57,7 +62,7 @@ const createGameBoard = () => {
                 makeRandomCoordinates()
             placeShip(randomColumn, randomRow, randomDirection, ships[i])
             if (getShotLocation(randomColumn, randomRow).isShip === true) {
-                shipDetails.push({ randomColumn, randomRow })
+                shipDetails.push({ randomColumn, randomRow, randomDirection })
             } else {
                 i -= 1
             }

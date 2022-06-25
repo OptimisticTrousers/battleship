@@ -72,20 +72,20 @@ describe('gameboard factory function', () => {
     describe('#checkIfAllShipsHaveSunk', () => {
         test('all of the ships have sunk', () => {
             const gameBoard = createGameBoard()
-            expect(gameBoard.checkIfAllShipsHaveSunk() === true).toBe(true)
+            expect(gameBoard.checkIfAllShipsHaveSunk()).toBe(true)
         })
         test('a ship being hit, but not sunk', () => {
             const gameBoard = createGameBoard()
             const [column, row] = [0, 3]
             gameBoard.placeShip(column, row, 'vertical', createShip(3))
             gameBoard.receiveAttack(column, row)
-            expect(gameBoard.checkIfAllShipsHaveSunk() === false).toBe(true)
+            expect(gameBoard.checkIfAllShipsHaveSunk()).toBe(false)
         })
         test('all of the ships have not sunk', () => {
             const gameBoard = createGameBoard()
             const [column, row] = [0, 3]
             gameBoard.placeShip(column, row, 'vertical', createShip(3))
-            expect(gameBoard.checkIfAllShipsHaveSunk() === false).toBe(true)
+            expect(gameBoard.checkIfAllShipsHaveSunk()).toBe(false)
         })
     })
 })
