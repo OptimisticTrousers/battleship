@@ -39,3 +39,7 @@ main {
     border: 2px solid rgb(134, 154, 189);
     display: inline-block;
 }
+
+.cell.ship {
+    background-color: #ddd9bc;
+}
