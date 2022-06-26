@@ -57,7 +57,7 @@ const createGameBoard = () => {
     ) => {
         // positions relative to the ship itself(ie. a horizontal ship's bottom is to the right)
 
-        addOffLimitAreaForShips(column, row, shipLength)
+        addOffLimitAreaForShips(column, row)
         // bottom
         setLocation(column + shipLength, row)
         // bottom-left
@@ -75,7 +75,7 @@ const createGameBoard = () => {
     ) => {
         // positions relative to how the user sees it(ie. a vertical ship's bottom is to the bottom)
 
-        addOffLimitAreaForShips(column, row, shipLength)
+        addOffLimitAreaForShips(column, row)
         // bottom
         setLocation(column, row + shipLength)
         // bottom-right
@@ -92,22 +92,23 @@ const createGameBoard = () => {
             if (row + shipLength <= 10) {
                 for (let i = 0; i < shipLength; i += 1) {
                     setLocation(column, row + i, ship)
-                    setLocation(column + 1, row, ship)
-                    setLocation(column - 1, row, ship)
+                    setLocation(column + 1, row + i)
+                    setLocation(column - 1, row + i)
                 }
                 addOffLimitAreaForVerticallyPositionedShip(
                     column,
                     row,
                     shipLength
                 )
+                console.log(gameBoard)
                 return true
             }
         } else if (direction === 'horizontal') {
             if (column + shipLength <= 10) {
                 for (let i = 0; i < shipLength; i += 1) {
                     setLocation(column + i, row, ship)
-                    setLocation(column, row + 1, ship)
-                    setLocation(column, row - 1, ship)
+                    setLocation(column + i, row + 1)
+                    setLocation(column + i, row - 1)
                 }
                 addOffLimitAreaForHorizontallyPositionedShip(
                     column,
