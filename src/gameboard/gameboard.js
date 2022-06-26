@@ -92,7 +92,7 @@ const createGameBoard = () => {
         row,
         shipLength
     ) => {
-        const bottom = [column + shipLength, row]
+        const bottom = [column , row + shipLength]
         const bottomElement = getLocation(bottom[0], bottom[1])
 
         if(bottomElement){
