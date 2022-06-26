@@ -21,14 +21,10 @@ describe('gameboard factory function', () => {
             let hasCorrectlyPlacedShipsRandomly = true
             // eslint-disable-next-line no-restricted-syntax
             for (let i = 0; i < coordinates.length; i += 1) {
-                if (
-                    gameBoard.getLocation(
-                        coordinates[i].randomColumn,
-                        coordinates[i].randomRow
-                    ).isShip === false
-                ) {
+                const { randomColumn, randomRow } = coordinates[i]
+                const location = gameBoard.getLocation(randomColumn, randomRow)
+                if (location.isShip === false) {
                     hasCorrectlyPlacedShipsRandomly = false
-                    // eslint-disable-next-line no-continue
                     break
                 }
             }

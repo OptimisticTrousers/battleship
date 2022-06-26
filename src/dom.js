@@ -1,15 +1,17 @@
-const handleAttack = (column, row, enemyBoard, opponent) => {
+const handleAttack = (column, row,enemyBoard, opponent) => {
     opponent.attack(column, row, enemyBoard)
 }
 
-const checkIfEnemyCellHasShip = (cell, column, row, enemyBoard, opponent) => {
+const attackCell = (cell, column, row, enemyBoard, opponent) => {
     const cellLocation = enemyBoard.getLocation(column, row)
     if (cellLocation.isShip) {
-        handleAttack(opponent)
-        cell.classList.add('hit')
+        console.log(cellLocation.isSunk())
         if (cellLocation.isSunk()) {
             cell.classList.add('sunk')
+        } else {
+            cell.classList.add('hit')
         }
+        handleAttack(column, row, enemyBoard, opponent)
     }
 }
 
@@ -40,7 +42,7 @@ export const addListenersToEnemyBoard = (enemyBoard, opponent) => {
             cell.setAttribute('column', column)
             cell.setAttribute('row', row)
             cell.addEventListener('click', () => {
-                checkIfEnemyCellHasShip(cell, column, row, enemyBoard, opponent)
+                attackCell(cell, column, row, enemyBoard, opponent)
             })
         }
     }
