@@ -34,6 +34,8 @@ describe('gameboard factory function', () => {
             }
             expect(hasCorrectlyPlacedShipsRandomly).toBe(true)
         })
+    })
+    describe('#checkIfOffLimitZoneWasCorrectlyImplemented', () => {
         test('correctly place off limit zone around ship', () => {
             const gameBoard = createGameBoard()
 
@@ -41,7 +43,9 @@ describe('gameboard factory function', () => {
 
             gameBoard.placeShip(0, 0, 'vertical', createShip(shipLength))
 
-            expect(gameBoard.checkIfOffLimitZoneWasCorrectlyImplemented(shipLength)).toBe(true)
+            expect(
+                gameBoard.checkIfOffLimitZoneWasCorrectlyImplemented(shipLength)
+            ).toBe(true)
         })
     })
     describe('#placeShip', () => {
