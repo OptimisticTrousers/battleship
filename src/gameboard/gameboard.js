@@ -53,22 +53,22 @@ const createGameBoard = () => {
         const leftRight = [column - 1, row + shipLength]
         const leftRightElement = getLocation(leftRight[0], leftRight[1])
 
-        if(topElement){
+        if (topElement) {
             setLocation(top[0], top[1], topElement)
         }
-        if(leftElement){
+        if (leftElement) {
             setLocation(left[0], left[1], leftElement)
         }
-        if(topRightElement){
+        if (topRightElement) {
             setLocation(topRight[0], topRight[1], topRightElement)
         }
-        if(topLeftElement){
+        if (topLeftElement) {
             setLocation(topLeft[0], topLeft[1], topLeftElement)
         }
-        if(bottomRightElement){
+        if (bottomRightElement) {
             setLocation(bottomRight[0], bottomRight[1], bottomRightElement)
         }
-        if(leftRightElement){
+        if (leftRightElement) {
             setLocation(leftRight[0], leftRight[1], leftRightElement)
         }
     }
@@ -78,10 +78,13 @@ const createGameBoard = () => {
         row,
         shipLength
     ) => {
-        const right = createOffLimitLocation()
-        addOffLimitAreaForShips(column, row, shipLength)
+        const right = [column + shipLength, row]
+        const rightElement = getLocation(right[0], right[1])
 
-        setLocation(column + shipLength, row, right)
+        if (rightElement) {
+            setLocation(right[0], right[1], rightElement)
+        }
+        addOffLimitAreaForShips(column, row, shipLength)
     }
 
     const addOffLimitAreaForVerticallyPositionedShip = (
@@ -89,10 +92,12 @@ const createGameBoard = () => {
         row,
         shipLength
     ) => {
-        const below = createOffLimitLocation()
-        addOffLimitAreaForShips(column, row, shipLength)
+        const bottom = [column + shipLength, row]
+        const bottomElement = getLocation(bottom[0], bottom[1])
 
-        setLocation(column, row + shipLength, below)
+        if(bottomElement){
+            setLocation(bottom[0], bottom[1], bottomElement)
+        }
     }
 
     const placeShip = (column, row, direction, ship) => {
