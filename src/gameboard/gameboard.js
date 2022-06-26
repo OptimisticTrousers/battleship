@@ -164,6 +164,7 @@ const createGameBoard = () => {
         checkIfAllShipsHaveSunk,
         placeShip,
         randomlyPlaceShips,
+        makeRandomCoordinates,
     }
 }
 

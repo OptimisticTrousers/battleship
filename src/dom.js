@@ -18,11 +18,20 @@ export const renderPlayerShips = ({ getLocation }) => {
             const cell = playerBoardArea.querySelector(
                 `.cell:nth-child(${row * 10 + column + 1})`
             )
+            cell.setAttribute('column', column)
+            cell.setAttribute('row', row)
             if (getLocation(row, column).isShip) {
                 cell.classList.add('ship')
             }
         }
     }
+}
+
+export const renderEnemyAtacks = (column, row) => {
+    const cell = document.querySelector(`.cell[column='${column}'][row='${row}']`)
+
+        cell.classList.add('hit')
+
 }
 
 export const addListenersToEnemyBoard = (enemyBoard, opponent) => {

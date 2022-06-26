@@ -1,4 +1,4 @@
-import { addListenersToEnemyBoard, renderPlayerShips} from './dom'
+import { addListenersToEnemyBoard, renderEnemyAtacks, renderPlayerShips} from './dom'
 
 import createGameBoard from './gameboard/gameboard'
 import createShip from './ship/ship'
@@ -21,6 +21,11 @@ enemyBoard.placeShip(5, 9, 'horizontal', createShip(4))
 addListenersToEnemyBoard(enemyBoard, player)
 
 renderPlayerShips(playerBoard)
+
+const {randomColumn, randomRow } = enemyBoard.makeRandomCoordinates()
+
+computer.attack(randomColumn, randomRow, playerBoard)
+renderEnemyAtacks(randomColumn, randomRow)
 
 
 
