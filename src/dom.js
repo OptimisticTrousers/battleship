@@ -5,17 +5,12 @@ const handleAttack = (column, row,enemyBoard, opponent) => {
 const attackCell = (cell, column, row, enemyBoard, opponent) => {
     const cellLocation = enemyBoard.getLocation(column, row)
     if (cellLocation.isShip) {
-        console.log(cellLocation.isSunk())
-        if (cellLocation.isSunk()) {
-            cell.classList.add('sunk')
-        } else {
-            cell.classList.add('hit')
-        }
+        cell.classList.add('hit')
         handleAttack(column, row, enemyBoard, opponent)
     }
 }
 
-export const addListenersToPlayerBoard = ({ getLocation }) => {
+export const renderPlayerShips = ({ getLocation }) => {
     const playerBoardArea = document.querySelector('div.player-board')
 
     for (let column = 0; column < 10; column += 1) {

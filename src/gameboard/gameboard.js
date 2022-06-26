@@ -87,8 +87,7 @@ const createGameBoard = () => {
     const placeShip = (column, row, direction, ship) => {
         const shipLength = ship.getLength()
         if (direction === 'vertical') {
-            const location = setLocation(column, row + shipLength)
-            if (row >= 0 && (row + shipLength - 1) < gameBoard.length) {
+            if (row >= 0 && row + shipLength - 1 < gameBoard.length) {
                 for (let i = 0; i < shipLength; i += 1) {
                     setLocation(column, row + i, ship)
                     setLocation(column + 1, row + i)
@@ -102,7 +101,7 @@ const createGameBoard = () => {
                 return true
             }
         } else if (direction === 'horizontal') {
-            if (column >= 0 && (column + shipLength - 1) < gameBoard.length) {
+            if (column >= 0 && column + shipLength - 1 < gameBoard.length) {
                 for (let i = 0; i < shipLength; i += 1) {
                     setLocation(column + i, row, ship)
                     setLocation(column + i, row + 1)
@@ -167,9 +166,5 @@ const createGameBoard = () => {
         randomlyPlaceShips,
     }
 }
-
-const gameBoard = createGameBoard()
-
-gameBoard.randomlyPlaceShips()
 
 module.exports = createGameBoard
