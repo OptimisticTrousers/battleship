@@ -5,7 +5,7 @@ const renderPlayerBoard = ({getShotLocation}) => {
         for (let j = 0; j < 10; j += 1) {
             const cell = document.createElement('div')
             cell.classList.add('cell')
-            if (getShotLocation(i, j).isShip) {
+            if (getShotLocation(j, i).isShip) {
                 cell.classList.add('ship')
             }
             playerBoardArea.appendChild(cell)

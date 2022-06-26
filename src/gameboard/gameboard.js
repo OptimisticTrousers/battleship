@@ -3,15 +3,10 @@ const createShip = require('../ship/ship')
 
 /* eslint-disable no-param-reassign */
 const createGameBoard = () => {
+    const emptyCell = { hasBeenHit: false, isShip: false, offLimits: false }
     const gameBoard = Array(10)
-        .fill({ hasBeenHit: false, isShip: false, offLimits: false })
-        .map(() =>
-            Array(10).fill({
-                hasBeenHit: false,
-                isShip: false,
-                offLimits: false,
-            })
-        )
+        .fill(JSON.parse(JSON.stringify(emptyCell)))
+        .map(() => Array(10).fill(JSON.parse(JSON.stringify(emptyCell))))
 
     const ships = [
         createShip(5),
@@ -35,15 +30,15 @@ const createGameBoard = () => {
             // (position.isShip === true && position.hasBeenHit === true)
         )
 
-    const getShotLocation = (column, row) => gameBoard[column][row]
+    const getShotLocation = (column, row) => gameBoard?.[column]?.[row]
 
     const addOffLimitAreaForShips = (column, row, shipLength) => {
-        const top = gameBoard[column][row - 1]
-        const left = gameBoard[column - 1][row]
-        const topRight = gameBoard[column + 1][row - 1]
-        const topLeft = gameBoard[column - 1][row - 1]
-        const bottomRight = gameBoard[column + 1][row + shipLength]
-        const leftRight = gameBoard[column - 1][row + shipLength]
+        const top = gameBoard?.[column]?.[row - 1]
+        const left = gameBoard?.[column - 1]?.[row]
+        const topRight = gameBoard?.[column + 1]?.[row - 1]
+        const topLeft = gameBoard?.[column - 1]?.[row - 1]
+        const bottomRight = gameBoard?.[column + 1]?.[row + shipLength]
+        const leftRight = gameBoard?.[column - 1]?.[row + shipLength]
 
         if (top) {
             top.offLimits = true
@@ -70,12 +65,13 @@ const createGameBoard = () => {
         row,
         shipLength
     ) => {
-        const right = gameBoard[column + shipLength][row]
-        addOffLimitAreaForShips(column, row, shipLength)
+        const right = getShotLocation(column + shipLength, row)
+        // addOffLimitAreaForShips(column, row, shipLength)
 
         if (right) {
-            right.offLimits = true
+            console.log(right)
         }
+        console.log(gameBoard)
     }
 
     const addOffLimitAreaForVerticallyPositionedShip = (
@@ -83,7 +79,7 @@ const createGameBoard = () => {
         row,
         shipLength
     ) => {
-        const bottom = gameBoard[column][row + shipLength]
+        const bottom = gameBoard?.[column]?.[row + shipLength]
 
         addOffLimitAreaForShips(column, row, shipLength)
 
@@ -99,6 +95,7 @@ const createGameBoard = () => {
                 for (let i = 0; i < shipLength; i += 1) {
                     gameBoard[column][row + i] = ship
                 }
+                // addOffLimitAreaForVerticallyPositionedShip(column, row, shipLength)
                 return true
             }
         } else if (direction === 'horizontal') {
@@ -106,6 +103,11 @@ const createGameBoard = () => {
                 for (let i = 0; i < shipLength; i += 1) {
                     gameBoard[column + i][row] = ship
                 }
+                addOffLimitAreaForHorizontallyPositionedShip(
+                    column,
+                    row,
+                    shipLength
+                )
                 return true
             }
         }
@@ -153,5 +155,8 @@ const createGameBoard = () => {
         randomlyPlaceShips,
     }
 }
+
+const bob = createGameBoard()
+bob.placeShip(0, 0, 'horizontal', createShip(3))
 
 module.exports = createGameBoard
