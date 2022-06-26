@@ -12,3 +12,6 @@ addListenersToEnemyBoard(enemyBoard)
 
 addListenersToPlayerBoard(playerBoard)
 
+do {
+}
+

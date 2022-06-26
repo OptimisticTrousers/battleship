@@ -32,6 +32,8 @@ export const addListenersToEnemyBoard = ({ getLocation }) => {
             const cell = enemyBoardArea.querySelector(
                 `.cell:nth-child(${row * 10 + column + 1})`
             )
+            cell.setAttribute('column', column)
+            cell.setAttribute('row', row)
             cell.addEventListener('click', () => {
                 checkIfEnemyCellHasShip(cell, column, row, getLocation)
             })
