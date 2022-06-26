@@ -30,7 +30,6 @@ const createGameBoard = () => {
             // (position.isShip === true && position.hasBeenHit === true)
         )
 
-
     const createOffLimitLocation = () =>
         Object.assign(emptyCell, { offLimits: true })
 
@@ -41,15 +40,37 @@ const createGameBoard = () => {
     }
 
     const addOffLimitAreaForShips = (column, row, shipLength) => {
-        const top = [column, row-1]
+        const top = [column, row - 1]
+        const topElement = getLocation(top[0], top[1])
         const left = [column - 1, row]
+        const leftElement = getLocation(left[0], left[1])
         const topRight = [column + 1, row - 1]
+        const topRightElement = getLocation(topRight[0], topRight[1])
         const topLeft = [column - 1, row - 1]
+        const topLeftElement = getLocation(topLeft[0], topLeft[1])
         const bottomRight = [column + 1, row + shipLength]
+        const bottomRightElement = getLocation(bottomRight[0], bottomRight[1])
         const leftRight = [column - 1, row + shipLength]
+        const leftRightElement = getLocation(leftRight[0], leftRight[1])
 
-
-
+        if(topElement){
+            setLocation(top[0], top[1], topElement)
+        }
+        if(leftElement){
+            setLocation(left[0], left[1], leftElement)
+        }
+        if(topRightElement){
+            setLocation(topRight[0], topRight[1], topRightElement)
+        }
+        if(topLeftElement){
+            setLocation(topLeft[0], topLeft[1], topLeftElement)
+        }
+        if(bottomRightElement){
+            setLocation(bottomRight[0], bottomRight[1], bottomRightElement)
+        }
+        if(leftRightElement){
+            setLocation(leftRight[0], leftRight[1], leftRightElement)
+        }
     }
 
     const addOffLimitAreaForHorizontallyPositionedShip = (
