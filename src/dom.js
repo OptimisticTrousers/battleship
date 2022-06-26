@@ -1,4 +1,4 @@
-const checkIfEnemyCellHasShip = (cell, column, row, event, getLocation) => {
+const checkIfEnemyCellHasShip = (cell, column, row, getLocation) => {
     const cellLocation = getLocation(column, row)
     if (cellLocation.isShip) {
         cell.classList.add('hit')
@@ -32,8 +32,8 @@ export const addListenersToEnemyBoard = ({ getLocation }) => {
             const cell = enemyBoardArea.querySelector(
                 `.cell:nth-child(${row * 10 + column + 1})`
             )
-            cell.addEventListener('click', (event) => {
-                checkIfEnemyCellHasShip(cell, column, row, event, getLocation)
+            cell.addEventListener('click', () => {
+                checkIfEnemyCellHasShip(cell, column, row, getLocation)
             })
         }
     }
