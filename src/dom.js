@@ -13,4 +13,18 @@ const renderPlayerBoard = ({ getLocation }) => {
     }
 }
 
+const handleClick = (event) => {
+    console.log('hi bob')
+}
+
+const addListenersToEnemyBoard = () => {
+    const enemyBoardArea = document.querySelector('div.enemy-board')
+
+    const cells = Array.from(enemyBoardArea.children)
+
+    cells.forEach((cell) => {
+        cell.addEventListener('click', handleClick)
+    })
+}
+
 export default renderPlayerBoard
