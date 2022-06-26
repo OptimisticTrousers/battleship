@@ -82,7 +82,7 @@ const createGameBoard = () => {
         row,
         shipLength
     ) => {
-        const bottom = gameBoard?.[column]?.[row + shipLength]
+        const bottom = getLocation(column, row + shipLength)
 
         addOffLimitAreaForShips(column, row, shipLength)
 
