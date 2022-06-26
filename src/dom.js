@@ -1,23 +1,23 @@
-const renderPlayerBoard = ({ getLocation }) => {
-    const playerBoardArea = document.querySelector('div.player-board')
-
-    for (let i = 0; i < 10; i += 1) {
-        for (let j = 0; j < 10; j += 1) {
-            const cell = document.createElement('div')
-            cell.classList.add('cell')
-            if (getLocation(j, i).isShip) {
-                cell.classList.add('ship')
-            }
-            playerBoardArea.appendChild(cell)
-        }
-    }
-}
-
 const checkIfCellHasShip = (event) => {
     console.log('hiiii this works')
 }
 
-const addListenersToEnemyBoard = () => {
+export const addListenersToPlayerBoard = ({ getLocation }) => {
+    const playerBoardArea = document.querySelector('div.player-board')
+
+    for (let i = 0; i < 10; i += 1) {
+        for (let j = 0; j < 10; j += 1) {
+            const cell = playerBoardArea.querySelector(
+                `.cell:nth-child(${j * 10 + i + 1})`
+            )
+            if (getLocation(j, i).isShip) {
+                cell.classList.add('ship')
+            }
+        }
+    }
+}
+
+export const addListenersToEnemyBoard = () => {
     const enemyBoardArea = document.querySelector('div.enemy-board')
 
     for (let i = 0; i < 10; i += 1) {
@@ -33,4 +33,3 @@ const addListenersToEnemyBoard = () => {
 
 addListenersToEnemyBoard()
 
-export default renderPlayerBoard
