@@ -100,7 +100,6 @@ const createGameBoard = () => {
                     row,
                     shipLength
                 )
-                console.log(gameBoard)
                 return true
             }
         } else if (direction === 'horizontal') {
@@ -169,8 +168,5 @@ const createGameBoard = () => {
         randomlyPlaceShips,
     }
 }
-
-const bob = createGameBoard()
-bob.placeShip(1, 1, 'vertical', createShip(2, 'bobs ship'))
 
 module.exports = createGameBoard
