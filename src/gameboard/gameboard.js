@@ -36,61 +36,18 @@ const createGameBoard = () => {
     const getLocation = (column, row) => gameBoard?.[column]?.[row]
 
     const setLocation = (column, row, ship = createOffLimitLocation()) => {
-        gameBoard[column][row] = ship
+        if (gameBoard?.[column]?.[row]) {
+            gameBoard[column][row] = ship
+        }
     }
 
-    const addOffLimitAreaForShips = (column, row, shipLength) => {
-        const top = createOffLimitLocation()
-
-        gameBoard[column][row - 1] = top
-
-        const left = createOffLimitLocation()
-
-        gameBoard[column - 1][row] = left
-        const topRight = createOffLimitLocation()
-
-        gameBoard[column + 1][row - 1] = topRight
-
-        const topLeft = createOffLimitLocation()
-        gameBoard[column - 1][row - 1] = topLeft
-
-        const bottomRight = createOffLimitLocation()
-        gameBoard[column + 1][row + shipLength] = bottomRight
-
-        const bottomLeft = createOffLimitLocation()
-        gameBoard[column - 1][row + shipLength] = bottomLeft
-
-        // const top = [column, row - 1]
-        // const topElement = getLocation(top[0], top[1])
-        // const left = [column - 1, row]
-        // const leftElement = getLocation(left[0], left[1])
-        // const topRight = [column + 1, row - 1]
-        // const topRightElement = getLocation(topRight[0], topRight[1])
-        // const topLeft = [column - 1, row - 1]
-        // const topLeftElement = getLocation(topLeft[0], topLeft[1])
-        // const bottomRight = [column + 1, row + shipLength]
-        // const bottomRightElement = getLocation(bottomRight[0], bottomRight[1])
-        // const bottomLeft = [column - 1, row + shipLength]
-        // const bottomLeftElement = getLocation(bottomLeft[0], bottomLeft[1])
-
-        // if (topElement) {
-        // setLocation(top[0], top[1], topElement)
-        // }
-        // if (leftElement) {
-        // setLocation(left[0], left[1], leftElement)
-        // }
-        // if (topRightElement) {
-        // setLocation(topRight[0], topRight[1], topRightElement)
-        // }
-        // if (topLeftElement) {
-        // setLocation(topLeft[0], topLeft[1], topLeftElement)
-        // }
-        // if (bottomRightElement) {
-        // setLocation(bottomRight[0], bottomRight[1], bottomRightElement)
-        // }
-        // if (bottomLeftElement) {
-        // setLocation(bottomLeft[0], bottomLeft[1], bottomLeftElement)
-        // }
+    const addOffLimitAreaForShips = (column, row) => {
+        // top-left
+        setLocation(column - 1, row - 1)
+        // left
+        setLocation(column - 1, row)
+        // top
+        setLocation(column, row - 1)
     }
 
     const addOffLimitAreaForHorizontallyPositionedShip = (
@@ -98,17 +55,17 @@ const createGameBoard = () => {
         row,
         shipLength
     ) => {
-        const right = createOffLimitLocation()
+        // positions relative to the ship itself(ie. a horizontal ship's bottom is to the right)
 
-        gameBoard[column + shipLength][row] = right
         addOffLimitAreaForShips(column, row, shipLength)
-        // const right = [column + shipLength, row]
-        // const rightElement = getLocation(right[0], right[1])
-
-        // if (rightElement) {
-        // setLocation(right[0], right[1], rightElement)
-        // }
-        // addOffLimitAreaForShips(column, row, shipLength)
+        // bottom
+        setLocation(column + shipLength, row)
+        // bottom-left
+        setLocation(column - 1, row + 1)
+        // bottom-right
+        setLocation(column + shipLength, row + 1)
+        // top-right
+        setLocation(column + shipLength, row - 1)
     }
 
     const addOffLimitAreaForVerticallyPositionedShip = (
@@ -116,17 +73,17 @@ const createGameBoard = () => {
         row,
         shipLength
     ) => {
-        const bottom = createOffLimitLocation()
+        // positions relative to how the user sees it(ie. a vertical ship's bottom is to the bottom)
 
-        gameBoard[column][row + shipLength] = bottom
         addOffLimitAreaForShips(column, row, shipLength)
-        // const bottom = [column , row + shipLength]
-        // const bottomElement = getLocation(bottom[0], bottom[1])
-
-        // if(bottomElement){
-        // setLocation(bottom[0], bottom[1], bottomElement)
-        // }
-        // addOffLimitAreaForShips(column, row ,shipLength)
+        // bottom
+        setLocation(column, row + shipLength)
+        // bottom-right
+        setLocation(column + 1, row + shipLength)
+        // bottom-left
+        setLocation(column - 1, row + shipLength)
+        // top-right
+        setLocation(column + 1, row - 1)
     }
 
     const placeShip = (column, row, direction, ship) => {
@@ -135,19 +92,22 @@ const createGameBoard = () => {
             if (row + shipLength <= 10) {
                 for (let i = 0; i < shipLength; i += 1) {
                     setLocation(column, row + i, ship)
+                    setLocation(column + 1, row, ship)
+                    setLocation(column - 1, row, ship)
                 }
                 addOffLimitAreaForVerticallyPositionedShip(
                     column,
                     row,
                     shipLength
                 )
-                console.log(gameBoard)
                 return true
             }
         } else if (direction === 'horizontal') {
             if (column + shipLength <= 10) {
                 for (let i = 0; i < shipLength; i += 1) {
                     setLocation(column + i, row, ship)
+                    setLocation(column, row + 1, ship)
+                    setLocation(column, row - 1, ship)
                 }
                 addOffLimitAreaForHorizontallyPositionedShip(
                     column,
