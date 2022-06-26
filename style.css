@@ -43,3 +43,11 @@ main {
 .cell.ship {
     background-color: #ddd9bc;
 }
+
+.cell.hit{
+    background-color: red;
+}
+
+.cell.sunk{
+    background-color: green;
+}
