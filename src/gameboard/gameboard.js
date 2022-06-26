@@ -5,8 +5,8 @@ const createShip = require('../ship/ship')
 const createGameBoard = () => {
     const emptyCell = { hasBeenHit: false, isShip: false, offLimits: false }
     const gameBoard = Array(10)
-        .fill(JSON.parse(JSON.stringify(emptyCell)))
-        .map(() => Array(10).fill(JSON.parse(JSON.stringify(emptyCell))))
+        .fill(structuredClone(emptyCell))
+        .map(() => Array(10).fill(structuredClone(emptyCell)))
 
     const ships = [
         createShip(5, 'Carrier'),
@@ -36,7 +36,11 @@ const createGameBoard = () => {
         gameBoard[column][row] = ship
     }
 
+    const createOffLimitLocation = () =>
+        Object.assign(emptyCell, { offLimits: true })
+
     const addOffLimitAreaForShips = (column, row, shipLength) => {
+
         const top = getLocation(column, row - 1)
         const left = getLocation(column - 1, row)
         const topRight = getLocation(column + 1, row - 1)
@@ -69,12 +73,10 @@ const createGameBoard = () => {
         row,
         shipLength
     ) => {
-        //const right = getLocation(column + shipLength, row)
-        //addOffLimitAreaForShips(column, row, shipLength)
+        const rightOfShip = createOffLimitLocation()
+        // addOffLimitAreaForShips(column, row, shipLength)
 
-        //if (right) {
-            //right.offLimits = true
-        //}
+        setLocation(column, row + shipLength, rightOfShip)
     }
 
     const addOffLimitAreaForVerticallyPositionedShip = (
@@ -82,13 +84,10 @@ const createGameBoard = () => {
         row,
         shipLength
     ) => {
-        const bottom = getLocation(column, row + shipLength)
+        const belowShip = createOffLimitLocation()
+        // addOffLimitAreaForShips(column, row, shipLength)
 
-        //addOffLimitAreaForShips(column, row, shipLength)
-
-        //if (bottom) {
-            //bottom.offLimits = true
-        //}
+        setLocation(column, row + shipLength, belowShip)
     }
 
     const placeShip = (column, row, direction, ship) => {

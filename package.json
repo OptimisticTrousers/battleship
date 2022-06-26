@@ -8,7 +8,7 @@
         "watch": "webpack --watch",
         "lint": "eslint src",
         "build": "webpack",
-        "coverage":  "jest --coverage"
+        "coverage": "jest --coverage"
     },
     "repository": {
         "type": "git",
