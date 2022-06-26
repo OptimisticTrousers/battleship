@@ -13,18 +13,24 @@ const renderPlayerBoard = ({ getLocation }) => {
     }
 }
 
-const handleClick = (event) => {
-    console.log('hi bob')
+const checkIfCellHasShip = (event) => {
+    console.log('hiiii this works')
 }
 
 const addListenersToEnemyBoard = () => {
     const enemyBoardArea = document.querySelector('div.enemy-board')
 
-    const cells = Array.from(enemyBoardArea.children)
-
-    cells.forEach((cell) => {
-        cell.addEventListener('click', handleClick)
-    })
+    for (let i = 0; i < 10; i += 1) {
+        for (let j = 0; j < 10; j += 1) {
+            // Crediting formula to calculate nth-child using nested loop: https://stackoverflow.com/questions/8872662/math-to-determine-item-index-based-on-col-row-selection-in-grid
+            const cell = enemyBoardArea.querySelector(
+                `.cell:nth-child(${j * 10 + i + 1})`
+            )
+            cell.addEventListener('click', checkIfCellHasShip)
+        }
+    }
 }
+
+addListenersToEnemyBoard()
 
 export default renderPlayerBoard
