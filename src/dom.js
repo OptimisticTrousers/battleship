@@ -1,6 +1,11 @@
-const checkIfEnemyCellHasShip = (cell, column, row, getLocation) => {
-    const cellLocation = getLocation(column, row)
+const handleAttack = (column, row, enemyBoard, opponent) => {
+    opponent.attack(column, row, enemyBoard)
+}
+
+const checkIfEnemyCellHasShip = (cell, column, row, enemyBoard, opponent) => {
+    const cellLocation = enemyBoard.getLocation(column, row)
     if (cellLocation.isShip) {
+        handleAttack(opponent)
         cell.classList.add('hit')
         if (cellLocation.isSunk()) {
             cell.classList.add('sunk')
@@ -23,7 +28,7 @@ export const addListenersToPlayerBoard = ({ getLocation }) => {
     }
 }
 
-export const addListenersToEnemyBoard = ({ getLocation }) => {
+export const addListenersToEnemyBoard = (enemyBoard, opponent) => {
     const enemyBoardArea = document.querySelector('div.enemy-board')
 
     for (let column = 0; column < 10; column += 1) {
@@ -35,7 +40,7 @@ export const addListenersToEnemyBoard = ({ getLocation }) => {
             cell.setAttribute('column', column)
             cell.setAttribute('row', row)
             cell.addEventListener('click', () => {
-                checkIfEnemyCellHasShip(cell, column, row, getLocation)
+                checkIfEnemyCellHasShip(cell, column, row, enemyBoard, opponent)
             })
         }
     }
