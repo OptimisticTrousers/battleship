@@ -1,4 +1,5 @@
-const createShip = (length) => {
+const createShip = (length, name = 'ship') => {
+
     const status = Array(length).fill('unhit')
 
     const getLength = () => status.length
@@ -14,6 +15,7 @@ const createShip = (length) => {
     const isSunk = () => status.every((position) => position === 'hit')
 
     return {
+        name,
         getLength,
         isSunk,
         hit,
