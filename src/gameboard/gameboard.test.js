@@ -23,7 +23,8 @@ describe('gameboard factory function', () => {
             for (let i = 0; i < coordinates.length; i += 1) {
                 const { randomColumn, randomRow } = coordinates[i]
                 const location = gameBoard.getLocation(randomColumn, randomRow)
-                if (location.isShip === false) {
+                if (location.isShip === false ) {
+                    expect([location, i]).toBe(true)
                     hasCorrectlyPlacedShipsRandomly = false
                     break
                 }

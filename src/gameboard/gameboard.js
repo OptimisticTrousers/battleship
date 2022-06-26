@@ -31,21 +31,19 @@ const createGameBoard = () => {
         )
 
     const createOffLimitLocation = () =>
-        Object.assign(emptyCell, { offLimits: true})
+        Object.assign(emptyCell, { offLimits: true })
 
     const getLocation = (column, row) => gameBoard?.[column]?.[row]
 
     const setLocation = (column, row, ship = createOffLimitLocation()) => {
-        if (gameBoard?.[column]?.[row]) {
-            gameBoard[column][row] = ship
-        }
+        if (gameBoard?.[column]?.[row] === undefined) return true
+        gameBoard[column][row] = ship
+        return true
     }
 
     const addOffLimitAreaForShips = (column, row) => {
         // top-left
         setLocation(column - 1, row - 1)
-        // left
-        setLocation(column - 1, row)
         // top
         setLocation(column, row - 1)
     }
@@ -89,31 +87,32 @@ const createGameBoard = () => {
     const placeShip = (column, row, direction, ship) => {
         const shipLength = ship.getLength()
         if (direction === 'vertical') {
-            if (row + shipLength <= 10) {
-                addOffLimitAreaForVerticallyPositionedShip(
-                    column,
-                    row,
-                    shipLength
-                )
+            const location = setLocation(column, row + shipLength)
+            if (row >= 0 && (row + shipLength - 1) < gameBoard.length) {
                 for (let i = 0; i < shipLength; i += 1) {
                     setLocation(column, row + i, ship)
                     setLocation(column + 1, row + i)
                     setLocation(column - 1, row + i)
                 }
-                return true
-            }
-        } else if (direction === 'horizontal') {
-            if (column + shipLength <= 10) {
-                addOffLimitAreaForHorizontallyPositionedShip(
+                addOffLimitAreaForVerticallyPositionedShip(
                     column,
                     row,
                     shipLength
                 )
+                return true
+            }
+        } else if (direction === 'horizontal') {
+            if (column >= 0 && (column + shipLength - 1) < gameBoard.length) {
                 for (let i = 0; i < shipLength; i += 1) {
                     setLocation(column + i, row, ship)
                     setLocation(column + i, row + 1)
                     setLocation(column + i, row - 1)
                 }
+                addOffLimitAreaForHorizontallyPositionedShip(
+                    column,
+                    row,
+                    shipLength
+                )
                 return true
             }
         }
@@ -136,7 +135,8 @@ const createGameBoard = () => {
             const ship = ships[i]
             const location = getLocation(randomColumn, randomRow)
             if (
-                location.isShip === true || location.offLimits === true ||
+                location.isShip === true ||
+                location.offLimits === true ||
                 placeShip(randomColumn, randomRow, randomDirection, ship) ===
                     false
             ) {
@@ -167,5 +167,9 @@ const createGameBoard = () => {
         randomlyPlaceShips,
     }
 }
+
+const gameBoard = createGameBoard()
+
+gameBoard.randomlyPlaceShips()
 
 module.exports = createGameBoard
