@@ -18,10 +18,10 @@ const createGameBoard = () => {
 
     const checkIfAllShipsHaveSunk = () =>
         gameBoard.flat().every(
-            (position) => {
-                if (position.isShip === false) return true
-                if (position.isShip === true && position.hasBeenHit === true) {
-                    return position.getStatus().every((unit) => unit === 'hit')
+            (cell) => {
+                if (cell.isShip === false) return true
+                if (cell.isShip === true && cell.hasBeenHit === true) {
+                    return cell.getStatus().every((unit) => unit === 'hit')
                 }
                 return false
             }
@@ -30,15 +30,19 @@ const createGameBoard = () => {
             // (position.isShip === true && position.hasBeenHit === true)
         )
 
-    const getShotLocation = (column, row) => gameBoard?.[column]?.[row]
+    const getLocation = (column, row) => gameBoard?.[column]?.[row]
+
+    const setLocation = (column, row, ship) => {
+        gameBoard[column][row] = ship
+    }
 
     const addOffLimitAreaForShips = (column, row, shipLength) => {
-        const top = gameBoard?.[column]?.[row - 1]
-        const left = gameBoard?.[column - 1]?.[row]
-        const topRight = gameBoard?.[column + 1]?.[row - 1]
-        const topLeft = gameBoard?.[column - 1]?.[row - 1]
-        const bottomRight = gameBoard?.[column + 1]?.[row + shipLength]
-        const leftRight = gameBoard?.[column - 1]?.[row + shipLength]
+        const top = getLocation(column, row)
+        const left = getLocation(column - 1, row)
+        const topRight = getLocation(column + 1, row - 1)
+        const topLeft = getLocation(column - 1, row - 1)
+        const bottomRight = getLocation(column + 1, row + shipLength)
+        const leftRight = getLocation(column - 1, row + shipLength)
 
         if (top) {
             top.offLimits = true
@@ -65,13 +69,12 @@ const createGameBoard = () => {
         row,
         shipLength
     ) => {
-        const right = getShotLocation(column + shipLength, row)
-        // addOffLimitAreaForShips(column, row, shipLength)
+        const right = getLocation(column + shipLength, row)
+        addOffLimitAreaForShips(column, row, shipLength)
 
         if (right) {
-            console.log(right)
+            right.offLimits = true
         }
-        console.log(gameBoard)
     }
 
     const addOffLimitAreaForVerticallyPositionedShip = (
@@ -93,7 +96,7 @@ const createGameBoard = () => {
         if (direction === 'vertical') {
             if (row + shipLength <= 10) {
                 for (let i = 0; i < shipLength; i += 1) {
-                    gameBoard[column][row + i] = ship
+                    setLocation(column, row + i, ship)
                 }
                 // addOffLimitAreaForVerticallyPositionedShip(column, row, shipLength)
                 return true
@@ -101,13 +104,13 @@ const createGameBoard = () => {
         } else if (direction === 'horizontal') {
             if (column + shipLength <= 10) {
                 for (let i = 0; i < shipLength; i += 1) {
-                    gameBoard[column + i][row] = ship
+                    setLocation(column + i, row, ship)
                 }
-                addOffLimitAreaForHorizontallyPositionedShip(
-                    column,
-                    row,
-                    shipLength
-                )
+                // addOffLimitAreaForHorizontallyPositionedShip(
+                // column,
+                // row,
+                // shipLength
+                // )
                 return true
             }
         }
@@ -128,7 +131,7 @@ const createGameBoard = () => {
             const { randomColumn, randomRow, randomDirection } =
                 makeRandomCoordinates()
             const ship = ships[i]
-            const location = getShotLocation(randomColumn, randomRow)
+            const location = getLocation(randomColumn, randomRow)
             if (
                 location.isShip === true ||
                 location.offLimits === true ||
@@ -148,7 +151,7 @@ const createGameBoard = () => {
     }
 
     return {
-        getShotLocation,
+        getLocation,
         receiveAttack,
         checkIfAllShipsHaveSunk,
         placeShip,

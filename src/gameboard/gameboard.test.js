@@ -3,7 +3,7 @@ const createGameBoard = require('./gameboard')
 const createShip = require('../ship/ship')
 
 describe('gameboard factory function', () => {
-    describe('#getShotLocation', () => {
+    describe('#getLocation', () => {
         test('placing a ship, then getting the ship location', () => {
             const gameBoard = createGameBoard()
 
@@ -11,7 +11,7 @@ describe('gameboard factory function', () => {
             const [column, row] = [0, 0]
             gameBoard.placeShip(column, row, 'vertical', ship)
 
-            expect(gameBoard.getShotLocation(column, row)).toMatchObject(ship)
+            expect(gameBoard.getLocation(column, row)).toMatchObject(ship)
         })
     })
     describe('#randomlyPlaceShips', () => {
@@ -22,7 +22,7 @@ describe('gameboard factory function', () => {
             // eslint-disable-next-line no-restricted-syntax
             for (let i = 0; i < coordinates.length; i += 1) {
                 if (
-                    gameBoard.getShotLocation(
+                    gameBoard.getLocation(
                         coordinates[i].randomColumn,
                         coordinates[i].randomRow
                     ).isShip === false
@@ -40,13 +40,13 @@ describe('gameboard factory function', () => {
             const gameBoard = createGameBoard()
             const [column, row] = [1, 1]
             gameBoard.placeShip(column, row, 'vertical', createShip(3))
-            expect(gameBoard.getShotLocation(1, 1).isShip).toBe(true)
+            expect(gameBoard.getLocation(1, 1).isShip).toBe(true)
         })
         test('placing a ship horizontally', () => {
             const gameBoard = createGameBoard()
             const [column, row] = [1, 1]
             gameBoard.placeShip(column, row, 'horizontal', createShip(3))
-            expect(gameBoard.getShotLocation(2, 1).isShip).toBe(true)
+            expect(gameBoard.getLocation(2, 1).isShip).toBe(true)
         })
     })
     describe('#receiveAttack', () => {
@@ -55,17 +55,19 @@ describe('gameboard factory function', () => {
             const [column, row] = [0, 3]
             gameBoard.placeShip(column, row, 'vertical', createShip(3))
             gameBoard.receiveAttack(column, row)
-            const shotLocation = gameBoard.getShotLocation(column, row)
-            expect(shotLocation.hasBeenHit === true && shotLocation.isShip === true).toBe(true)
+            const shotLocation = gameBoard.getLocation(column, row)
+            expect(
+                shotLocation.hasBeenHit === true && shotLocation.isShip === true
+            ).toBe(true)
         })
         test('missing a ship on attack', () => {
             const gameBoard = createGameBoard()
             const [column, row] = [5, 0]
             gameBoard.receiveAttack(column, row)
-            const shotLocation = gameBoard.getShotLocation(column, row)
+            const shotLocation = gameBoard.getLocation(column, row)
             expect(
                 shotLocation.isShip === false &&
-                    shotLocation.hasBeenHit === true 
+                    shotLocation.hasBeenHit === true
             ).toBe(true)
         })
     })

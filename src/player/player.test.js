@@ -20,16 +20,14 @@ describe('player factory function', () => {
             const computerBoard = createGameBoard()
             computerBoard.placeShip(0, 2, 'vertical', createShip(3))
             player.attack(0, 2, computerBoard)
-            expect(computerBoard.getShotLocation(0, 2).hasBeenHit).toBe(true)
+            expect(computerBoard.getLocation(0, 2).hasBeenHit).toBe(true)
         })
         test('the player missed the enemy', () => {
             const player = createPlayer('Human')
             const computerBoard = createGameBoard()
             const [column, row] = [0, 7]
             player.attack(column, row, computerBoard)
-            expect(computerBoard.getShotLocation(column, row).isShip).toBe(
-                false
-            )
+            expect(computerBoard.getLocation(column, row).isShip).toBe(false)
         })
         test('the computer can shoot the player', () => {
             const computer = createPlayer('Computer')
@@ -37,9 +35,7 @@ describe('player factory function', () => {
             const [column, row] = [5, 3]
             playerBoard.placeShip(column, row, 'horizontal', createShip(5))
             computer.attack(column, row, playerBoard)
-            expect(playerBoard.getShotLocation(column, row).hasBeenHit).toBe(
-                true
-            )
+            expect(playerBoard.getLocation(column, row).hasBeenHit).toBe(true)
         })
         test('the computer missed the player', () => {
             const computer = createPlayer('Computer')
@@ -47,7 +43,7 @@ describe('player factory function', () => {
             const playerBoard = createGameBoard()
             const [column, row] = [0, 1]
             computer.attack(column, row, playerBoard)
-            expect(computerBoard.getShotLocation(column, row).hasBeenHit).toBe(
+            expect(computerBoard.getLocation(column, row).hasBeenHit).toBe(
                 false
             )
         })
