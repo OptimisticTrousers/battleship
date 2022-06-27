@@ -6,16 +6,19 @@ const createShip = require('../ship/ship')
 const createGameBoard = () => {
     const emptyCell = { hasBeenHit: false, isShip: false, offLimits: false }
 
-    const gameBoard = Array(10).fill([])
+
     const initializeBoard = () => {
-        for (let i = 0; i < 10; i++) {
-            for (let j = 0; j < 10; j++) {
-                gameBoard[i][j] = { ...emptyCell, column: i, row: j }
+        const gameBoard = Array(10).fill().map(() => Array(10).fill())
+        for(let i= 0; i < 10; i++){
+            for(let j =0; j < 10; j++){
+                gameBoard[i][j] = {...emptyCell, column: i, row: j}
             }
         }
+        return gameBoard
     }
 
-    initializeBoard()
+    const gameBoard = initializeBoard()
+
 
     const ships = [
         createShip(5, 'Carrier'),
