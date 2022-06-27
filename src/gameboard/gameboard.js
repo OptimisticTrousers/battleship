@@ -84,12 +84,11 @@ const createGameBoard = () => {
         setLocation(column + 1, row - 1)
     }
 
-    const checkIfRowCoordinateIsValid = (row, shipLength) => {
-return row >= 0 && row + shipLength - 1 < gameBoard.length
-    }
+    const checkIfColumnCoordinateIsValid = (column, shipLength) =>
+        column >= 0 && column + shipLength - 1 < gameBoard.length
 
-    const checkIfColumnCoordinateIsValid = (column, shipLength) => {
-return column >= 0 && column + shipLength - 1 < gameBoard.length}
+    const checkIfRowCoordinateIsValid = (row, shipLength) =>
+        row >= 0 && row + shipLength - 1 < gameBoard.length
 
     const placeShip = (column, row, direction, ship) => {
         const shipLength = ship.getLength()
@@ -105,6 +104,7 @@ return column >= 0 && column + shipLength - 1 < gameBoard.length}
                     row,
                     shipLength
                 )
+                return true
             }
         } else if (direction === 'horizontal') {
             if (checkIfColumnCoordinateIsValid(column, shipLength)) {
@@ -118,40 +118,36 @@ return column >= 0 && column + shipLength - 1 < gameBoard.length}
                     row,
                     shipLength
                 )
+                return true
             }
         }
-    }
-
-    }
-
-    const checkIfCoordinatesAreValid = (column, row, ship) => {
-
-        if(!checkIfColumnCoordinateIsValid(column, ship.getLength())) return true
-        if(!checkIfRowCoordinateIsValid(row, ship.getLength())) return true
-        if(!(location.isShip === true || location.offLimits === true)) return true
         return false
     }
-
-    const makeRandomCoordinates = (ship) => {
+    const makeRandomCoordinates = () => {
         const randomDirection =
             Math.floor(Math.random() * 2) === 0 ? 'vertical' : 'horizontal'
         const randomColumn = Math.floor(Math.random() * 10)
         const randomRow = Math.floor(Math.random() * 10)
-        if(checkIfCoordinatesAreValid(column, row, ship)){
-
-            return { randomColumn, randomRow, randomDirection }
-        }
-        return makeRandomCoordinates(ship)
+        return { randomColumn, randomRow, randomDirection }
     }
 
     const randomlyPlaceShips = () => {
         const shipDetails = []
         for (let i = 0; i < ships.length; i += 1) {
-            const ship = ships[i]
             const { randomColumn, randomRow, randomDirection } =
-                makeRandomCoordinates(ship)
+                makeRandomCoordinates()
+            const ship = ships[i]
             const location = getLocation(randomColumn, randomRow)
-            shipDetails.push({ randomColumn, randomRow, randomDirection })
+            if (
+                location.isShip === true ||
+                location.offLimits === true ||
+                placeShip(randomColumn, randomRow, randomDirection, ship) ===
+                    false
+            ) {
+                i -= 1
+            } else {
+                shipDetails.push({ randomColumn, randomRow, randomDirection })
+            }
         }
         return shipDetails
     }
