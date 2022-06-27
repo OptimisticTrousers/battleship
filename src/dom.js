@@ -14,7 +14,7 @@ const attackEnemyCell = (cell, column, row, enemyBoard, player) => {
 
 const attackPlayerCell = (cell, playerBoard, enemy) => {
     const { randomColumn, randomRow } = playerBoard.makeRandomCoordinates()
-    if(handleAttack(randomColumn, randomRow, playerBoard, enemy) === 'You have already hit this spot!') return attackPlayerCell(cell, playerBoard, enemy)
+    handleAttack(randomColumn, randomColumn, playerBoard, enemy)
 
     return { randomColumn, randomRow }
 }
