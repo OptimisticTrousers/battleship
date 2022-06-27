@@ -51,14 +51,17 @@ export const renderEnemyAtacks = (playerBoard, column, row) => {
     const cell = document.querySelector(
         `.cell[column='${column}'][row='${row}']`
     )
-    const cellLocation = playerBoard.getLocation(column, row)
-    if(cellLocation.isShip){
+    if(cell.classList.contains('ship')){
 
         cell.classList.add('hit')
     }
     else{
         cell.classList.add('miss')
     }
+}
+
+const handler = function(event){
+
 }
 
 export const addListenersToEnemyBoard = (
@@ -77,13 +80,16 @@ export const addListenersToEnemyBoard = (
             )
             cell.setAttribute('column', column)
             cell.setAttribute('row', row)
-            cell.addEventListener('click', () => {
+
+            const controller = new AbortController()
+            cell.addEventListener('click', () =>  {
                 // human player attacking computer
                 attackEnemyCell(cell, column, row, enemyBoard, player)
                 // computer attacking human
                 const {randomColumn, randomRow} = attackHuman(cell, playerBoard, enemy)
                 renderEnemyAtacks(playerBoard, randomColumn, randomRow)
-            })
+                controller.abort()
+            }, {signal: controller.signal})
         }
     }
 }
