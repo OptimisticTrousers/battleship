@@ -1,3 +1,4 @@
+/* eslint-disable no-multi-assign */
 /* eslint-disable no-unused-expressions */
 const createShip = require('../ship/ship')
 
@@ -105,8 +106,7 @@ const createGameBoard = () => {
         if (direction === 'vertical') {
             if (checkIfRowCoordinateIsValid(row, shipLength)) {
                 for (let i = 0; i < shipLength; i += 1) {
-                    gameBoard[column][ row + i] = ship
-                    const location = gameBoard[column][ row + i] 
+                    const location = gameBoard[column][ row + i] = ship
                     location.position = i
                     //setLocation(column, row + i, ship)
                     setLocation(column + 1, row + i)
@@ -122,8 +122,7 @@ const createGameBoard = () => {
         } else if (direction === 'horizontal') {
             if (checkIfColumnCoordinateIsValid(column, shipLength)) {
                 for (let i = 0; i < shipLength; i += 1) {
-                    gameBoard[column + i][ row ] = ship
-                    const location = gameBoard[column + i][ row ] 
+                    const location = gameBoard[column + i][ row ] = ship
                     location.position = i
                     //setLocation(column + i, row, ship)
                     setLocation(column + i, row + 1)
