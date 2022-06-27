@@ -1,4 +1,4 @@
-import { addListenersToEnemyBoard, renderEnemyAtacks, renderPlayerShips} from './dom'
+import { addListenersToEnemyBoard, renderPlayerShips} from './dom'
 
 import createGameBoard from './gameboard/gameboard'
 import createShip from './ship/ship'
