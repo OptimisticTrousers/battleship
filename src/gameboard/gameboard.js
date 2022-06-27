@@ -5,9 +5,17 @@ const createShip = require('../ship/ship')
 /* eslint-disable no-param-reassign */
 const createGameBoard = () => {
     const emptyCell = { hasBeenHit: false, isShip: false, offLimits: false }
-    const gameBoard = Array(10)
-        .fill(structuredClone(emptyCell))
-        .map(() => Array(10).fill(structuredClone(emptyCell)))
+
+    const gameBoard = Array(10).fill([])
+    const initializeBoard = () => {
+        for (let i = 0; i < 10; i++) {
+            for (let j = 0; j < 10; j++) {
+                gameBoard[i][j] = { ...emptyCell, column: i, row: j }
+            }
+        }
+    }
+
+    initializeBoard()
 
     const ships = [
         createShip(5, 'Carrier'),
@@ -94,9 +102,8 @@ const createGameBoard = () => {
         column,
         row,
         direction,
-        ship
+        shipLength
     ) => {
-        const shipLength = ship.getLength()
         if (direction === 'vertical') {
             for (let i = 0; i < shipLength; i++) {
                 const location = getLocation(column, row + i)
@@ -109,9 +116,7 @@ const createGameBoard = () => {
                     }
                 }
             }
-        }
-
-        else if (direction === 'horizontal') {
+        } else if (direction === 'horizontal') {
             for (let i = 0; i < shipLength; i++) {
                 const location = getLocation(column + i, row)
                 if (location) {
@@ -119,23 +124,71 @@ const createGameBoard = () => {
                         location.isShip === true &&
                         location.offLimits === true
                     ) {
-                        return true 
+                        return true
                     }
                 }
             }
         }
 
-        return false 
+        return false
+    }
+
+    const isOffLimitAreaClear = (column, row, direction, shipLength) => {
+        if (direction === 'vertical') {
+            for (let i = 0; i < shipLength; i++) {
+                const left = getLocation(column - 1, row + i)
+                const right = getLocation(column + 1, row + i)
+                if (left) {
+                    if (left.isShip && left.offLimits) {
+                        return false
+                    }
+                }
+                if (right) {
+                    if (right.isShip && right.offLimits) {
+                        return false
+                    }
+                }
+            }
+        } else if (direction === 'horizontal') {
+            for (let i = 0; i < shipLength; i++) {
+                const top = getLocation(column + i, row - 1)
+                const bottom = getLocation(column + i, row + 1)
+                if (top) {
+                    if (top.isShip && top.offLimits) {
+                        return false
+                    }
+                }
+                if (bottom) {
+                    if (bottom.isShip && bottom.offLimits) {
+                        return false
+                    }
+                }
+            }
+        }
+
+        return true
     }
 
     const placeShip = (column, row, direction, ship) => {
         const shipLength = ship.getLength()
-        if (checkIfLocationIsAShipOrOffLimits(column, row, direction, ship))
+        if (
+            checkIfLocationIsAShipOrOffLimits(
+                column,
+                row,
+                direction,
+                shipLength
+            )
+        )
             return false
         if (direction === 'vertical') {
             if (checkIfRowCoordinateIsValid(row, shipLength)) {
                 for (let i = 0; i < shipLength; i += 1) {
-                    setLocation(column, row + i, { ...ship, position: i })
+                    setLocation(column, row + i, {
+                        ...ship,
+                        position: i,
+                        hasBeenHit: false,
+                        direction,
+                    })
                     setLocation(column + 1, row + i)
                     setLocation(column - 1, row + i)
                 }
@@ -149,7 +202,12 @@ const createGameBoard = () => {
         } else if (direction === 'horizontal') {
             if (checkIfColumnCoordinateIsValid(column, shipLength)) {
                 for (let i = 0; i < shipLength; i += 1) {
-                    setLocation(column + i, row, { ...ship, position: i })
+                    setLocation(column + i, row, {
+                        ...ship,
+                        position: i,
+                        hasBeenHit: false,
+                        direction,
+                    })
                     // setLocation(column + i, row, ship)
                     setLocation(column + i, row + 1)
                     setLocation(column + i, row - 1)
@@ -164,23 +222,36 @@ const createGameBoard = () => {
         }
         return false
     }
+
+    const availableSpaces = () =>
+        gameBoard
+            .flat()
+            .filter((cell) => cell.isShip === false && cell.offLimits === false)
+            .length - 1
+
     const makeRandomCoordinates = () => {
         const randomDirection =
             Math.floor(Math.random() * 2) === 0 ? 'vertical' : 'horizontal'
-        const randomColumn = Math.floor(Math.random() * 10)
-        const randomRow = Math.floor(Math.random() * 10)
-        return { randomColumn, randomRow, randomDirection }
+        const randomLocation = Math.floor(Math.random() * availableSpaces())
+
+        return { randomLocation, randomDirection }
     }
 
     const randomlyPlaceShips = () => {
-        const shipDetails = []
-        for (let i = 0; i < ships.length; i += 1) {
-            const ship = ships[i]
-            const { randomColumn, randomRow, randomDirection } =
-                makeRandomCoordinates()
-            placeShip(randomColumn, randomRow, randomDirection, ship)
+        const shipsDetails = []
+        for (let i = 0; i < ships.length; i++) {
+            const { randomLocation, randomDirection } = makeRandomCoordinates()
+            const flattenedGameBoard = gameBoard.flat()
+            const elementIndex = flattenedGameBoard.findIndex(
+                (element, index) => index === randomLocation
+            )
+
+            const element = flattenedGameBoard[elementIndex]
+            const elementColumn = element.column
+            const elementRow = element.row
+            shipsDetails.push({elementColumn, elementRow, randomDirection})
         }
-        return shipDetails
+        return shipsDetails
     }
 
     const receiveAttack = (column, row) => {
