@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 const createGameBoard = require('./gameboard')
 const createShip = require('../ship/ship')
+const createPlayer = require('../player/player')
 
 describe('gameboard factory function', () => {
     describe('#getLocation', () => {
@@ -23,7 +24,7 @@ describe('gameboard factory function', () => {
             for (let i = 0; i < coordinates.length; i += 1) {
                 const { randomColumn, randomRow } = coordinates[i]
                 const location = gameBoard.getLocation(randomColumn, randomRow)
-                if (location.isShip === false ) {
+                if (location.isShip === false) {
                     expect([location, i]).toBe(true)
                     hasCorrectlyPlacedShipsRandomly = false
                     break
@@ -84,6 +85,23 @@ describe('gameboard factory function', () => {
     describe('#checkIfAllShipsHaveSunk', () => {
         test('all of the ships have sunk', () => {
             const gameBoard = createGameBoard()
+            const player = createPlayer()
+            const [firstColumn, firstRow]= [0, 0]
+            const [secondColumn, secondRow]= [3, 4]
+            const [thirdColumn, thirdRow]= [6, 7]
+            const [fourthColumn, fourthRow]= [9, 1]
+            const [fifthColumn, fifthRow]= [5, 9]
+            gameBoard.placeShip(firstColumn, firstRow, 'horizontal', createShip(1))
+            gameBoard.placeShip(secondColumn, secondRow, 'horizontal', createShip(1))
+            gameBoard.placeShip(thirdColumn, thirdRow, 'horizontal', createShip(1))
+            gameBoard.placeShip(fourthColumn, fourthRow, 'vertical', createShip(1))
+            gameBoard.placeShip(fifthColumn, fifthRow, 'horizontal', createShip(1))
+
+            player.attack(firstColumn, firstRow, gameBoard)
+            player.attack(secondColumn, secondRow, gameBoard)
+            player.attack(thirdColumn, thirdRow, gameBoard)
+            player.attack(fourthColumn, fourthRow, gameBoard)
+            player.attack(fifthColumn, fifthRow, gameBoard)
             expect(gameBoard.checkIfAllShipsHaveSunk()).toBe(true)
         })
         test('a ship being hit, but not sunk', () => {

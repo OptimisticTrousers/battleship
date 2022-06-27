@@ -1,8 +1,10 @@
-const renderAttacks = (player, column, row) => {
+const renderAttacks = (player, column, row, enemyBoard) => {
     const cell = document.querySelector(
         `.${player}-board > .cell[column='${column}'][row='${row}']`
     )
-    if (cell.classList.contains('ship')) {
+
+    const location = enemyBoard.getLocation(column, row)
+    if (location.isShip) {
         cell.classList.add('hit')
     } else {
         cell.classList.add('miss')
@@ -14,13 +16,13 @@ const handleAttack = (column, row, enemyBoard, player) =>
 
 const attackEnemyCell = (column, row, enemyBoard, player) => {
     handleAttack(column, row, enemyBoard, player)
-    renderAttacks('enemy', column, row)
+    renderAttacks('enemy', column, row, enemyBoard)
 }
 
 const attackPlayerCell = (playerBoard, enemy) => {
     const { randomColumn, randomRow } = playerBoard.makeRandomCoordinates()
     handleAttack(randomColumn, randomColumn, playerBoard, enemy)
-    renderAttacks('player', randomColumn, randomRow)
+    renderAttacks('player', randomColumn, randomRow, playerBoard)
 }
 // https://jsmanifest.com/the-publish-subscribe-pattern-in-javascript/
 
@@ -72,6 +74,16 @@ export const renderPlayerShips = ({ getLocation }) => {
     }
 }
 
+const checkIfGameOver = (playerBoard, enemyBoard) => {
+    console.log(enemyBoard.checkIfAllShipsHaveSunk())
+    if(playerBoard.checkIfAllShipsHaveSunk()){
+        console.log('PLAYER won')
+    }
+    if(enemyBoard.checkIfAllShipsHaveSunk()){
+        console.log('ENEMY won')
+    }
+}
+
 export const addListenersToEnemyBoard = (
     playerBoard,
     enemyBoard,
@@ -102,6 +114,7 @@ export const addListenersToEnemyBoard = (
                         player,
                         enemy,
                     })
+
                 },
                 { once: true }
             )
@@ -122,4 +135,7 @@ export const attack = ({
     attackEnemyCell(column, row, enemyBoard, player)
     // computer attacking human
     attackPlayerCell(playerBoard, enemy)
+
+    checkIfGameOver(playerBoard, enemyBoard)
+
 }

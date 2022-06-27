@@ -3,8 +3,9 @@ const createPlayer = (name = 'player') => {
 
     const attack = (column, row, { getLocation, receiveAttack }) => {
         const location = getLocation(column, row)
-        if (location.hasBeenHit === false || (location.isShip && location.getStatus().includes('unhit'))) {
+        if (location.hasBeenHit === false || (location.isShip && location.getStatus().includes('unhit') === false)) {
             receiveAttack(column, row)
+            location.hit(0)
             return "It's a hit!"
         }
 
