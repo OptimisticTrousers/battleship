@@ -15,24 +15,6 @@ describe('gameboard factory function', () => {
             expect(gameBoard.getLocation(column, row)).toMatchObject(ship)
         })
     })
-    describe('#randomlyPlaceShips', () => {
-        test('randomly place ships all over the board', () => {
-            const gameBoard = createGameBoard()
-            const coordinates = gameBoard.randomlyPlaceShips()
-            let hasCorrectlyPlacedShipsRandomly = true
-            // eslint-disable-next-line no-restricted-syntax
-            for (let i = 0; i < coordinates.length; i += 1) {
-                const { randomColumn, randomRow } = coordinates[i]
-                const location = gameBoard.getLocation(randomColumn, randomRow)
-                if (location.isShip === false) {
-                    expect([location, i]).toBe(true)
-                    hasCorrectlyPlacedShipsRandomly = false
-                    break
-                }
-            }
-            expect(hasCorrectlyPlacedShipsRandomly).toBe(true)
-        })
-    })
     describe('#checkIfOffLimitZoneWasCorrectlyImplemented', () => {
         test('correctly place off limit zone around ship', () => {
             const gameBoard = createGameBoard()
