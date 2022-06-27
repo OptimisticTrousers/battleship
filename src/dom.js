@@ -1,12 +1,11 @@
-const handleAttack = (column, row, enemyBoard, player) => {
+const handleAttack = (column, row, enemyBoard, player) =>
     player.attack(column, row, enemyBoard)
-}
 
 const attackEnemyCell = (cell, column, row, enemyBoard, player) => {
     const cellLocation = enemyBoard.getLocation(column, row)
+    if(handleAttack(column, row, enemyBoard, player) === 'You have already hit this spot!') return attackPlayerCell(cell, playerBoard, enemy)
     if (cellLocation.isShip) {
         cell.classList.add('hit')
-        handleAttack(column, row, enemyBoard, player)
     } else {
         cell.classList.add('miss')
     }
@@ -15,9 +14,9 @@ const attackEnemyCell = (cell, column, row, enemyBoard, player) => {
 const attackPlayerCell = (cell, playerBoard, enemy) => {
     const { randomColumn, randomRow } = playerBoard.makeRandomCoordinates()
     const cellLocation = playerBoard.getLocation(randomColumn, randomRow)
+    if(handleAttack(randomColumn, randomRow, playerBoard, enemy) === 'You have already hit this spot!') return attackPlayerCell(cell, playerBoard, enemy)
     if (cellLocation.isShip) {
         cell.classList.add('hit')
-        handleAttack(randomColumn, randomRow, playerBoard, enemy)
     } else {
         cell.classList.add('miss')
     }
