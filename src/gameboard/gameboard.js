@@ -96,63 +96,81 @@ const createGameBoard = () => {
         return false
     }
 
+    const isPlacementPossible = (ship, row, column, direction) => {
+        if(row < 0 || row > 10 - 1 || column < 0 || column > 10 - 1) return false
+
+        const shipLength = ship.getLength(0)
+        if(direction === 'vertical'){
+            if(row + shipLength > 10) return false
+        } else{
+            // eslint-disable-next-line no-lonely-if
+            if(column + shipLength > 10) return false
+        }
+
+        if(direction === 'vertical'){
+            for(let i = 0; i < ship.length; i++){
+                if(gameBoard[row + i][column]) return false
+            }
+        } else {
+            for(let i = 0; i < ship.length; i++){
+                if(gameBoard[row][column + i]) return false
+            }
+        }
+
+        if(direction === 'vertical'){
+            for(let i = 0; i < ship.length; i++){
+                for(let x = -1; x <= 1; x++){
+                    for(let y = -1; y <= 1; y++){
+                        if(row + x + i < 0 || row + x + i >= 10 || column + y < 0 || column + y >= 10) continue
+
+                        if(gameBoard[row + x + i][column + y]) return false
+                    }
+                }
+            }
+        } else{
+            for(let i = 0; i < ship.length; i++){
+                for(let x = -1; x <= 1; x++){
+                    for(let y = -1; y <= 1; y++){
+                        if(row + x < 0 || row + x >= 10 || column + y + i < 0 || column + y + i >= 10) continue
+
+                        if(gameBoard[row + x][column + y + i]) return false
+                    }
+                }
+            }
+        }
+
+        return true
+
+    }
+
     const placeShip = (column, row, direction, ship) => {
+
+        if(isPlacementPossible(ship, row, column, direction)) return false
+
         const shipLength = ship.getLength()
         if (direction === 'vertical') {
-            if (checkIfRowCoordinateIsValid(row, shipLength)) {
                 for (let i = 0; i < shipLength; i += 1) {
-                    if (
-                        checkIfLocationIsAShipOrOffLimits(
-                            getLocation(column, row + i)
-                        ) === false
-                    ) {
                         setLocation(column, row + i, ship)
-                        setLocation(column + 1, row + i)
-                        setLocation(column - 1, row + i)
                     }
-                    else{
-                        return false
-                    }
-                }
-                addOffLimitAreaForVerticallyPositionedShip(
-                    column,
-                    row,
-                    shipLength
-                )
-                return true
-            }
         } else if (direction === 'horizontal') {
-            if (checkIfColumnCoordinateIsValid(column, shipLength)) {
                 for (let i = 0; i < shipLength; i += 1) {
-                    if (!checkIfLocationIsAShipOrOffLimits(column + i, row)) {
                         setLocation(column + i, row, ship)
-                        setLocation(column + i, row + 1)
-                        setLocation(column + i, row - 1)
-                    }
-                    else{
-                        return false
-                    }
                 }
-                addOffLimitAreaForHorizontallyPositionedShip(
-                    column,
-                    row,
-                    shipLength
-                )
                 return true
-            }
         }
         return false
     }
+
 
     const makeRandomCoordinates = (shipLength) => {
         const randomDirection =
             Math.floor(Math.random() * 2) === 0 ? 'vertical' : 'horizontal'
         const randomColumn = Math.floor(Math.random() * 10)
         const randomRow = Math.floor(Math.random() * 10)
-        if (!checkIfColumnCoordinateIsValid(randomColumn, shipLength))
-            return makeRandomCoordinates(shipLength)
-        if (!checkIfRowCoordinateIsValid(randomRow, shipLength))
-            return makeRandomCoordinates(shipLength)
+        //if (!checkIfColumnCoordinateIsValid(randomColumn, shipLength))
+            //return makeRandomCoordinates(shipLength)
+        //if (!checkIfRowCoordinateIsValid(randomRow, shipLength))
+            //return makeRandomCoordinates(shipLength)
         return { randomColumn, randomRow, randomDirection }
     }
 
