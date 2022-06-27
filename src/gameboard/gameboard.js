@@ -9,9 +9,9 @@ const createGameBoard = () => {
     
     const initializeBoard = () => {
         const gameBoard = Array(10).fill().map(() => Array(10).fill())
-        for(let i= 0; i < 10; i++){
-            for(let j =0; j < 10; j++){
-                gameBoard[i][j] = {...emptyCell, column: i, row: j}
+        for(let column= 0; column < 10; column++){
+            for(let row= 0; row < 10; row++){
+                gameBoard[column][row] = {...emptyCell, column, row}
             }
         }
         return gameBoard
@@ -36,7 +36,9 @@ const createGameBoard = () => {
 
     const setLocation = (column, row, ship = createOffLimitLocation()) => {
         if (gameBoard?.[column]?.[row] === undefined) return true
-        gameBoard[column][row] = ship
+        const location = gameBoard[column][row]
+
+        gameBoard[column][row] = {...location, ...ship}
         return true
     }
     const checkIfAllShipsHaveSunk = () => {
@@ -146,24 +148,39 @@ const createGameBoard = () => {
         }
         return false
     }
-        const availableSpaces = () =>
-        gameBoard
-            .flat()
-            .filter((cell) => cell.isShip === false && cell.offLimits === false)
-            .length - 1
+        const availableSpaces = () =>{
 
+        const flattenedGameBoard = [...gameBoard.flat()]
+
+            flattenedGameBoard.forEach((element) => {
+                if(element.hasBeenHit === true){
+                    element.availability = false
+                }
+                else{
+                    element.availability =true  
+                }
+            })
+
+            return flattenedGameBoard
+
+        }
     const makeRandomCoordinates = () => {
         const randomDirection =
             Math.floor(Math.random() * 2) === 0 ? 'vertical' : 'horizontal'
-        const randomLocation = Math.floor(Math.random() * availableSpaces())
-const flattenedGameBoard = gameBoard.flat()
+        const randomLocation = Math.floor(Math.random() * 100)
+        const flattenedGameBoard = availableSpaces()
 
-        const elementIndex = flattenedGameBoard.findIndex((cell, index) => index === randomLocation)
+        const location = flattenedGameBoard[randomLocation]
 
-        const element = flattenedGameBoard[elementIndex]
+        if(location.availability === false){
+            return makeRandomCoordinates()
+        }
 
-        const elementColumn = element.column
-        const elementRow = element.row
+        const elementColumn = location.column
+        const elementRow = location.row
+
+        console.log(location)
+
 
         return { elementColumn, elementRow, randomDirection }
     }
