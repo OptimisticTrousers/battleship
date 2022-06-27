@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-    entry: './src/index.js',
+    entry: ['./src/index.js', './src/dom.js'],
     devtool: 'inline-source-map',
     output: {
         filename: 'main.js',

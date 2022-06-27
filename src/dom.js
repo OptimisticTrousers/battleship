@@ -1,27 +1,6 @@
-const handleAttack = (column, row, enemyBoard, player) =>
-    player.attack(column, row, enemyBoard)
-
-const attackEnemyCell = (cell, column, row, enemyBoard, player) => {
-    const cellLocation = enemyBoard.getLocation(column, row)
-    if (cellLocation.isShip) {
-        cell.classList.add('hit')
-        
-    } else {
-        cell.classList.add('miss')
-    }
-    handleAttack(column, row, enemyBoard, player)
-}
-
-const attackPlayerCell = (cell, playerBoard, enemy) => {
-    const { randomColumn, randomRow } = playerBoard.makeRandomCoordinates()
-    handleAttack(randomColumn, randomColumn, playerBoard, enemy)
-
-    return { randomColumn, randomRow }
-}
-
-const renderEnemyAtacks = (column, row) => {
+const renderAttacks = (player, column, row) => {
     const cell = document.querySelector(
-        `.cell[column='${column}'][row='${row}']`
+        `.${player}-board > .cell[column='${column}'][row='${row}']`
     )
     if (cell.classList.contains('ship')) {
         cell.classList.add('hit')
@@ -30,6 +9,19 @@ const renderEnemyAtacks = (column, row) => {
     }
 }
 
+const handleAttack = (column, row, enemyBoard, player) =>
+    player.attack(column, row, enemyBoard)
+
+const attackEnemyCell = (column, row, enemyBoard, player) => {
+    handleAttack(column, row, enemyBoard, player)
+    renderAttacks('enemy', column, row)
+}
+
+const attackPlayerCell = (playerBoard, enemy) => {
+    const { randomColumn, randomRow } = playerBoard.makeRandomCoordinates()
+    handleAttack(randomColumn, randomColumn, playerBoard, enemy)
+    renderAttacks('player', randomColumn, randomRow)
+}
 // https://jsmanifest.com/the-publish-subscribe-pattern-in-javascript/
 
 export const pubSub = () => {
@@ -127,12 +119,7 @@ export const attack = ({
     enemy,
 }) => {
     // human player attacking computer
-    attackEnemyCell(cell, column, row, enemyBoard, player)
+    attackEnemyCell(column, row, enemyBoard, player)
     // computer attacking human
-    const { randomColumn, randomRow } = attackPlayerCell(
-        cell,
-        playerBoard,
-        enemy
-    )
-     renderEnemyAtacks(randomColumn, randomRow)
+    attackPlayerCell(playerBoard, enemy)
 }
