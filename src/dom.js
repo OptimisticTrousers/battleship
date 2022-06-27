@@ -60,10 +60,6 @@ export const renderEnemyAtacks = (playerBoard, column, row) => {
     }
 }
 
-const handler = function(event){
-
-}
-
 export const addListenersToEnemyBoard = (
     playerBoard,
     enemyBoard,
@@ -83,12 +79,17 @@ export const addListenersToEnemyBoard = (
 
             const controller = new AbortController()
             cell.addEventListener('click', () =>  {
+
+                if(cell.classList.contains('hit')){
+
+                    alert('STOP BOB')
+                    controller.abort()
+                }
                 // human player attacking computer
                 attackEnemyCell(cell, column, row, enemyBoard, player)
                 // computer attacking human
                 const {randomColumn, randomRow} = attackHuman(cell, playerBoard, enemy)
                 renderEnemyAtacks(playerBoard, randomColumn, randomRow)
-                controller.abort()
             }, {signal: controller.signal})
         }
     }
