@@ -17,31 +17,28 @@ const createGameBoard = () => {
         createShip(2, 'Patrol Boat'),
     ]
 
-
     const createOffLimitLocation = () =>
         Object.assign(emptyCell, { offLimits: true })
 
     const getLocation = (column, row) => gameBoard?.[column]?.[row]
 
     const setLocation = (column, row, ship = createOffLimitLocation()) => {
-        if (gameBoard?.[column]?.[row] === undefined) return true
-        gameBoard[column][row] = ship
-        return true
+        if (gameBoard?.[column]?.[row] !== undefined)
+            gameBoard[column][row] = ship
     }
     const checkIfAllShipsHaveSunk = () => {
-
-        let haveAllShipsSunk =true  
-    for (let i = 0; i < 10; i++) {
-      for (let j = 0; j < 10; j++) {
-        const location = getLocation(i, j)
-        if(location.isShip === false) continue
-        if(location.isShip && location.isSunk() === false){
-           haveAllShipsSunk = false 
-           break;
+        let haveAllShipsSunk = true
+        for (let i = 0; i < 10; i++) {
+            for (let j = 0; j < 10; j++) {
+                const location = getLocation(i, j)
+                if (location.isShip === false) continue
+                if (location.isShip && location.isSunk() === false) {
+                    haveAllShipsSunk = false
+                    break
+                }
+            }
         }
-      }
-    }
-    return haveAllShipsSunk 
+        return haveAllShipsSunk
     }
 
     const addOffLimitAreaForShips = (column, row) => {
@@ -93,20 +90,52 @@ const createGameBoard = () => {
     const checkIfRowCoordinateIsValid = (row, shipLength) =>
         row >= 0 && row + shipLength - 1 < gameBoard.length
 
-    const checkIfLocationIsAShipOrOffLimits = (location) => {
-        if (location.isShip === true || location.offLimits === true) return true
+    const checkIfLocationIsAShipOrOffLimits = (
+        column,
+        row,
+        direction,
+        ship
+    ) => {
+        const shipLength = ship.getLength(0)
+        if (direction === 'vertical') {
+            for (let i = 0; i < shipLength; i++) {
+                const location = getLocation(column, row + i)
+                if (location) {
+                    if (
+                        location.isShip === true &&
+                        location.offLimits === true
+                    ) {
+                        return false
+                    }
+                }
+            }
+        }
+
+        if (direction === 'horizontal') {
+            for (let i = 0; i < shipLength; i++) {
+                const location = getLocation(column + i, row)
+                if (location) {
+                    if (
+                        location.isShip === true &&
+                        location.offLimits === true
+                    ) {
+                        return false
+                    }
+                }
+            }
+        }
 
         return false
     }
 
     const placeShip = (column, row, direction, ship) => {
-        if (checkIfLocationIsAShipOrOffLimits(getLocation(column, row)))
-            return false
         const shipLength = ship.getLength()
+        if (checkIfLocationIsAShipOrOffLimits(column, row, direction, ship))
+            return false
         if (direction === 'vertical') {
             if (checkIfRowCoordinateIsValid(row, shipLength)) {
                 for (let i = 0; i < shipLength; i += 1) {
-                    setLocation(column, row + i, {...ship, position: i})
+                    setLocation(column, row + i, { ...ship, position: i })
                     setLocation(column + 1, row + i)
                     setLocation(column - 1, row + i)
                 }
@@ -120,8 +149,8 @@ const createGameBoard = () => {
         } else if (direction === 'horizontal') {
             if (checkIfColumnCoordinateIsValid(column, shipLength)) {
                 for (let i = 0; i < shipLength; i += 1) {
-                    setLocation(column + i , row, {...ship, position: i})
-                    //setLocation(column + i, row, ship)
+                    setLocation(column + i, row, { ...ship, position: i })
+                    // setLocation(column + i, row, ship)
                     setLocation(column + i, row + 1)
                     setLocation(column + i, row - 1)
                 }
@@ -148,12 +177,8 @@ const createGameBoard = () => {
         for (let i = 0; i < ships.length; i += 1) {
             const ship = ships[i]
             const { randomColumn, randomRow, randomDirection } =
-                makeRandomCoordinates(ship.getLength())
-            if (placeShip(randomColumn, randomRow, randomDirection, ship)) {
-                shipDetails.push({ randomColumn, randomRow, randomDirection })
-            } else {
-                i -= 1
-            }
+                makeRandomCoordinates()
+            placeShip(randomColumn, randomRow, randomDirection, ship)
         }
         return shipDetails
     }
