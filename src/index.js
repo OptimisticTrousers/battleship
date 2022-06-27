@@ -11,8 +11,6 @@ const player = createPlayer()
 
 const computer = createPlayer()
 
-playerBoard.randomlyPlaceShips()
-enemyBoard.randomlyPlaceShips()
 playerBoard.placeShip(0, 0, 'horizontal', createShip(5))
 playerBoard.placeShip(3, 4, 'horizontal', createShip(3))
 playerBoard.placeShip(6, 7, 'horizontal', createShip(2))
