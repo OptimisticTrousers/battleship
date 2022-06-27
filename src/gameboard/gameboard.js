@@ -167,22 +167,26 @@ const createGameBoard = () => {
             Math.floor(Math.random() * 2) === 0 ? 'vertical' : 'horizontal'
         const randomColumn = Math.floor(Math.random() * 10)
         const randomRow = Math.floor(Math.random() * 10)
-        //if (!checkIfColumnCoordinateIsValid(randomColumn, shipLength))
-            //return makeRandomCoordinates(shipLength)
-        //if (!checkIfRowCoordinateIsValid(randomRow, shipLength))
-            //return makeRandomCoordinates(shipLength)
         return { randomColumn, randomRow, randomDirection }
     }
 
     const randomlyPlaceShips = () => {
-        const shipDetails = []
-        for (let i = 0; i < ships.length; i += 1) {
-            const ship = ships[i]
-            const { randomColumn, randomRow, randomDirection } =
-                makeRandomCoordinates(ship.getLength())
-            shipDetails.push({ randomColumn, randomRow, randomDirection })
+        if(!checkIfAllShipsHaveSunk()) return []
+
+        let successfulPlacements = 0
+
+        const arrayOfCoordinates = []
+
+        while(successfulPlacements < 5){
+            const {randomColumn, randomRow, randomDirection } = makeRandomCoordinates()
+
+            if(placeShip(randomColumn,  randomRow, randomDirection, ships[successfulPlacements])){
+                arrayOfCoordinates.push({randomColumn, randomRow, randomDirection})
+                successfulPlacements += 1
+            }
+
         }
-        return shipDetails
+        return arrayOfCoordinates
     }
 
     const receiveAttack = (column, row) => {
