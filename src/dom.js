@@ -7,8 +7,7 @@ const attackEnemyCell = (cell, column, row, enemyBoard, player) => {
     if (cellLocation.isShip) {
         cell.classList.add('hit')
         handleAttack(column, row, enemyBoard, player)
-    }
-    else{
+    } else {
         cell.classList.add('miss')
     }
 }
@@ -18,8 +17,7 @@ const attackPlayerCell = (cell, column, row, playerBoard, enemy) => {
     if (cellLocation.isShip) {
         cell.classList.add('hit')
         handleAttack(column, row, playerBoard, enemy)
-    }
-    else{
+    } else {
         cell.classList.add('miss')
     }
 }
@@ -27,7 +25,7 @@ const attackPlayerCell = (cell, column, row, playerBoard, enemy) => {
 const attackHuman = (cell, playerBoard, enemy) => {
     const { randomColumn, randomRow } = playerBoard.makeRandomCoordinates()
     attackPlayerCell(cell, randomColumn, randomRow, playerBoard, enemy)
-    return {randomColumn, randomRow}
+    return { randomColumn, randomRow }
 }
 
 export const renderPlayerShips = ({ getLocation }) => {
@@ -51,11 +49,9 @@ export const renderEnemyAtacks = (playerBoard, column, row) => {
     const cell = document.querySelector(
         `.cell[column='${column}'][row='${row}']`
     )
-    if(cell.classList.contains('ship')){
-
+    if (cell.classList.contains('ship')) {
         cell.classList.add('hit')
-    }
-    else{
+    } else {
         cell.classList.add('miss')
     }
 }
@@ -77,20 +73,21 @@ export const addListenersToEnemyBoard = (
             cell.setAttribute('column', column)
             cell.setAttribute('row', row)
 
-            const controller = new AbortController()
-            cell.addEventListener('click', () =>  {
-
-                if(cell.classList.contains('hit')){
-
-                    alert('STOP BOB')
-                    controller.abort()
-                }
-                // human player attacking computer
-                attackEnemyCell(cell, column, row, enemyBoard, player)
-                // computer attacking human
-                const {randomColumn, randomRow} = attackHuman(cell, playerBoard, enemy)
-                renderEnemyAtacks(playerBoard, randomColumn, randomRow)
-            }, {signal: controller.signal})
+            cell.addEventListener(
+                'click',
+                () => {
+                    // human player attacking computer
+                    attackEnemyCell(cell, column, row, enemyBoard, player)
+                    // computer attacking human
+                    const { randomColumn, randomRow } = attackHuman(
+                        cell,
+                        playerBoard,
+                        enemy
+                    )
+                    renderEnemyAtacks(playerBoard, randomColumn, randomRow)
+                },
+                { once: true }
+            )
         }
     }
 }
