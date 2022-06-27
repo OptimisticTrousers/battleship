@@ -123,20 +123,24 @@ const createGameBoard = () => {
         }
         return false
     }
-    const makeRandomCoordinates = () => {
+    const makeRandomCoordinates = (ship) => {
         const randomDirection =
             Math.floor(Math.random() * 2) === 0 ? 'vertical' : 'horizontal'
         const randomColumn = Math.floor(Math.random() * 10)
         const randomRow = Math.floor(Math.random() * 10)
+        const location = getLocation(randomColumn, randomRow)
+        if(!checkIfColumnCoordinateIsValid(randomColumn, ship)) return makeRandomCoordinates(ship)
+        if(!checkIfRowCoordinateIsValid(randomRow, ship)) return makeRandomCoordinates(ship)
+        if(!(location.isShip === true || location.offLimits === true)) return makeRandomCoordinates(ship)
         return { randomColumn, randomRow, randomDirection }
     }
 
     const randomlyPlaceShips = () => {
         const shipDetails = []
         for (let i = 0; i < ships.length; i += 1) {
-            const { randomColumn, randomRow, randomDirection } =
-                makeRandomCoordinates()
             const ship = ships[i]
+            const { randomColumn, randomRow, randomDirection } =
+                makeRandomCoordinates(ship)
             const location = getLocation(randomColumn, randomRow)
             if (
                 location.isShip === true ||
