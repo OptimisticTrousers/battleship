@@ -96,7 +96,7 @@ const createGameBoard = () => {
         direction,
         ship
     ) => {
-        const shipLength = ship.getLength(0)
+        const shipLength = ship.getLength()
         if (direction === 'vertical') {
             for (let i = 0; i < shipLength; i++) {
                 const location = getLocation(column, row + i)
@@ -105,13 +105,13 @@ const createGameBoard = () => {
                         location.isShip === true &&
                         location.offLimits === true
                     ) {
-                        return false
+                        return true
                     }
                 }
             }
         }
 
-        if (direction === 'horizontal') {
+        else if (direction === 'horizontal') {
             for (let i = 0; i < shipLength; i++) {
                 const location = getLocation(column + i, row)
                 if (location) {
@@ -119,13 +119,13 @@ const createGameBoard = () => {
                         location.isShip === true &&
                         location.offLimits === true
                     ) {
-                        return false
+                        return true 
                     }
                 }
             }
         }
 
-        return false
+        return false 
     }
 
     const placeShip = (column, row, direction, ship) => {
