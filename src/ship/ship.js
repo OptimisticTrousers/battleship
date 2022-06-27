@@ -21,6 +21,7 @@ const createShip = (length, name = 'ship') => {
         hit,
         getStatus,
         hasBeenHit: false,
+        offLimits: true,
         isShip: true,
     }
 }

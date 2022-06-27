@@ -106,16 +106,48 @@ const createGameBoard = () => {
     const checkIfRowCoordinateIsValid = (row, shipLength) =>
         row >= 0 && row + shipLength - 1 < gameBoard.length
 
-    const checkIfLocationIsAShipOrOffLimits = (location) => {
-        if (location.isShip === true || location.offLimits === true) return true
+
+    const checkIfLocationIsAShipOrOffLimits = (
+        column,
+        row,
+        direction,
+        shipLength
+    ) => {
+        if (direction === 'vertical') {
+            for (let i = 0; i < shipLength; i++) {
+                const location = getLocation(column, row + i)
+                if (location) {
+                    if (
+                        location.isShip === true &&
+                        location.offLimits === true
+                    ) {
+                        return false
+                    }
+                }
+            }
+        }
+
+        if (direction === 'horizontal') {
+            for (let i = 0; i < shipLength; i++) {
+                const location = getLocation(column + i, row)
+                if (location) {
+                    if (
+                        location.isShip === true &&
+                        location.offLimits === true
+                    ) {
+                        return false
+                    }
+                }
+            }
+        }
 
         return false
     }
 
     const placeShip = (column, row, direction, ship) => {
-        if (checkIfLocationIsAShipOrOffLimits(getLocation(column, row)))
-            return false
         const shipLength = ship.getLength()
+        if (checkIfLocationIsAShipOrOffLimits(getLocation(column, row, direction, shipLength)))
+            return false
         if (direction === 'vertical') {
             if (checkIfRowCoordinateIsValid(row, shipLength)) {
                 for (let i = 0; i < shipLength; i += 1) {

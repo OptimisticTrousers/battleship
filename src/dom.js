@@ -67,7 +67,7 @@ export const renderPlayerShips = ({ getLocation }) => {
             )
             cell.setAttribute('column', column)
             cell.setAttribute('row', row)
-            if (getLocation(row, column).isShip) {
+            if (getLocation(column, row).isShip) {
                 cell.classList.add('ship')
             }
         }
