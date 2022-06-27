@@ -18,14 +18,7 @@ enemyBoard.placeShip(6, 7, 'horizontal', createShip(2))
 enemyBoard.placeShip(9, 1, 'vertical', createShip(3))
 enemyBoard.placeShip(5, 9, 'horizontal', createShip(4))
 
-addListenersToEnemyBoard(enemyBoard, player)
+addListenersToEnemyBoard(playerBoard, enemyBoard, player, computer)
+
 
 renderPlayerShips(playerBoard)
-
-const {randomColumn, randomRow } = enemyBoard.makeRandomCoordinates()
-
-computer.attack(randomColumn, randomRow, playerBoard)
-renderEnemyAtacks(randomColumn, randomRow)
-
-
-
