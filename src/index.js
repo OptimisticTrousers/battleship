@@ -1,4 +1,4 @@
-import { addListenersToEnemyBoard, renderPlayerShips} from './dom'
+import { addListenersToEnemyBoard, renderPlayerShips,pubSub, attack} from './dom'
 
 import createGameBoard from './gameboard/gameboard'
 import createShip from './ship/ship'
@@ -18,7 +18,11 @@ enemyBoard.placeShip(6, 7, 'horizontal', createShip(2))
 enemyBoard.placeShip(9, 1, 'vertical', createShip(3))
 enemyBoard.placeShip(5, 9, 'horizontal', createShip(4))
 
-addListenersToEnemyBoard(playerBoard, enemyBoard, player, computer)
+const ps = pubSub()
+
+addListenersToEnemyBoard(playerBoard, enemyBoard, player, computer, ps)
+
+ps.subscribe('click', attack)
 
 
 renderPlayerShips(playerBoard)

@@ -21,26 +21,11 @@ const attackPlayerCell = (cell, playerBoard, enemy) => {
     } else {
         cell.classList.add('miss')
     }
+
+    return { randomColumn, randomRow }
 }
 
-export const renderPlayerShips = ({ getLocation }) => {
-    const playerBoardArea = document.querySelector('div.player-board')
-
-    for (let column = 0; column < 10; column += 1) {
-        for (let row = 0; row < 10; row += 1) {
-            const cell = playerBoardArea.querySelector(
-                `.cell:nth-child(${row * 10 + column + 1})`
-            )
-            cell.setAttribute('column', column)
-            cell.setAttribute('row', row)
-            if (getLocation(row, column).isShip) {
-                cell.classList.add('ship')
-            }
-        }
-    }
-}
-
-export const renderEnemyAtacks = (column, row) => {
+const renderEnemyAtacks = (column, row) => {
     const cell = document.querySelector(
         `.cell[column='${column}'][row='${row}']`
     )
@@ -53,7 +38,7 @@ export const renderEnemyAtacks = (column, row) => {
 
 // https://jsmanifest.com/the-publish-subscribe-pattern-in-javascript/
 
-function pubSub() {
+export const pubSub = () => {
     const subscribers = {}
 
     function publish(eventName, data) {
@@ -84,26 +69,29 @@ function pubSub() {
     }
 }
 
-function attack(playerBoard, enemyBoard, player, enemy){
+export const renderPlayerShips = ({ getLocation }) => {
+    const playerBoardArea = document.querySelector('div.player-board')
 
-
-/// / human player attacking computer
-// attackEnemyCell(cell, column, row, enemyBoard, player)
-/// / computer attacking human
-// const { randomColumn, randomRow } = attackHuman(
-// cell,
-// playerBoard,
-// enemy
-// )
-// renderEnemyAtacks(playerBoard, randomColumn, randomRow)
-
+    for (let column = 0; column < 10; column += 1) {
+        for (let row = 0; row < 10; row += 1) {
+            const cell = playerBoardArea.querySelector(
+                `.cell:nth-child(${row * 10 + column + 1})`
+            )
+            cell.setAttribute('column', column)
+            cell.setAttribute('row', row)
+            if (getLocation(row, column).isShip) {
+                cell.classList.add('ship')
+            }
+        }
+    }
 }
 
 export const addListenersToEnemyBoard = (
     playerBoard,
     enemyBoard,
     player,
-    enemy
+    enemy,
+    ps
 ) => {
     const enemyBoardArea = document.querySelector('div.enemy-board')
 
@@ -116,13 +104,41 @@ export const addListenersToEnemyBoard = (
             cell.setAttribute('column', column)
             cell.setAttribute('row', row)
 
-            cell.addEventListener('click', () => {
-
-                const ps = pubSub()
-
-                ps.publish('click', [cell, column, row, playerBoard, enemyBoard, player, enemy])
-
-            }, { once: true })
+            cell.addEventListener(
+                'click',
+                () => {
+                    ps.publish('click', {
+                        cell,
+                        column,
+                        row,
+                        playerBoard,
+                        enemyBoard,
+                        player,
+                        enemy,
+                    })
+                },
+                { once: true }
+            )
         }
     }
+}
+
+export const attack = ({
+    cell,
+    column,
+    row,
+    playerBoard,
+    enemyBoard,
+    player,
+    enemy,
+}) => {
+    // human player attacking computer
+    attackEnemyCell(cell, column, row, enemyBoard, player)
+    // computer attacking human
+    const { randomColumn, randomRow } = attackPlayerCell(
+        cell,
+        playerBoard,
+        enemy
+    )
+    renderEnemyAtacks(randomColumn, randomRow)
 }
