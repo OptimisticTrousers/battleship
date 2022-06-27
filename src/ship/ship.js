@@ -20,6 +20,7 @@ const createShip = (length, name = 'ship') => {
         isSunk,
         hit,
         getStatus,
+        hasBeenHit: false,
         isShip: true,
     }
 }

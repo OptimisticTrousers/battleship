@@ -14,13 +14,7 @@ const attackEnemyCell = (cell, column, row, enemyBoard, player) => {
 
 const attackPlayerCell = (cell, playerBoard, enemy) => {
     const { randomColumn, randomRow } = playerBoard.makeRandomCoordinates()
-    const cellLocation = playerBoard.getLocation(randomColumn, randomRow)
     if(handleAttack(randomColumn, randomRow, playerBoard, enemy) === 'You have already hit this spot!') return attackPlayerCell(cell, playerBoard, enemy)
-    if (cellLocation.isShip) {
-        cell.classList.add('hit')
-    } else {
-        cell.classList.add('miss')
-    }
 
     return { randomColumn, randomRow }
 }
@@ -140,5 +134,5 @@ export const attack = ({
         playerBoard,
         enemy
     )
-    renderEnemyAtacks(randomColumn, randomRow)
+     renderEnemyAtacks(randomColumn, randomRow)
 }
