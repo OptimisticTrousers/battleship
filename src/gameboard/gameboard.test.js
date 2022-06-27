@@ -91,13 +91,14 @@ describe('gameboard factory function', () => {
             const [thirdColumn, thirdRow]= [6, 7]
             const [fourthColumn, fourthRow]= [9, 1]
             const [fifthColumn, fifthRow]= [5, 9]
-            gameBoard.placeShip(firstColumn, firstRow, 'horizontal', createShip(1))
+            gameBoard.placeShip(firstColumn, firstRow, 'horizontal', createShip(2))
             gameBoard.placeShip(secondColumn, secondRow, 'horizontal', createShip(1))
             gameBoard.placeShip(thirdColumn, thirdRow, 'horizontal', createShip(1))
             gameBoard.placeShip(fourthColumn, fourthRow, 'vertical', createShip(1))
             gameBoard.placeShip(fifthColumn, fifthRow, 'horizontal', createShip(1))
 
             player.attack(firstColumn, firstRow, gameBoard)
+            player.attack(firstColumn + 1, firstRow, gameBoard)
             player.attack(secondColumn, secondRow, gameBoard)
             player.attack(thirdColumn, thirdRow, gameBoard)
             player.attack(fourthColumn, fourthRow, gameBoard)

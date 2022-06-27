@@ -106,8 +106,7 @@ const createGameBoard = () => {
         if (direction === 'vertical') {
             if (checkIfRowCoordinateIsValid(row, shipLength)) {
                 for (let i = 0; i < shipLength; i += 1) {
-                    const location = gameBoard[column][ row + i] = ship
-                    location.position = i
+                    gameBoard[column][ row + i] = { ...ship, position : i}
                     //setLocation(column, row + i, ship)
                     setLocation(column + 1, row + i)
                     setLocation(column - 1, row + i)
@@ -122,8 +121,7 @@ const createGameBoard = () => {
         } else if (direction === 'horizontal') {
             if (checkIfColumnCoordinateIsValid(column, shipLength)) {
                 for (let i = 0; i < shipLength; i += 1) {
-                    const location = gameBoard[column + i][ row ] = ship
-                    location.position = i
+                    gameBoard[column + i][ row ] = { ...ship, position: i}
                     //setLocation(column + i, row, ship)
                     setLocation(column + i, row + 1)
                     setLocation(column + i, row - 1)

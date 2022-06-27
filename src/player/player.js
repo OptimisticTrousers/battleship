@@ -5,7 +5,7 @@ const createPlayer = (name = 'player') => {
         const location = getLocation(column, row)
         if (location.hasBeenHit === false || (location.isShip && location.getStatus().includes('unhit') === false)) {
             receiveAttack(column, row)
-            location.hit(0)
+            location.hit(location.position)
             return "It's a hit!"
         }
 
