@@ -75,12 +75,30 @@ export const renderPlayerShips = ({ getLocation }) => {
 }
 
 const checkIfGameOver = (playerBoard, enemyBoard) => {
-    console.log(enemyBoard.checkIfAllShipsHaveSunk())
     if(playerBoard.checkIfAllShipsHaveSunk()){
-        console.log('PLAYER won')
+        const modal = document.querySelector('.modal');
+        const modalWinner = document.querySelector('.modal-content > p')
+        const playAgainButton = document.querySelector('.modal-content > button')
+
+        modal.style.display = "block"
+        playAgainButton.addEventListener('click', () => {
+            location.reload()
+        })
+
+        modalWinner.textContent = 'You win!'
+
+
     }
     if(enemyBoard.checkIfAllShipsHaveSunk()){
-        console.log('ENEMY won')
+        const modal = document.querySelector('.modal');
+        const modalWinner = document.querySelector('.modal-content > p')
+        const playAgainButton = document.querySelector('.modal-content > button')
+
+        modal.style.display = "block"
+        modalWinner.textContent = 'You lose!'
+        playAgainButton.addEventListener('click', () => {
+            location.reload()
+        })
     }
 }
 
