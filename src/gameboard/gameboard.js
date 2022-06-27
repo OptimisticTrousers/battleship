@@ -146,12 +146,26 @@ const createGameBoard = () => {
         }
         return false
     }
+        const availableSpaces = () =>
+        gameBoard
+            .flat()
+            .filter((cell) => cell.isShip === false && cell.offLimits === false)
+            .length - 1
+
     const makeRandomCoordinates = () => {
         const randomDirection =
             Math.floor(Math.random() * 2) === 0 ? 'vertical' : 'horizontal'
-        const randomColumn = Math.floor(Math.random() * 10)
-        const randomRow = Math.floor(Math.random() * 10)
-        return { randomColumn, randomRow, randomDirection }
+        const randomLocation = Math.floor(Math.random() * availableSpaces())
+const flattenedGameBoard = gameBoard.flat()
+
+        const elementIndex = flattenedGameBoard.findIndex((cell, index) => index === randomLocation)
+
+        const element = flattenedGameBoard[elementIndex]
+
+        const elementColumn = element.column
+        const elementRow = element.row
+
+        return { elementColumn, elementRow, randomDirection }
     }
 
     const randomlyPlaceShips = () => {

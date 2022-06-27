@@ -20,9 +20,9 @@ const attackEnemyCell = (column, row, enemyBoard, player) => {
 }
 
 const attackPlayerCell = (playerBoard, enemy) => {
-    const { randomColumn, randomRow } = playerBoard.makeRandomCoordinates()
-    handleAttack(randomColumn, randomColumn, playerBoard, enemy)
-    renderAttacks('player', randomColumn, randomRow, playerBoard)
+    const { elementColumn , elementRow} = playerBoard.makeRandomCoordinates()
+    handleAttack(elementColumn, elementRow, playerBoard, enemy)
+    renderAttacks('player', elementColumn, elementRow, playerBoard)
 }
 // https://jsmanifest.com/the-publish-subscribe-pattern-in-javascript/
 
