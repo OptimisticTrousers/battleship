@@ -6,7 +6,7 @@ const attackEnemyCell = (cell, column, row, enemyBoard, player) => {
     const cellLocation = enemyBoard.getLocation(column, row)
     if (cellLocation.isShip) {
         cell.classList.add('hit')
-        handleAttack(column, row, enemyBoard, player)
+        // handleAttack(column, row, enemyBoard, player)
     } else {
         cell.classList.add('miss')
     }
@@ -16,7 +16,7 @@ const attackPlayerCell = (cell, column, row, playerBoard, enemy) => {
     const cellLocation = playerBoard.getLocation(column, row)
     if (cellLocation.isShip) {
         cell.classList.add('hit')
-        handleAttack(column, row, playerBoard, enemy)
+        // handleAttack(column, row, playerBoard, enemy)
     } else {
         cell.classList.add('miss')
     }
@@ -53,6 +53,39 @@ export const renderEnemyAtacks = (playerBoard, column, row) => {
         cell.classList.add('hit')
     } else {
         cell.classList.add('miss')
+    }
+}
+
+//https://jsmanifest.com/the-publish-subscribe-pattern-in-javascript/
+
+function pubSub() {
+    const subscribers = {}
+
+    function publish(eventName, data) {
+        if (!Array.isArray(subscribers[eventName])) {
+            return
+        }
+        subscribers[eventName].forEach((callback) => {
+            callback(data)
+        })
+    }
+    function subscribe(eventName, callback) {
+        if (!Array.isArray(subscribe[eventName])) {
+            subscribers[eventName] = []
+        }
+        subscribers[eventName].push(callback)
+        const index = subscribers[eventName].length - 1
+
+        return {
+            unsubscribe() {
+                subscribers[eventName].splice(index, 1)
+            }
+        }
+    }
+
+    return {
+        publish,
+        subscribe,
     }
 }
 
