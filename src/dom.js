@@ -83,7 +83,7 @@ function getDragAfterElement(container, y, x){
         }
             return closest
 
-    }, {offset: Number.NEGATIVE_INFINITY}).element
+    }, {offsetX: Number.NEGATIVE_INFINITY, offsetY:Number.NEGATIVE_INFINITY}).element
 }
 
 const addListenerToBoat = (cells) => {
@@ -91,9 +91,6 @@ const addListenerToBoat = (cells) => {
     //Video for drag and drop: https://www.youtube.com/watch?v=jfYWwQrtzzY
 
     const cellsContainer = document.querySelector('.player-board')
-
-    let droptarget = ""
-
     cells.forEach(cell => {
         cell.addEventListener('dragstart', () => {
             cell.classList.add('dragging')
