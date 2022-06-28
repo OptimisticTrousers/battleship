@@ -72,13 +72,17 @@ const cellDragListener = function (event) {
 //}
 
 function getDragAfterElement(container, y){
-    const draggableElements = [...container.querySelectorAll('.cell[ship-name="Submarine"]:not(.dragging)')]
+    const draggableElements = [...container.querySelectorAll('.cell:not(.dragging)')]
 
-    draggableElements.reduce((closest, child) => {
+    return draggableElements.reduce((closest, child) => {
         const box = child.getBoundingClientRect()
-        console.log(box)
+        const offset = y - box.top - box.height / 2
+        if(offset < 0 && offset > closest.offset){
+            return {offset, element:child}
+        }
+            return closest
 
-    }, {offset: Number.POSITIVE_INFINITY})
+    }, {offset: Number.NEGATIVE_INFINITY}).element
 }
 
 const addListenerToBoat = (cells) => {
@@ -97,6 +101,7 @@ const addListenerToBoat = (cells) => {
     cellsContainer.addEventListener('dragover', (event) => {
         event.preventDefault()
         const afterElement = getDragAfterElement(cellsContainer, event.clientY)
+        console.log(afterElement)
         const draggable = document.querySelector('.dragging')
         cellsContainer.appendChild(draggable)
     })
