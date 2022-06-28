@@ -42,6 +42,7 @@ main {
 
 .cell.ship {
     background-color: #ddd9bc;
+    cursor: move;
 }
 
 .cell.hit{
@@ -89,4 +90,8 @@ main {
     background-color: green;
     color:white;
 
+}
+
+.cell.dragging{
+    opacity: .5;
 }
