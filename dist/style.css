@@ -94,10 +94,3 @@ main {
 .cell.dragging{
     opacity: .5;
 }
-
-.ship-container{
-    all: initial;
-}
-.ship-container{
-    all: unset;
-}

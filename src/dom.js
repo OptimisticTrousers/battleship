@@ -344,7 +344,6 @@ export const renderPlayerShips = ({ getLocation }) => {
             if (location.isShip) {
                 cell.classList.add('ship')
                 cell.setAttribute('ship-name', location.getName())
-                cell.setAttribute('draggable', true)
             }
         }
     }
