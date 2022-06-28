@@ -12,10 +12,12 @@ const createShip = (length, name = 'ship') => {
         }
     }
 
+    const getName = () =>  name
+
     const isSunk = () => status.every((position) => position === 'hit')
 
     return {
-        name,
+        getName,
         getLength,
         isSunk,
         hit,

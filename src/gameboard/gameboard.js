@@ -211,8 +211,6 @@ const createGameBoard = () => {
         const elementColumn = location.column
         const elementRow = location.row
 
-        console.log(location)
-
 
         return { elementColumn, elementRow, randomDirection }
     }

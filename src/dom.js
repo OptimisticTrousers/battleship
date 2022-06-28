@@ -20,7 +20,7 @@ const attackEnemyCell = (column, row, enemyBoard, player) => {
 }
 
 const attackPlayerCell = (playerBoard, enemy) => {
-    const { elementColumn , elementRow} = playerBoard.makeRandomCoordinates()
+    const { elementColumn, elementRow } = playerBoard.makeRandomCoordinates()
     handleAttack(elementColumn, elementRow, playerBoard, enemy)
     renderAttacks('player', elementColumn, elementRow, playerBoard)
 }
@@ -57,6 +57,79 @@ export const pubSub = () => {
     }
 }
 
+const cellDragListener = function (event) {
+    console.log(this)
+}
+
+//const addDraggableProperties = () => {
+
+    //const draggables = document.querySelectorAll('.cell[draggable="true"]')
+    //draggables.forEach(draggable => {
+        //draggable.addEventListener('dragstart', () => {
+            //console.log('bob jones')
+        //})
+    //})
+//}
+
+function getDragAfterElement(container, y){
+    const draggableElements = [...container.querySelectorAll('.cell[ship-name="Submarine"]:not(.dragging)')]
+
+    draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect()
+        console.log(box)
+
+    }, {offset: Number.POSITIVE_INFINITY})
+}
+
+const addListenerToBoat = (cells) => {
+
+    const cellsContainer = document.querySelector('.player-board')
+    cells.forEach(cell => {
+        cell.addEventListener('dragstart', () => {
+            cell.classList.add('dragging')
+        })
+
+        cell.addEventListener('dragend', () => {
+            cell.classList.remove('dragging')
+        })
+    })
+
+    console.log(cellsContainer)
+    cellsContainer.addEventListener('dragover', (event) => {
+        event.preventDefault()
+        const afterElement = getDragAfterElement(cellsContainer, event.clientY)
+        const draggable = document.querySelector('.dragging')
+        cellsContainer.appendChild(draggable)
+    })
+}
+
+const queryCells = () => {
+
+    const patrolBoat= document.querySelectorAll('.cell[ship-name="Patrol Boat"]')
+    addListenerToBoat(patrolBoat)
+
+    //const patrolBoatContainer = document.createElement('div')
+
+    const submarine = document.querySelectorAll('.cell[ship-name="Submarine"]')
+    addListenerToBoat(submarine)
+    //const submarineContainer = document.createElement('div')
+
+    const carrier = document.querySelectorAll('.cell[ship-name="Carrier"]')
+    addListenerToBoat(carrier)
+    //const carrierContainer = document.createElement('div')
+
+    const battleShip= document.querySelectorAll('.cell[ship-name="Battleship"]')
+    addListenerToBoat(battleShip)
+    //const battleShipContainer= document.createElement('div')
+
+    const destroyer = document.querySelectorAll('.cell[ship-name="Destroyer"]')
+    addListenerToBoat(destroyer)
+    //const destroyerContainer = document.createElement('div')
+
+
+}
+
+
 export const renderPlayerShips = ({ getLocation }) => {
     const playerBoardArea = document.querySelector('div.player-board')
 
@@ -67,34 +140,40 @@ export const renderPlayerShips = ({ getLocation }) => {
             )
             cell.setAttribute('column', column)
             cell.setAttribute('row', row)
-            if (getLocation(column, row).isShip) {
+            const location = getLocation(column, row)
+            if (location.isShip) {
                 cell.classList.add('ship')
+                cell.setAttribute('ship-name', location.getName())
+                cell.setAttribute('draggable', true)
             }
         }
     }
+                queryCells()
 }
 
 const checkIfGameOver = (playerBoard, enemyBoard) => {
-    if(playerBoard.checkIfAllShipsHaveSunk()){
-        const modal = document.querySelector('.modal');
+    if (playerBoard.checkIfAllShipsHaveSunk()) {
+        const modal = document.querySelector('.modal')
         const modalWinner = document.querySelector('.modal-content > p')
-        const playAgainButton = document.querySelector('.modal-content > button')
+        const playAgainButton = document.querySelector(
+            '.modal-content > button'
+        )
 
-        modal.style.display = "block"
+        modal.style.display = 'block'
         playAgainButton.addEventListener('click', () => {
             location.reload()
         })
 
         modalWinner.textContent = 'You win!'
-
-
     }
-    if(enemyBoard.checkIfAllShipsHaveSunk()){
-        const modal = document.querySelector('.modal');
+    if (enemyBoard.checkIfAllShipsHaveSunk()) {
+        const modal = document.querySelector('.modal')
         const modalWinner = document.querySelector('.modal-content > p')
-        const playAgainButton = document.querySelector('.modal-content > button')
+        const playAgainButton = document.querySelector(
+            '.modal-content > button'
+        )
 
-        modal.style.display = "block"
+        modal.style.display = 'block'
         modalWinner.textContent = 'You lose!'
         playAgainButton.addEventListener('click', () => {
             location.reload()
@@ -132,7 +211,6 @@ export const addListenersToEnemyBoard = (
                         player,
                         enemy,
                     })
-
                 },
                 { once: true }
             )
@@ -155,5 +233,4 @@ export const attack = ({
     attackPlayerCell(playerBoard, enemy)
 
     checkIfGameOver(playerBoard, enemyBoard)
-
 }
