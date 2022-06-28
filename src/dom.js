@@ -117,33 +117,8 @@ const checkIfColumnContainsShip = (row, playerBoard) => {
 
 const attackPlayerCell = (playerBoard, enemy, elementColumn, elementRow, prevLocation) => {
         const location = playerBoard.getLocation(elementColumn, elementRow)
-    if(location&& location.isShip === false && prevLocation && prevLocation.isShip === true){
-
-        let prevLocationRow;
-        let prevLocationColumn;
-        if(prevLocation.column > elementColumn ){
-        prevLocationColumn = prevLocation.column - 1
-        }
-        else if(prevLocation.column !== undefined &&  prevLocation.column < elementColumn){
-        prevLocationColumn = prevLocation.column + 1
-        }
-        else if(prevLocation.row !== undefined && prevLocation.row > elementRow){
-        prevLocationRow = prevLocation.row- 1
-
-        }
-        else if(prevLocation.row !== undefined && prevLocation.row < elementRow){
-        prevLocationRow = prevLocation.row + 1
-
-        }
-
-        setTimeout(() => {
-
-        attackPlayerCell(playerBoard, enemy, prevLocationColumn, prevLocationRow, prevLocation)
-        },700)
-    }
-    else if(handleAttack(elementColumn, elementRow, playerBoard, enemy) === "You hit a ship!"){
+    if(handleAttack(elementColumn, elementRow, playerBoard, enemy) === "You hit a ship!"){
         
-
 
         const randomPosition = randomDirectionAttack(elementColumn, elementRow, playerBoard)
         const randomPositionColumn = randomPosition.column
@@ -157,19 +132,19 @@ const attackPlayerCell = (playerBoard, enemy, elementColumn, elementRow, prevLoc
                     // eslint-disable-next-line default-case
                     switch(random){
                         case 0:
-                                attackPlayerCell(playerBoard, enemy, filteredDirections[0].column, filteredDirections[0].row, location)
+                                attackPlayerCell(playerBoard, enemy, filteredDirections[0].column, filteredDirections[0].row, prevLocation)
 
                             break;
                         case 1:
-                                attackPlayerCell(playerBoard, enemy, filteredDirections[1].column, filteredDirections[1].row, location)
+                                attackPlayerCell(playerBoard, enemy, filteredDirections[1].column, filteredDirections[1].row, prevLocation)
 
                             break;
                         case 2:
-                                attackPlayerCell(playerBoard, enemy, filteredDirections[2].column, filteredDirections[2].row, location)
+                                attackPlayerCell(playerBoard, enemy, filteredDirections[2].column, filteredDirections[2].row, prevLocation)
 
                             break;
                         case 3:
-                                attackPlayerCell(playerBoard, enemy, filteredDirections[3].column, filteredDirections[3].row)
+                                attackPlayerCell(playerBoard, enemy, filteredDirections[3].column, filteredDirections[3].row, prevLocation)
 
                             break;
 
@@ -179,6 +154,34 @@ const attackPlayerCell = (playerBoard, enemy, elementColumn, elementRow, prevLoc
         setTimeout(() => {
                 attackPlayerCell(playerBoard, enemy, randomPositionColumn, randomPositionRow)
         }, 700)
+    }
+    else if(location&& location.isShip === false && prevLocation && prevLocation.isShip === true){
+
+        let prevLocationRow;
+        let prevLocationColumn;
+        const shipLength = prevLocation.getLength()
+        if(prevLocation.column > elementColumn ){
+        prevLocationColumn = prevLocation.column - (prevLocation.column - elementColumn)
+        }
+        if(prevLocation.column < elementColumn){
+        prevLocationColumn = prevLocation.column + (elementColumn - prevLocation.column)
+        }
+        if(prevLocation.row > elementRow){
+        prevLocationRow = prevLocation.row -  (prevLocation.row - elementRow)
+
+        }
+        if(prevLocation.row < elementRow){
+        prevLocationRow = prevLocation.row + (elementRow - prevLocation.row)
+
+        }
+
+        setTimeout(() => {
+
+            if(prevLocation.isSunk() === false){
+
+            attackPlayerCell(playerBoard, enemy, prevLocationColumn, prevLocationRow, prevLocation)
+            }
+        },700)
     }
 
     setTimeout(() => {
