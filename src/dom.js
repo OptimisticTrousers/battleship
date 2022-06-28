@@ -28,16 +28,16 @@ const isSpaceAroundHit = (column, row, playerBoard) => {
 
     const spacesHit = []
 
-    if(nextColumn ?? !nextColumn.hasBeenHit){
+    if(nextColumn && !nextColumn.hasBeenHit){
         spacesHit.push(nextColumn)
     }
-    if(previousColumn ?? !previousColumn.hasBeenHit){
+    if(previousColumn && !previousColumn.hasBeenHit){
         spacesHit.push(previousColumn)
     }
-    if(nextRow ?? !nextRow.hasBeenHit){
+    if(nextRow && !nextRow.hasBeenHit){
         spacesHit.push(nextRow)
     }
-    if(previousRow ?? !previousRow.hasBeenHit){
+    if(previousRow && !previousRow.hasBeenHit){
         spacesHit.push(previousRow)
     }
 
@@ -56,17 +56,135 @@ const randomDirectionAttack = (column, row, playerBoard) => {
     return spacesHit[randomIndex]
 }
 
-const attackPlayerCell = (playerBoard, enemy, elementColumn, elementRow) => {
-        console.log(elementColumn, elementRow)
-    if(handleAttack(elementColumn, elementRow, playerBoard, enemy) === "You hit a ship!"){
+const isRandomColumnGreaterThanCurrentColumn = (column, randomColumn) => 
+    randomColumn > column
+
+const isRandomRowGreaterThanCurrentColumn = (row, randomRow) => 
+    randomRow > row
+
+const listOfRandomCoordinates = (column, row, playerBoard) => {
+
+        const locationPrototype = {
+            location() {
+                return playerBoard.getLocation(this.column, this.row)
+            }
+        }
+
+        const top = Object.assign(Object.create(locationPrototype), {
+            column,
+            row: row - 1,
+        })
+        const bottom = Object.assign(Object.create(locationPrototype), {
+            column,
+            row: row + 1,
+        })
+        const right = Object.assign(Object.create(locationPrototype), {
+            column: column + 1,
+            row,
+        })
+        const left = Object.assign(Object.create(locationPrototype), {
+            column: column - 1,
+            row,
+        })
+        const directions = []
+
+        directions.push(top)
+        directions.push(bottom)
+        directions.push(right)
+        directions.push(left)
+
+        return directions
+}
+
+const checkIfRowContainsShip = (column, playerBoard) => {
+    for(let row = 0; row < 10; row++){
+        if(playerBoard.getLocation(column, row).isShip){
+            return true
+        }
+    }
+    return false
+}
+
+const checkIfColumnContainsShip = (row, playerBoard) => {
+
+    for(let column = 0; column < 10; column++){
+        if(playerBoard.getLocation(column, row).isShip){
+            return true
+        }
+    }
+    return false
+}
+
+const attackPlayerCell = (playerBoard, enemy, elementColumn, elementRow, prevLocation) => {
+        const location = playerBoard.getLocation(elementColumn, elementRow)
+    if(location&& location.isShip === false && prevLocation && prevLocation.isShip === true){
+
+        let prevLocationRow;
+        let prevLocationColumn;
+        if(prevLocation.column > elementColumn ){
+        prevLocationColumn = prevLocation.column - 1
+        }
+        else if(prevLocation.column !== undefined &&  prevLocation.column < elementColumn){
+        prevLocationColumn = prevLocation.column + 1
+        }
+        else if(prevLocation.row !== undefined && prevLocation.row > elementRow){
+        prevLocationRow = prevLocation.row- 1
+
+        }
+        else if(prevLocation.row !== undefined && prevLocation.row < elementRow){
+        prevLocationRow = prevLocation.row + 1
+
+        }
+
+        setTimeout(() => {
+
+        attackPlayerCell(playerBoard, enemy, prevLocationColumn, prevLocationRow, prevLocation)
+        },700)
+    }
+    else if(handleAttack(elementColumn, elementRow, playerBoard, enemy) === "You hit a ship!"){
         
+
 
         const randomPosition = randomDirectionAttack(elementColumn, elementRow, playerBoard)
         const randomPositionColumn = randomPosition.column
+
+        const directions = listOfRandomCoordinates(elementColumn, elementRow, playerBoard)
+        const filteredDirections = directions.filter((element) => element.column !== undefined && element.row !== undefined)
         const randomPositionRow = randomPosition.row
-        attackPlayerCell(playerBoard, enemy, randomPositionColumn, randomPositionRow)
+                if(location.isShip && location.isSunk() === false){
+
+                    const random = Math.floor(Math.random() * filteredDirections.length)
+                    // eslint-disable-next-line default-case
+                    switch(random){
+                        case 0:
+                                attackPlayerCell(playerBoard, enemy, filteredDirections[0].column, filteredDirections[0].row, location)
+
+                            break;
+                        case 1:
+                                attackPlayerCell(playerBoard, enemy, filteredDirections[1].column, filteredDirections[1].row, location)
+
+                            break;
+                        case 2:
+                                attackPlayerCell(playerBoard, enemy, filteredDirections[2].column, filteredDirections[2].row, location)
+
+                            break;
+                        case 3:
+                                attackPlayerCell(playerBoard, enemy, filteredDirections[3].column, filteredDirections[3].row)
+
+                            break;
+
+                    }
+                }
+
+        setTimeout(() => {
+                attackPlayerCell(playerBoard, enemy, randomPositionColumn, randomPositionRow)
+        }, 700)
     }
+
+    setTimeout(() => {
+
     renderAttacks('player', elementColumn, elementRow, playerBoard)
+    }, 700)
 }
 // https://jsmanifest.com/the-publish-subscribe-pattern-in-javascript/
 
