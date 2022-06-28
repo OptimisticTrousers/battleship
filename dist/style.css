@@ -140,6 +140,24 @@ button.randomize:hover{
     opacity: .5;
 }
 
+footer{
+
+text-align: center;
+}
+
+footer > a{
+
+font-size: 24px;
+color: white;
+padding: 14px 16px;
+text-decoration: none;
+}
+
+footer > a:hover{
+    transition: all ease-in 0.5s;
+    color:#08f51b;
+}
+
 @media (max-width: 580px) {
     .cell{
         width: 2rem;
