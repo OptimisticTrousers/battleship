@@ -91,7 +91,8 @@ const addListenerToBoat = (cells) => {
     //Video for drag and drop: https://www.youtube.com/watch?v=jfYWwQrtzzY
 
     const cellsContainer = document.querySelector('.player-board')
-    cells.forEach(cell => {
+    const shipContainer  = document.createElement('div')
+    cells.forEach((cell, index) => {
         cell.addEventListener('dragstart', () => {
             cell.classList.add('dragging')
         })
