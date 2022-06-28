@@ -71,14 +71,15 @@ const cellDragListener = function (event) {
     //})
 //}
 
-function getDragAfterElement(container, y){
+function getDragAfterElement(container, y, x){
     const draggableElements = [...container.querySelectorAll('.cell:not(.dragging)')]
 
     return draggableElements.reduce((closest, child) => {
         const box = child.getBoundingClientRect()
-        const offset = y - box.top - box.height / 2
-        if(offset < 0 && offset > closest.offset){
-            return {offset, element:child}
+        const offsetY = y - box.top - box.height / 2
+        const offsetX = x - box.left - box.width/ 2
+        if(offsetY < 0 && offsetY > closest.offsetY && offsetX < 0 && offsetX > closest.offsetX){
+            return {offsetX, offsetY, element:child}
         }
             return closest
 
@@ -90,6 +91,9 @@ const addListenerToBoat = (cells) => {
     //Video for drag and drop: https://www.youtube.com/watch?v=jfYWwQrtzzY
 
     const cellsContainer = document.querySelector('.player-board')
+
+    let droptarget = ""
+
     cells.forEach(cell => {
         cell.addEventListener('dragstart', () => {
             cell.classList.add('dragging')
@@ -102,7 +106,7 @@ const addListenerToBoat = (cells) => {
 
     cellsContainer.addEventListener('dragover', (event) => {
         event.preventDefault()
-        const afterElement = getDragAfterElement(cellsContainer, event.clientY)
+        const afterElement = getDragAfterElement(cellsContainer, event.clientY, event.clientX)
         const draggable = document.querySelector('.dragging')
         if(afterElement === null){
 
