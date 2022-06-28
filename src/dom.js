@@ -78,6 +78,7 @@ function getDragAfterElement(container, y, x){
         const box = child.getBoundingClientRect()
         const offsetY = y - box.top - box.height / 2
         const offsetX = x - box.left - box.width/ 2
+        console.log(child)
         if(offsetY < 0 && offsetY > closest.offsetY && offsetX < 0 && offsetX > closest.offsetX){
             return {offsetX, offsetY, element:child}
         }
@@ -104,8 +105,9 @@ const addListenerToBoat = (cells) => {
 
     cellsContainer.addEventListener('dragover', (event) => {
         event.preventDefault()
-        const afterElement = getDragAfterElement(cellsContainer, event.clientY, event.clientX)
+        let afterElement;
         const draggable = document.querySelector('.dragging')
+        console.log(afterElement)
         if(afterElement === null){
 
             cellsContainer.appendChild(draggable)
@@ -141,7 +143,23 @@ const queryCells = () => {
 
 }
 
+function createDragAndDropFleet(player){
+    renderPlayerShipSelect(1, 1)
+    renderPlayerShipSelect(2, 2)
+    renderPlayerShipSelect(3, 3)
+    renderPlayerShipSelect(4, 4)
 
+    function renderPlayerShipSelect(i, length){
+        const container = document.querySelector('.player-board')
+        const shipContainer = documnet.createElement('div')
+        shipContainer.classList.add("ship-container")
+        container.appendChild(shipContainer)
+
+        const shipInfo = document.createElement("span")
+        shipInfo.classList.add()
+
+    }
+}
 export const renderPlayerShips = ({ getLocation }) => {
     const playerBoardArea = document.querySelector('div.player-board')
 
@@ -160,7 +178,6 @@ export const renderPlayerShips = ({ getLocation }) => {
             }
         }
     }
-                queryCells()
 }
 
 const checkIfGameOver = (playerBoard, enemyBoard) => {
