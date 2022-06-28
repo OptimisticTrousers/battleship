@@ -132,19 +132,19 @@ const attackPlayerCell = (playerBoard, enemy, elementColumn, elementRow, prevLoc
                     // eslint-disable-next-line default-case
                     switch(random){
                         case 0:
-                                attackPlayerCell(playerBoard, enemy, filteredDirections[0].column, filteredDirections[0].row, prevLocation)
+                                attackPlayerCell(playerBoard, enemy, filteredDirections[0].column, filteredDirections[0].row, location)
 
                             break;
                         case 1:
-                                attackPlayerCell(playerBoard, enemy, filteredDirections[1].column, filteredDirections[1].row, prevLocation)
+                                attackPlayerCell(playerBoard, enemy, filteredDirections[1].column, filteredDirections[1].row, location)
 
                             break;
                         case 2:
-                                attackPlayerCell(playerBoard, enemy, filteredDirections[2].column, filteredDirections[2].row, prevLocation)
+                                attackPlayerCell(playerBoard, enemy, filteredDirections[2].column, filteredDirections[2].row, location)
 
                             break;
                         case 3:
-                                attackPlayerCell(playerBoard, enemy, filteredDirections[3].column, filteredDirections[3].row, prevLocation)
+                                attackPlayerCell(playerBoard, enemy, filteredDirections[3].column, filteredDirections[3].row, location)
 
                             break;
 
@@ -152,7 +152,7 @@ const attackPlayerCell = (playerBoard, enemy, elementColumn, elementRow, prevLoc
                 }
 
         setTimeout(() => {
-                attackPlayerCell(playerBoard, enemy, randomPositionColumn, randomPositionRow)
+                attackPlayerCell(playerBoard, enemy, randomPositionColumn, randomPositionRow, prevLocation)
         }, 700)
     }
     else if(location&& location.isShip === false && prevLocation && prevLocation.isShip === true){
@@ -184,10 +184,12 @@ const attackPlayerCell = (playerBoard, enemy, elementColumn, elementRow, prevLoc
         },700)
     }
 
+
     setTimeout(() => {
 
-    renderAttacks('player', elementColumn, elementRow, playerBoard)
+    renderAttacks('player', elementColumn, elementRow, playerBoard, prevLocation)
     }, 700)
+
 }
 // https://jsmanifest.com/the-publish-subscribe-pattern-in-javascript/
 
