@@ -101,9 +101,13 @@ const addListenerToBoat = (cells) => {
     cellsContainer.addEventListener('dragover', (event) => {
         event.preventDefault()
         const afterElement = getDragAfterElement(cellsContainer, event.clientY)
-        console.log(afterElement)
         const draggable = document.querySelector('.dragging')
-        cellsContainer.appendChild(draggable)
+        if(afterElement === null){
+
+            cellsContainer.appendChild(draggable)
+        } else{
+            cellsContainer.insertBefore(draggable, afterElement)
+        }
     })
 }
 
