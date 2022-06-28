@@ -87,6 +87,8 @@ function getDragAfterElement(container, y){
 
 const addListenerToBoat = (cells) => {
 
+    //Video for drag and drop: https://www.youtube.com/watch?v=jfYWwQrtzzY
+
     const cellsContainer = document.querySelector('.player-board')
     cells.forEach(cell => {
         cell.addEventListener('dragstart', () => {
