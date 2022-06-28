@@ -27,7 +27,7 @@ body {
 h1 {
     font-family: Stereonic-XS;
     padding-top: 2rem;
-    font-size: 3rem;
+    font-size: 5rem;
     text-align: center;
 }
 
@@ -41,8 +41,19 @@ main {
     flex-wrap: wrap;
 }
 
+.player, .enemy{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    row-gap: 32px;
+}
 .player > p, .enemy > p{
-    font-size: 2rem;
+    font-size: 3rem;
+}
+
+button.randomize{
+    padding: 1.5rem 3rem;
 }
 
 .player-board,
