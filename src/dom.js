@@ -94,7 +94,6 @@ const addListenerToBoat = (cells) => {
         })
     })
 
-    console.log(cellsContainer)
     cellsContainer.addEventListener('dragover', (event) => {
         event.preventDefault()
         const afterElement = getDragAfterElement(cellsContainer, event.clientY)
