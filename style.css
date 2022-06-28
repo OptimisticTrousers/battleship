@@ -37,6 +37,7 @@ main {
     width: inherit;
     height: inherit;
     justify-content: space-evenly;
+    row-gap: 32px;
     flex-wrap: wrap;
 }
 
