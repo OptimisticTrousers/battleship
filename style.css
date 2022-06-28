@@ -9,12 +9,12 @@ html {
 
 @font-face{
     font-family: Proto-Sans-32;
-    src: url('./proto-sans-32.otf')
+    src: url('./fonts/proto-sans-32.otf')
 }
 
 @font-face{
     font-family: Stereonic-XS;
-    src: url('./Mint\ Type\ -\ Stereonic-XS.otf')
+    src: url('./fonts/Mint\ Type\ -\ Stereonic-XS.otf')
 }
 body {
     min-height: 100vh;
@@ -101,7 +101,7 @@ button.randomize:hover{
     background-color: blue;
 }
 .modal{
-        display: none;
+    display: none;
     position: fixed;
     z-index: 1;
     width: 100%;
@@ -156,6 +156,17 @@ text-decoration: none;
 footer > a:hover{
     transition: all ease-in 0.5s;
     color:#08f51b;
+}
+.modal img{
+
+    mix-blend-mode: multiply;
+    width:75%;
+    filter: brightness(1.25);
+    margin-top: 0.5rem;
+    border-radius: 10px;
+    border: 1px solid green;
+    margin-bottom: 0.5rem;
+    
 }
 
 @media (max-width: 580px) {
