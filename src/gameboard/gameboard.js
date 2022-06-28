@@ -18,7 +18,7 @@ const createGameBoard = () => {
     
     }
 
-    const gameBoard = initializeBoard()
+    let gameBoard = initializeBoard()
 
     const ships = [
         createShip(5, 'Carrier'),
@@ -240,7 +240,12 @@ const createGameBoard = () => {
         shipLength + 2
     // adding shipLength plus two because for every increase in the size of ship, the zones covered increase by 2 units
 
+    const clearBoard  = () => {
+        gameBoard = initializeBoard()
+    }
+
     return {
+        clearBoard,
         checkIfLocationIsAShipOrOffLimits,
         checkIfOffLimitZoneWasCorrectlyImplemented,
         getLocation,

@@ -1,4 +1,4 @@
-import { addListenersToEnemyBoard, renderPlayerShips,pubSub, attack} from './dom'
+import { addListenersToEnemyBoard, renderPlayerShips,pubSub, randomizeListener, attack} from './dom'
 
 import createGameBoard from './gameboard/gameboard'
 import createShip from './ship/ship'
@@ -19,12 +19,12 @@ const computer = createPlayer()
         createShip(3, 'Submarine'),
         createShip(2, 'Patrol Boat'),
     ]
-playerBoard.placeShip(0, 0, 'horizontal', createShip(5))
-playerBoard.placeShip(3, 4, 'horizontal', createShip(3))
-playerBoard.placeShip(6, 7, 'horizontal', createShip(2))
-playerBoard.placeShip(9, 1, 'vertical', createShip(3))
-playerBoard.placeShip(5, 9, 'horizontal', createShip(4))
 
+const randomizeButton = document.querySelector('button.randomize')
+
+randomizeButton.addEventListener('click', () => {
+    randomizeListener(playerBoard)
+})
 enemyBoard.placeShip(0, 0, 'horizontal', createShip(5))
 enemyBoard.placeShip(3, 4, 'horizontal', createShip(3))
 enemyBoard.placeShip(6, 7, 'horizontal', createShip(2))

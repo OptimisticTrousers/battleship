@@ -1,3 +1,6 @@
+import createGameBoard from "./gameboard/gameboard"
+import createShip from "./ship/ship"
+
 const renderAttacks = (player, column, row, enemyBoard) => {
     const cell = document.querySelector(
         `.${player}-board > .cell[column='${column}'][row='${row}']`
@@ -413,6 +416,63 @@ export const addListenersToEnemyBoard = (
         }
     }
 }
+
+const clearBoardDOM = () => {
+    const cells = document.querySelectorAll('.player-board > .cell')
+
+    cells.forEach(cell => {
+        cell.classList.remove('ship')
+        cell.classList.remove('hit')
+        cell.classList.remove('miss')
+    })
+
+
+
+}
+
+
+export const randomizeListener = (gameBoard) => {
+
+    gameBoard.clearBoard()
+    clearBoardDOM()
+
+    const randomPossibility = Math.floor(Math.random() * 4)
+    switch(randomPossibility){
+        case 0:
+        gameBoard.placeShip(9, 1, 'vertical', createShip(5))
+        gameBoard.placeShip(0, 3, 'horizontal', createShip(3))
+        gameBoard.placeShip(3, 6, 'horizontal', createShip(2))
+        gameBoard.placeShip(6, 5, 'horizontal', createShip(3))
+        gameBoard.placeShip(3, 9, 'horizontal', createShip(4))
+            break;
+        case 1:
+        gameBoard.placeShip(0, 2, 'horizontal', createShip(5))
+        gameBoard.placeShip(4, 5, 'horizontal', createShip(3))
+        gameBoard.placeShip(8, 7, 'horizontal', createShip(2))
+        gameBoard.placeShip(5, 9, 'horizontal', createShip(3))
+        gameBoard.placeShip(6, 3, 'horizontal', createShip(4))
+            break;
+        case 2:
+        gameBoard.placeShip(5, 1, 'horizontal', createShip(5))
+        gameBoard.placeShip(3, 3, 'vertical', createShip(3))
+        gameBoard.placeShip(0, 0, 'vertical', createShip(2))
+        gameBoard.placeShip(6, 5, 'horizontal', createShip(3))
+        gameBoard.placeShip(5, 9, 'horizontal', createShip(4))
+            break;
+        default:
+            gameBoard.placeShip(0, 0, 'horizontal', createShip(5))
+            gameBoard.placeShip(3, 4, 'horizontal', createShip(3))
+            gameBoard.placeShip(6, 7, 'horizontal', createShip(2))
+            gameBoard.placeShip(9, 1, 'vertical', createShip(3))
+            gameBoard.placeShip(5, 9, 'horizontal', createShip(4))
+            break;
+    }
+
+    renderPlayerShips(gameBoard)
+
+}
+
+
 
 export const attack = ({
     cell,
