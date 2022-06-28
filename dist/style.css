@@ -95,3 +95,20 @@ main {
 .cell.dragging{
     opacity: .5;
 }
+
+@media (max-width: 640px) {
+    .cell{
+        width: 2rem;
+        height: 2rem;
+    }
+
+}
+
+@media (max-width: 460px) {
+    .cell{
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+}
+
