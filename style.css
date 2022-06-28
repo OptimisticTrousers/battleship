@@ -53,6 +53,11 @@ main {
 }
 
 button.randomize{
+    border: 1px solid black;
+    background-color: #004F2D;
+    font-family: Proto-Sans-32;
+    color: white;
+    border-radius: 20px;
     padding: 1.5rem 3rem;
 }
 
