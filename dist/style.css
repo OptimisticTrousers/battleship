@@ -20,9 +20,10 @@ h1 {
 
 main {
     display: flex;
-    width: 70vw;
-    height: 90vh;
+    width: inherit;
+    height: inherit;
     justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
 .player-board,
@@ -34,8 +35,8 @@ main {
 }
 
 .cell {
-    width: 50px;
-    height: 50px;
+    width: 3rem;
+    height: 3rem;
     border: 2px solid #14b267;
 }
 
