@@ -241,6 +241,7 @@ const createGameBoard = () => {
     // adding shipLength plus two because for every increase in the size of ship, the zones covered increase by 2 units
 
     return {
+        checkIfLocationIsAShipOrOffLimits,
         checkIfOffLimitZoneWasCorrectlyImplemented,
         getLocation,
         receiveAttack,

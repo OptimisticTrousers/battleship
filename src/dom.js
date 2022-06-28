@@ -19,9 +19,53 @@ const attackEnemyCell = (column, row, enemyBoard, player) => {
     renderAttacks('enemy', column, row, enemyBoard)
 }
 
-const attackPlayerCell = (playerBoard, enemy) => {
-    const { elementColumn, elementRow } = playerBoard.makeRandomCoordinates()
-    handleAttack(elementColumn, elementRow, playerBoard, enemy)
+const isSpaceAroundHit = (column, row, playerBoard) => {
+
+    const nextColumn = playerBoard.getLocation(column + 1, row)
+    const previousColumn = playerBoard.getLocation(column - 1, row)
+    const nextRow = playerBoard.getLocation(column, row + 1)
+    const previousRow = playerBoard.getLocation(column, row - 1)
+
+    const spacesHit = []
+
+    if(nextColumn ?? !nextColumn.hasBeenHit){
+        spacesHit.push(nextColumn)
+    }
+    if(previousColumn ?? !previousColumn.hasBeenHit){
+        spacesHit.push(previousColumn)
+    }
+    if(nextRow ?? !nextRow.hasBeenHit){
+        spacesHit.push(nextRow)
+    }
+    if(previousRow ?? !previousRow.hasBeenHit){
+        spacesHit.push(previousRow)
+    }
+
+    return spacesHit
+
+}
+
+const randomDirectionAttack = (column, row, playerBoard) => {
+
+    const spacesHit = isSpaceAroundHit(column, row, playerBoard)
+
+    const randomIndex = Math.floor(Math.random() * spacesHit.length)
+
+    if(!spacesHit[randomIndex]) return randomDirectionAttack(column, row , playerBoard)
+
+    return spacesHit[randomIndex]
+}
+
+const attackPlayerCell = (playerBoard, enemy, elementColumn, elementRow) => {
+        console.log(elementColumn, elementRow)
+    if(handleAttack(elementColumn, elementRow, playerBoard, enemy) === "You hit a ship!"){
+        
+
+        const randomPosition = randomDirectionAttack(elementColumn, elementRow, playerBoard)
+        const randomPositionColumn = randomPosition.column
+        const randomPositionRow = randomPosition.row
+        attackPlayerCell(playerBoard, enemy, randomPositionColumn, randomPositionRow)
+    }
     renderAttacks('player', elementColumn, elementRow, playerBoard)
 }
 // https://jsmanifest.com/the-publish-subscribe-pattern-in-javascript/
@@ -259,7 +303,8 @@ export const attack = ({
     // human player attacking computer
     attackEnemyCell(column, row, enemyBoard, player)
     // computer attacking human
-    attackPlayerCell(playerBoard, enemy)
+    const { elementColumn, elementRow } = playerBoard.makeRandomCoordinates()
+    attackPlayerCell(playerBoard, enemy, elementColumn, elementRow)
 
     checkIfGameOver(playerBoard, enemyBoard)
 }

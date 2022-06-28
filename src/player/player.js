@@ -8,6 +8,7 @@ const createPlayer = (name = 'player') => {
             if(location.hit){
 
                 location.hit(location.position)
+                return "You hit a ship!"
             }
             return "It's a hit!"
         }
