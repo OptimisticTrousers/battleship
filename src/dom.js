@@ -360,7 +360,7 @@ const checkIfGameOver = (playerBoard, enemyBoard) => {
             location.reload()
         })
 
-        modalWinner.textContent = 'You win!'
+        modalWinner.textContent = 'You lose!'
     }
     if (enemyBoard.checkIfAllShipsHaveSunk()) {
         const modal = document.querySelector('.modal')
@@ -370,7 +370,7 @@ const checkIfGameOver = (playerBoard, enemyBoard) => {
         )
 
         modal.style.display = 'block'
-        modalWinner.textContent = 'You lose!'
+        modalWinner.textContent = 'You win!'
         playAgainButton.addEventListener('click', () => {
             location.reload()
         })
