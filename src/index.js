@@ -6,26 +6,17 @@ import createPlayer from './player/player'
 
 const playerBoard = createGameBoard()
 const enemyBoard = createGameBoard()
-
 const player = createPlayer()
-
 const computer = createPlayer()
-
-
-    const ships = [
-        createShip(5, 'Carrier'),
-        createShip(4, 'Battleship'),
-        createShip(3, 'Destroyer'),
-        createShip(3, 'Submarine'),
-        createShip(2, 'Patrol Boat'),
-    ]
 
 const randomizeButton = document.querySelector('button.randomize')
 
 randomizeButton.addEventListener('click', () => {
     randomizeListener(playerBoard)
 })
+
 randomizeListener(playerBoard)
+
 enemyBoard.placeShip(0, 0, 'horizontal', createShip(5))
 enemyBoard.placeShip(3, 4, 'horizontal', createShip(3))
 enemyBoard.placeShip(6, 7, 'horizontal', createShip(2))
@@ -37,6 +28,5 @@ const ps = pubSub()
 addListenersToEnemyBoard(playerBoard, enemyBoard, player, computer, ps)
 
 ps.subscribe('click', attack)
-
 
 renderPlayerShips(playerBoard)
