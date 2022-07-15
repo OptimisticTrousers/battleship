@@ -215,25 +215,39 @@ const createGameBoard = () => {
         return { elementColumn, elementRow, randomDirection }
     }
 
-    let randomShip = (length) => {
-        let pos1 = Math.floor(Math.random() * 10)
-        let pos2 = Math.floor(Math.random() * 10)
-        let dir = Math.round(Math.random())
+  // creates a ship with random pos and orientation
+  let randomShip = (length) => {
+    let pos1 = Math.floor(Math.random() * 10);
+    let pos2 = Math.floor(Math.random() * 10);
+    let dir = Math.round(Math.random());
 
-        if(dir === 0) {
-            dir = "h"
-            if(gameBoard.placeShip(pos1, pos2, dir, createShip(length))) return false
-        }
-
-        if(dir === 1) {
-            dir = "v"
-            if(gameBoard.placeShip(pos1, pos2, dir, createShip(length))) return false
-        }
+    if (dir === 0) {
+      dir = "horizontal";
+      if (placeShip(pos1, pos2, dir, createShip(length)) === false) return false;
     }
+
+    if (dir === 1) {
+      dir = "vertical";
+      if (placeShip(pos1, pos2, dir, createShip(length)) === false) return false;
+    }
+  };
 
     let randomFleet = () => {
         for(let i = 0; i < 2;) {
             if(randomShip(1) === false) continue 
+            i++
+        }
+
+        for(let i = 0; i < 2;) {
+            if(randomShip(2) === false) continue 
+            i++
+        }
+        for(let i = 0; i < 2;) {
+            if(randomShip(3) === false) continue 
+            i++
+        }
+        for(let i = 0; i < 2;) {
+            if(randomShip(4) === false) continue 
             i++
         }
     }
@@ -267,10 +281,6 @@ const createGameBoard = () => {
         gameBoard = initializeBoard()
     }
 
-    const getBoard =() => {
-        return gameBoard
-    }
-
     return {
         clearBoard,
         checkIfLocationIsAShipOrOffLimits,
@@ -281,6 +291,7 @@ const createGameBoard = () => {
         placeShip,
         randomlyPlaceShips,
         makeRandomCoordinates,
+        randomFleet,
     }
 }
 module.exports = createGameBoard
