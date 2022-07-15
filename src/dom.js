@@ -241,6 +241,17 @@ const checkIfGameOver = (playerBoard, enemyBoard) => {
     }
 }
 
+function createDragAndDropFleet(playerBoard) {
+    renderShipSelect(1, 1)
+    renderShipSelect(2, 2)
+    renderShipSelect(3, 3)
+    renderShipSelect(4, 4)
+
+    function renderShipSelect(i, length) {
+        const container = 
+    }
+}
+
 export const addListenersToEnemyBoard = (
     playerBoard,
     enemyBoard,

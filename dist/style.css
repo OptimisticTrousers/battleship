@@ -119,6 +119,22 @@ button.randomize:hover{
   transition: 0.2s ease-in-out;
   flex-direction: column;
 }
+.ship-container {
+  position: absolute;
+  background: rgb(255, 255, 255);
+  height: 10rem;
+  width: 10rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+  align-items: center;
+}
+.ship.container span {
+
+    cursor: default;
+    justify-self: flex-start;
+    color: #273547e7;
+}
 .sunk::after {
 
     content: "✕";

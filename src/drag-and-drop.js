@@ -6,7 +6,7 @@ function shipDrag(player, shipName, playerBoard) {
 
     const ship = document.querySelector(shipName)
     const body = document.querySelector('body')
-    const cells = document.querySelectorAll('.player-board.cell')
+    const cells = document.querySelectorAll('.player-board > .cell')
     const child = ship.childNodes
     let dragSelection;
     let offset;
