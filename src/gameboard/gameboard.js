@@ -314,7 +314,7 @@ const placeShip = (column, row, direction, ship) => {
         randomlyPlaceShips,
         makeRandomCoordinates,
         randomFleet,
-        getBoard,
+        gameBoard,
         isStartAllowed : {
             get: function() {
                 return isStartAllowed

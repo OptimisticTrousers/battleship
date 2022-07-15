@@ -4,7 +4,6 @@ import createShip from './ship/ship'
 let totalAmountShips = 0
 
 function shipDrag(shipName, playerBoard) {
-    console.log(playerBoard)
     let amountLeft = 2
 
     const ship = document.querySelector(shipName)
@@ -23,11 +22,12 @@ function shipDrag(shipName, playerBoard) {
     ship.addEventListener("click", (e) => changeDir(e))
 
     ship.addEventListener("dragstart", (e) => {
-        for(let i = 0; i < 10; i++)
-            playerBoard.getBoard()[i].forEach((e, j) => {
+        for(let i = 0; i < 10; i++){
+            playerBoard.gameBoard[i].forEach((e, j) => {
                 if(e.offLimits || e.isShip)
-                document.querySelector(`.player-board > .cell[column='${e}'][row='${j}']`).classList.toggle("not-available")
+                document.querySelector(`.player-board > .cell[column='${e.column}'][row='${e.row}']`).classList.toggle("not-available")
             })
+        }
     })
 
     ship.addEventListener('dragend', (e, i) => {
@@ -50,24 +50,24 @@ function shipDrag(shipName, playerBoard) {
         }
 
         if(dir === "horizontal") pos2 += offset
-        if(dir === "v") pos1 += offset
+        if(dir === "vertical") pos1 += offset
 
         if(pos2 < 0) return
 
         if(shipName === ".ship-1"){
-            if(playerBoard.placeShip(pos1, pos2, dir, createShip(1)) === false) return
+            if(playerBoard.placeShip(pos2, pos1, dir, createShip(1)) === false) return
             }
         if(shipName === ".ship-2"){
 
-            if(playerBoard.placeShip(pos1, pos2, dir, createShip(2)) === false) return
+            if(playerBoard.placeShip(pos2, pos1, dir, createShip(2)) === false) return
         }
         if(shipName === ".ship-3") {
 
-            if(playerBoard.placeShip(pos1, pos2, dir, createShip(3)) === false) return
+            if(playerBoard.placeShip(pos2, pos1, dir, createShip(3)) === false) return
         }
         if(shipName === ".ship-4") {
 
-            if(playerBoard.placeShip(pos1, pos2, dir, createShip(4)) === false) return
+            if(playerBoard.placeShip(pos2, pos1, dir, createShip(4)) === false) return
         }
 
         renderPlayerShips(playerBoard)
