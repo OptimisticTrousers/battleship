@@ -125,11 +125,12 @@ export async function renderAttackP2(p1, p2, pos1, pos2, playerBoard, enemyBoard
   if (attack === "You hit a ship!") {
     setWasHit(true, true, pos1, pos2);
     e.classList.add("hit");
+    playerBoard.getLocation(pos1, pos2).domTargets.push(e)
     // if ship is sunk, add "sunk" class
     if (playerBoard.getLocation(pos1, pos2).isSunk()) {
-      //p1.board.board[pos1][pos2].ship.domTargets.forEach((e) =>
-        //e.classList.add("sunk")
-      //);
+      playerBoard.getLocation(pos1, pos2).domTargets.forEach((e) =>
+        e.classList.add("sunk")
+      );
       isSunk = true;
       if (playerBoard.checkIfAllShipsHaveSunk() === true) return checkIfGameOver(playerBoard, enemyBoard);
     }

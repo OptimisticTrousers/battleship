@@ -1,5 +1,7 @@
 const createShip = (length, name = 'ship') => {
 
+    let domTargets = []
+
     const status = Array(length).fill('unhit')
 
     const getLength = () => status.length
@@ -22,6 +24,7 @@ const createShip = (length, name = 'ship') => {
         isSunk,
         hit,
         getStatus,
+        domTargets,
         hasBeenHit: false,
         offLimits: true,
         isShip: true,
