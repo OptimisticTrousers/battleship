@@ -248,7 +248,8 @@ function createDragAndDropFleet(playerBoard) {
     renderShipSelect(4, 4)
 
     function renderShipSelect(i, length) {
-        const container = 
+        const container = document.querySelector(".ships")
+        const
     }
 }
 
