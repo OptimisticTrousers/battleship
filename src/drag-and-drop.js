@@ -4,6 +4,7 @@ import createShip from './ship/ship'
 let totalAmountShips = 0
 
 function shipDrag(shipName, playerBoard) {
+    console.log(playerBoard)
     let amountLeft = 2
 
     const ship = document.querySelector(shipName)
@@ -23,7 +24,7 @@ function shipDrag(shipName, playerBoard) {
 
     ship.addEventListener("dragstart", (e) => {
         for(let i = 0; i < 10; i++)
-            playerBoard.gameBoard[i].forEach((e, j) => {
+            playerBoard.getBoard()[i].forEach((e, j) => {
                 if(e.offLimits || e.isShip)
                 document.querySelector(`.player-board > .cell[column='${e}'][row='${j}']`).classList.toggle("not-available")
             })

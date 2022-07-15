@@ -301,6 +301,8 @@ const placeShip = (column, row, direction, ship) => {
         gameBoard = initializeBoard()
     }
 
+    const getBoard = () => gameBoard
+
     return {
         clearBoard,
         checkIfLocationIsAShipOrOffLimits,
@@ -312,6 +314,7 @@ const placeShip = (column, row, direction, ship) => {
         randomlyPlaceShips,
         makeRandomCoordinates,
         randomFleet,
+        getBoard,
         isStartAllowed : {
             get: function() {
                 return isStartAllowed
