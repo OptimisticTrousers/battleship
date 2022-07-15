@@ -147,9 +147,10 @@ const createGameBoard = () => {
       // makes tiles around ship "reserved"
   let reserveAround = (pos1, pos2) => {
     function cell(n1, n2) {
+        const position = gameBoard[pos1 + n1][[pos2 + n2]]
       if (pos1 + n1 > 9 || pos1 + n1 < 0) return;
-      if (gameBoard[pos1 + n1][pos2 + n2] === false)
-        gameBoard[pos1 + n1][pos2 + n2] = "res";
+      if (position.isShip === false && position.offLimits === false)
+        position.offLimits = true;
     }
     function reserveCell(row) {
       cell(row, -1);
@@ -161,42 +162,40 @@ const createGameBoard = () => {
     reserveCell(1);
   };
 
-    const placeShip = (column, row, direction, ship) => {
-        const shipLength = ship.getLength()
-        if (checkIfLocationIsAShipOrOffLimits(getLocation(column, row, direction, shipLength)))
-            return false
-        if (direction === 'vertical') {
-            if (checkIfRowCoordinateIsValid(row, shipLength)) {
-                for (let i = 0; i < shipLength; i += 1) {
-                    setLocation(column, row + i, {...ship, position: i})
-                    setLocation(column + 1, row + i)
-                    setLocation(column - 1, row + i)
-                }
-                addOffLimitAreaForVerticallyPositionedShip(
-                    column,
-                    row,
-                    shipLength
-                )
-                return true
-            }
-        } else if (direction === 'horizontal') {
-            if (checkIfColumnCoordinateIsValid(column, shipLength)) {
-                for (let i = 0; i < shipLength; i += 1) {
-                    setLocation(column + i , row, {...ship, position: i})
-                    //setLocation(column + i, row, ship)
-                    setLocation(column + i, row + 1)
-                    setLocation(column + i, row - 1)
-                }
-                addOffLimitAreaForHorizontallyPositionedShip(
-                    column,
-                    row,
-                    shipLength
-                )
-                return true
-            }
-        }
-        return false
+      let placeShip = (pos1, pos2, direction, ship) => {
+    if (gameBoard[pos1][pos2].isShip || gameBoard[pos1][pos2].offLimits) return false;
+    let shipLength = ship.getLength();
+    let shipPos = 0;
+
+    if (direction === "horizontal") {
+      if (pos2 + ship.length > 10) return false; // checks if it overflows
+
+      // checks if pos is reserved
+      for (let i = 0; i < shipLength; i++) {
+        if (gameBoard[pos1][pos2 + i].offLimits || gameBoard[pos1][pos2 + i].isShip) return false;
+      }
+
+      for (let i = pos2; i < pos2 + ship.length; i++) {
+        gameBoard[pos1].splice(i, 1, { ...ship, position: i});
+        reserveAround(pos1, pos2 + shipPos);
+        shipPos++;
+      }
     }
+    if (direction === "vertical") {
+      if (pos1 + ship.length > 10) return false; //checks if it overflows
+
+      // checks if pos is reserved
+      for (let i = 0; i < shipLength; i++) {
+        if (gameBoard[pos1 + i][pos2].offLimits || gameBoard[pos1 + i][pos2].isShip) return false;
+      }
+
+      for (let i = pos1; i < pos1 + ship.length; i++) {
+        gameBoard[i].splice(pos2, 1, { ...ship, position: i});
+        reserveAround(pos1 + shipPos, pos2); //reserve pos
+        shipPos++;
+      }
+    }
+  };
         const availableSpaces = () =>{
 
         const flattenedGameBoard = [...gameBoard.flat()]
