@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 import { renderAttackP2 } from "./dom";
 
 let wasHit = false;
@@ -31,6 +32,14 @@ function registerSurroundingPos(pos1, pos2) {
   if (pos1 !== 0) surroundingPos.push([pos1 - 1, pos2]);
   if (pos1 !== 9) surroundingPos.push([pos1 + 1, pos2]);
   return surroundingPos;
+}
+
+function delay(delayInMs) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(2);
+    }, delayInMs);
+  });
 }
 
 function aiPlay(repeat, p1, p2, isSunk) {
