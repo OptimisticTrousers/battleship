@@ -119,7 +119,6 @@ async function renderAttackP2(playerBoard, enemyBoard, p1, p2, pos1, pos2) {
   if (attack === "You hit a ship!") {
     setWasHit(true, true, pos1, pos2);
     e.classList.add("hit");
-    p1.board.board[pos1][pos2].ship.domTargets.push(e);
     // if ship is sunk, add "sunk" class
     if (p1.gameBoard[pos2][pos1]) {
       //p1.board.board[pos1][pos2].ship.domTargets.forEach((e) =>
