@@ -374,6 +374,7 @@ export const attack = ({
     player,
     enemy,
 }) => {
+
     // human player attacking computer
     attackEnemyCell(column, row, enemyBoard, playerBoard, player, enemy)
     // computer attacking human

@@ -78,6 +78,11 @@ function shipDrag(shipName, playerBoard) {
         if(totalAmountShips === 8) playerBoard.isStartAllowed.set(true)
         ship.parentNode.firstChild.textContent = `${amountLeft}x`
         if(amountLeft === 0) ship.parentNode.style.display = "none" 
+        if(document.querySelectorAll('.ship-container').forEach((container) => container.style.display === "none")) {
+            playerBoard.isStartAllowed.set(true)
+            //const container = document.querySelector("body > main > div.player > .ships")
+            //container.style.display ="none"
+        }
     })
 
     cells.forEach((e, i) => {
