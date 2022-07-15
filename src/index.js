@@ -13,9 +13,8 @@ const randomizeButton = document.querySelector('button.randomize')
 
 randomizeButton.addEventListener('click', () => {
 
-    playerBoard.randomFleet()
+    randomizeListener(enemyBoard)
 })
-    playerBoard.randomFleet()
 
 enemyBoard.placeShip(0, 0, 'horizontal', createShip(5))
 enemyBoard.placeShip(3, 4, 'horizontal', createShip(3))
