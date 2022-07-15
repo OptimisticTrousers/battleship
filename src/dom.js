@@ -337,6 +337,4 @@ export const attack = ({
     //const { elementColumn, elementRow } = playerBoard.makeRandomCoordinates()
     //renderAttackP2(player, enemy, elementColumn, elementRow, playerBoard, enemyBoard)
     //aiPlay(false, player, enemy, undefined, playerBoard, enemyBoard)
-
-    checkIfGameOver(playerBoard, enemyBoard)
 }

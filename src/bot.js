@@ -66,7 +66,7 @@ function aiPlay(repeat, p1, p2, isSunk, playerBoard, enemyBoard) {
     if (attackDirection === "right") newPos = attackTowards("left");
     if (attackDirection === "left") newPos = attackTowards("right");
     if (newPos[0] >= 0 && newPos[0] <= 9 && newPos[1] >= 0 && newPos[1] <= 9)
-      return renderAttackP2(p1, p2, newPos[0], newPos[1]);
+      return renderAttackP2(p1, p2, newPos[0], newPos[1], playerBoard, enemyBoard);
   } else if (status) {
     if (surroundingPos.length == 0)
       registerSurroundingPos(lastHitPos[0], lastHitPos[1]);
