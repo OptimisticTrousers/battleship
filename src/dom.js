@@ -295,6 +295,7 @@ export const addListenersToEnemyBoard = (
             cell.addEventListener(
                 'click',
                 () => {
+                    if(playerBoard.isStartAllowed.get() === false) return
                     ps.publish('click', {
                         cell,
                         column,
