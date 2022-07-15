@@ -21,9 +21,10 @@ const handleAttack = (column, row, enemyBoard, player) =>
 const attackEnemyCell = async (column, row, enemyBoard, playerBoard, player, enemy) => {
 
 
-    await delay(700)
     handleAttack(column, row, enemyBoard, player)
     renderAttacks('enemy', column, row, enemyBoard)
+    await delay(700)
+    return enemyBoard.checkIfAllShipsHaveSunk() ? checkIfGameOver() : aiPlay(false, player, enemy, undefined, playerBoard, enemyBoard)
 }
 
 const isSpaceAroundHit = (column, row, playerBoard) => {
@@ -334,7 +335,7 @@ export const attack = ({
     // computer attacking human
     //const { elementColumn, elementRow } = playerBoard.makeRandomCoordinates()
     //renderAttackP2(player, enemy, elementColumn, elementRow, playerBoard, enemyBoard)
-    aiPlay(false, player, enemy, undefined, playerBoard, enemyBoard)
+    //aiPlay(false, player, enemy, undefined, playerBoard, enemyBoard)
 
     checkIfGameOver(playerBoard, enemyBoard)
 }
