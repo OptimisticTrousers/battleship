@@ -72,6 +72,31 @@ function shipDrag(player, shipName, playerBoard) {
         amountLeft -= 1
         totalAmountShips++
 
-        if(totalAmountShips === 0) playerBoard
+        if(totalAmountShips === 8) playerBoard.isStartAllowed.set(true)
+        ship.parentNode.firstChild.textContent = amountLeft + "x"
+        if(amountLeft === 0) ship.parentNode.style.display = "none"
     })
+
+    cells.forEach((e, i) => {
+        e.addEventListener("dragover", (e) => {
+            e.preventDefault()
+            dragSelection = i 
+        })
+    })
+
+    body.addEventListener("dragenter", () => {
+        dragSelection = -1
+    })
+
+    function changeDir(e) {
+        if(dir === "h") {
+            dir = "v"
+            e.target.parentNode.classList.toggle("rotated")
+        } else {
+            dir = "h";
+            e.target.parentNode.classList.toggle("rotated")
+        }
+    }
 }
+
+export {shipDrag, totalAmountShips}

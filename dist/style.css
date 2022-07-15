@@ -112,6 +112,9 @@ button.randomize:hover{
     background-color: #6097d6;
     z-index: 1;
 }
+.not-available {
+  background-color: #ff004c17;
+}
 .sunk::after {
 
     content: "✕";
