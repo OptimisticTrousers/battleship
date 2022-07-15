@@ -99,25 +99,6 @@ const listOfRandomCoordinates = (column, row, playerBoard) => {
         return directions
 }
 
-const checkIfRowContainsShip = (column, playerBoard) => {
-    for(let row = 0; row < 10; row++){
-        if(playerBoard.getLocation(column, row).isShip){
-            return true
-        }
-    }
-    return false
-}
-
-const checkIfColumnContainsShip = (row, playerBoard) => {
-
-    for(let column = 0; column < 10; column++){
-        if(playerBoard.getLocation(column, row).isShip){
-            return true
-        }
-    }
-    return false
-}
-
 const attackPlayerCell = (playerBoard, enemy, elementColumn, elementRow, prevLocation) => {
         const location = playerBoard.getLocation(elementColumn, elementRow)
     if(handleAttack(elementColumn, elementRow, playerBoard, enemy) === "You hit a ship!"){
@@ -227,109 +208,6 @@ export const pubSub = () => {
     }
 }
 
-const cellDragListener = function (event) {
-    console.log(this)
-}
-
-//const addDraggableProperties = () => {
-
-    //const draggables = document.querySelectorAll('.cell[draggable="true"]')
-    //draggables.forEach(draggable => {
-        //draggable.addEventListener('dragstart', () => {
-            //console.log('bob jones')
-        //})
-    //})
-//}
-
-function getDragAfterElement(container, y, x){
-    const draggableElements = [...container.querySelectorAll('.cell:not(.dragging)')]
-
-    return draggableElements.reduce((closest, child) => {
-        const box = child.getBoundingClientRect()
-        const offsetY = y - box.top - box.height / 2
-        const offsetX = x - box.left - box.width/ 2
-        console.log(child)
-        if(offsetY < 0 && offsetY > closest.offsetY && offsetX < 0 && offsetX > closest.offsetX){
-            return {offsetX, offsetY, element:child}
-        }
-            return closest
-
-    }, {offsetX: Number.NEGATIVE_INFINITY, offsetY:Number.NEGATIVE_INFINITY}).element
-}
-
-const addListenerToBoat = (cells) => {
-
-    //Video for drag and drop: https://www.youtube.com/watch?v=jfYWwQrtzzY
-
-    const cellsContainer = document.querySelector('.player-board')
-    const shipContainer  = document.createElement('div')
-    cells.forEach((cell, index) => {
-        cell.addEventListener('dragstart', () => {
-            cell.classList.add('dragging')
-        })
-
-        cell.addEventListener('dragend', () => {
-            cell.classList.remove('dragging')
-        })
-    })
-
-    cellsContainer.addEventListener('dragover', (event) => {
-        event.preventDefault()
-        let afterElement;
-        const draggable = document.querySelector('.dragging')
-        console.log(afterElement)
-        if(afterElement === null){
-
-            cellsContainer.appendChild(draggable)
-        } else{
-            cellsContainer.insertBefore(draggable, afterElement)
-        }
-    })
-}
-
-const queryCells = () => {
-
-    const patrolBoat= document.querySelectorAll('.cell[ship-name="Patrol Boat"]')
-    addListenerToBoat(patrolBoat)
-
-    //const patrolBoatContainer = document.createElement('div')
-
-    const submarine = document.querySelectorAll('.cell[ship-name="Submarine"]')
-    addListenerToBoat(submarine)
-    //const submarineContainer = document.createElement('div')
-
-    const carrier = document.querySelectorAll('.cell[ship-name="Carrier"]')
-    addListenerToBoat(carrier)
-    //const carrierContainer = document.createElement('div')
-
-    const battleShip= document.querySelectorAll('.cell[ship-name="Battleship"]')
-    addListenerToBoat(battleShip)
-    //const battleShipContainer= document.createElement('div')
-
-    const destroyer = document.querySelectorAll('.cell[ship-name="Destroyer"]')
-    addListenerToBoat(destroyer)
-    //const destroyerContainer = document.createElement('div')
-
-
-}
-
-function createDragAndDropFleet(player){
-    renderPlayerShipSelect(1, 1)
-    renderPlayerShipSelect(2, 2)
-    renderPlayerShipSelect(3, 3)
-    renderPlayerShipSelect(4, 4)
-
-    function renderPlayerShipSelect(i, length){
-        const container = document.querySelector('.player-board')
-        const shipContainer = documnet.createElement('div')
-        shipContainer.classList.add("ship-container")
-        container.appendChild(shipContainer)
-
-        const shipInfo = document.createElement("span")
-        shipInfo.classList.add()
-
-    }
-}
 export const renderPlayerShips = ({ getLocation }) => {
     const playerBoardArea = document.querySelector('div.player-board')
 
@@ -429,7 +307,6 @@ const clearBoardDOM = () => {
 
 }
 
-
 export const randomizeListener = (gameBoard) => {
 
     gameBoard.clearBoard()
@@ -470,8 +347,6 @@ export const randomizeListener = (gameBoard) => {
     renderPlayerShips(gameBoard)
 
 }
-
-
 
 export const attack = ({
     cell,
