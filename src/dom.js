@@ -124,7 +124,6 @@ export async function renderAttackP2(p1, p2, pos1, pos2, playerBoard, enemyBoard
 
   const attack = p2.attack(pos1, pos2, playerBoard);
 
-    console.log(playerBoard.getLocation(pos1, pos2))
   if (attack === "You have already hit this spot!") {
     const repeat = true;
     aiPlay(repeat, p1, p2, undefined, playerBoard, enemyBoard);

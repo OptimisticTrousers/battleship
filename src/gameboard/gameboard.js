@@ -150,8 +150,8 @@ const createGameBoard = () => {
   let reserveAround = (pos1, pos2) => {
     function cell(n1, n2) {
       if (pos1 + n1 > 9 || pos1 + n1 < 0) return;
-      if (gameBoard[pos1 + n1][pos2 + n2] === false)
-        gameBoard[pos1 + n1][pos2 + n2] = "res";
+      if (Object.is(gameBoard[pos1 + n1][pos2 + n2], emptyCell))
+        gameBoard[pos1 + n1][pos2 + n2].offLimits = true;
     }
     function reserveCell(row) {
       cell(row, -1);
@@ -164,6 +164,7 @@ const createGameBoard = () => {
   };
 
 const placeShip = (column, row, direction, ship) => {
+    if(gameBoard[column][row].isShip || gameBoard[column][row].offLimits) return false
         const shipLength = ship.getLength()
         if (checkIfLocationIsAShipOrOffLimits(getLocation(column, row, direction, shipLength)))
             return false
@@ -171,6 +172,7 @@ const placeShip = (column, row, direction, ship) => {
             if (checkIfRowCoordinateIsValid(row, shipLength)) {
                 for (let i = 0; i < shipLength; i += 1) {
                     setLocation(column, row + i, {...ship, position: i})
+                    //reserveAround(column, row + i)
                     setLocation(column + 1, row + i)
                     setLocation(column - 1, row + i)
                 }
@@ -185,7 +187,7 @@ const placeShip = (column, row, direction, ship) => {
             if (checkIfColumnCoordinateIsValid(column, shipLength)) {
                 for (let i = 0; i < shipLength; i += 1) {
                     setLocation(column + i , row, {...ship, position: i})
-                    //setLocation(column + i, row, ship)
+                    //reserveAround(column + i, row)
                     setLocation(column + i, row + 1)
                     setLocation(column + i, row - 1)
                 }
