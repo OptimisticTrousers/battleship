@@ -131,7 +131,7 @@ button.randomize:hover{
     cursor: grabbing;
 
 }
-.ships {
+body > main > div.player > div:nth-child(4) {
   height: 10rem;
   width: 15rem;
   display: flex;
@@ -140,11 +140,15 @@ button.randomize:hover{
   gap: 1rem;
   flex-wrap: wrap;
 }
+body > main > div.player > div:nth-child(4) span {
+
+    margin-top: 1rem;
+}
 .ship-container {
   position: absolute;
   background: rgb(255, 255, 255);
   height: 10rem;
-  width: 10rem;
+  width: 15rem;
   display: flex;
   gap: 0.5rem;
   flex-direction: column;
