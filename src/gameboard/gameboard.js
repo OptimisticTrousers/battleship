@@ -166,7 +166,7 @@ const createGameBoard = () => {
             if (checkIfColumnCoordinateIsValid(column, shipLength)) {
                 for (let i = 0; i < shipLength; i += 1) {
                     setLocation(column + i , row, {...ship, position: i})
-                    //setLocation(column + i, row, ship)
+                    // setLocation(column + i, row, ship)
                     setLocation(column + i, row + 1)
                     setLocation(column + i, row - 1)
                 }
@@ -244,7 +244,10 @@ const createGameBoard = () => {
         gameBoard = initializeBoard()
     }
 
+    const getBoard =() => gameBoard
+
     return {
+        getBoard,
         clearBoard,
         checkIfLocationIsAShipOrOffLimits,
         checkIfOffLimitZoneWasCorrectlyImplemented,

@@ -108,23 +108,23 @@ async function renderAttackP2(playerBoard, enemyBoard, p1, p2, pos1, pos2) {
     )
   let attack = p2.attack(pos1, pos2, playerBoard);
 
-  if (!attack) {
+  if (attack === "You have already hit this spot!") {
     let repeat = true;
     aiPlay(repeat, p1, p2);
   }
-  if (attack === "miss") {
+  if (attack === "It's a hit!") {
     setWasHit(false);
     e.classList.add("miss");
   }
-  if (attack === "hit") {
+  if (attack === "You hit a ship!") {
     setWasHit(true, true, pos1, pos2);
     e.classList.add("hit");
     p1.board.board[pos1][pos2].ship.domTargets.push(e);
     // if ship is sunk, add "sunk" class
-    if (p1.board.board[pos1][pos2].ship.isSunk()) {
-      p1.board.board[pos1][pos2].ship.domTargets.forEach((e) =>
-        e.classList.add("sunk")
-      );
+    if (p1.gameBoard[pos2][pos1]) {
+      //p1.board.board[pos1][pos2].ship.domTargets.forEach((e) =>
+        //e.classList.add("sunk")
+      //);
       isSunk = true;
       if (p1.board.areAllSunk(p1.board.board) === true) return checkIfGameOver(playerBoard, enemyBoard);
     }
