@@ -132,7 +132,7 @@ button.randomize:hover{
 
 }
 body > main > div.player > div:nth-child(4) {
-  height: 10rem;
+  height: 17rem;
   width: 15rem;
   display: flex;
   justify-content: center;
@@ -147,8 +147,8 @@ body > main > div.player > div:nth-child(4) span {
 .ship-container {
   position: absolute;
   background: rgb(255, 255, 255);
-  height: 10rem;
-  width: 15rem;
+  height: inherit;
+  width: inherit;
   display: flex;
   gap: 0.5rem;
   flex-direction: column;
