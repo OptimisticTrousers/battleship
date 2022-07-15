@@ -15,12 +15,11 @@ const renderAttacks = (player, column, row, enemyBoard) => {
     }
 }
 
-const handleAttack = (column, row, enemyBoard, playerBoard, player) =>
+const handleAttack = (column, row, enemyBoard, player) =>
     player.attack(column, row, enemyBoard)
 
-const attackEnemyCell = async (column, row, enemyBoard, playerBoard, player, enemy) => {
+const attackEnemyCell = (column, row, enemyBoard, playerBoard, player, enemy) => {
 
-    await delay(700)
 
     handleAttack(column, row, enemyBoard, player)
     renderAttacks('enemy', column, row, enemyBoard)
@@ -104,37 +103,39 @@ const listOfRandomCoordinates = (column, row, playerBoard) => {
 }
 
 // renders attack for p2 (AI)
-async function renderAttackP2(playerBoard, enemyBoard, p1, p2, pos1, pos2) {
+export function renderAttackP2(p1, p2, pos1, pos2, playerBoard, enemyBoard) {
   let isSunk = false;
   let e = document.querySelector(
-        `.player-board > .cell[column='${pos2}'][row='${pos1}']`
+        `.player-board > .cell[column='${pos1}'][row='${pos2}']`
     )
+
+    console.log(pos1, pos2)
+    console.log(p1, p2)
   let attack = p2.attack(pos1, pos2, playerBoard);
 
-  if (attack === "You have already hit this spot!") {
+  if (attack === "You hit a ship!") {
     let repeat = true;
-    aiPlay(repeat, p1, p2);
+    aiPlay(repeat, p1, p2, undefined, playerBoard, enemyBoard);
   }
   if (attack === "It's a hit!") {
     setWasHit(false);
     e.classList.add("miss");
   }
-  if (attack === "You hit a ship!") {
+  if (attack === "You have already hit this spot!") {
     setWasHit(true, true, pos1, pos2);
     e.classList.add("hit");
     // if ship is sunk, add "sunk" class
-    if (p1.gameBoard[pos2][pos1]) {
+    if (playerBoard.getLocation(pos1, pos2).isSunk()) {
       //p1.board.board[pos1][pos2].ship.domTargets.forEach((e) =>
         //e.classList.add("sunk")
       //);
       isSunk = true;
-      if (p1.board.areAllSunk(p1.board.board) === true) return checkIfGameOver(playerBoard, enemyBoard);
+      if (p1.checkIfAllShipsHaveSunk() === true) return checkIfGameOver(playerBoard, enemyBoard);
     }
-    await delay(1000);
-    return aiPlay(false, p1, p2, isSunk);
+    return aiPlay(false, p1, p2, isSunk, playerBoard, enemyBoard);
   }
 
-  p1.isTurn(p2); // gives turn to P1
+  //p1.isTurn(p2); // gives turn to P1
 }
 // https://jsmanifest.com/the-publish-subscribe-pattern-in-javascript/
 
@@ -331,7 +332,7 @@ export const attack = ({
     attackEnemyCell(column, row, enemyBoard, playerBoard, player, enemy)
     // computer attacking human
     const { elementColumn, elementRow } = playerBoard.makeRandomCoordinates()
-    renderAttackP2(playerBoard, enemyBoard, player, enemy, elementColumn, elementRow)
+    renderAttackP2(player, enemy, elementColumn, elementRow, playerBoard, enemyBoard)
 
     checkIfGameOver(playerBoard, enemyBoard)
 }
