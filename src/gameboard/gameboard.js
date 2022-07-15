@@ -6,6 +6,8 @@ const createShip = require('../ship/ship')
 /* eslint-disable no-param-reassign */
 const createGameBoard = () => {
     const emptyCell = { hasBeenHit: false, isShip: false, offLimits: false }
+
+    let isStartAllowed = false
     
     const initializeBoard = () => {
         const gameBoard = Array(10).fill().map(() => Array(10).fill())
@@ -310,6 +312,14 @@ const placeShip = (column, row, direction, ship) => {
         randomlyPlaceShips,
         makeRandomCoordinates,
         randomFleet,
+        isStartAllowed : {
+            get: function() {
+                return isStartAllowed
+            },
+            set: function(value) {
+                isStartAllowed = value
+            }
+        }
     }
 }
 module.exports = createGameBoard
