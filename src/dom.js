@@ -1,6 +1,6 @@
 import createGameBoard from "./gameboard/gameboard"
 import createShip from "./ship/ship"
-import { aiPlay, getWasHit, setWasHit, surroundingPos } from "./botAI";
+import { aiPlay, getWasHit, setWasHit, surroundingPos } from "./bot";
 
 const renderAttacks = (player, column, row, enemyBoard) => {
     const cell = document.querySelector(
@@ -15,10 +15,13 @@ const renderAttacks = (player, column, row, enemyBoard) => {
     }
 }
 
-const handleAttack = (column, row, enemyBoard, player) =>
+const handleAttack = (column, row, enemyBoard, playerBoard, player) =>
     player.attack(column, row, enemyBoard)
 
-const attackEnemyCell = (column, row, enemyBoard, player) => {
+const attackEnemyCell = async (column, row, enemyBoard, playerBoard, player, enemy) => {
+
+    await delay(700)
+
     handleAttack(column, row, enemyBoard, player)
     renderAttacks('enemy', column, row, enemyBoard)
 }
@@ -325,7 +328,7 @@ export const attack = ({
     enemy,
 }) => {
     // human player attacking computer
-    attackEnemyCell(column, row, enemyBoard, player)
+    attackEnemyCell(column, row, enemyBoard, playerBoard, player, enemy)
     // computer attacking human
     const { elementColumn, elementRow } = playerBoard.makeRandomCoordinates()
     renderAttackP2(playerBoard, enemyBoard, player, enemy, elementColumn, elementRow)
