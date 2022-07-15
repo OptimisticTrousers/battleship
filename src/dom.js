@@ -7,12 +7,22 @@ const renderAttacks = (player, column, row, enemyBoard) => {
         `.${player}-board > .cell[column='${column}'][row='${row}']`
     )
 
+    if(enemyBoard.getLocation(column, row)?.isShip){
+
+        enemyBoard.getLocation(column, row).domTargets.push(cell)
+        if(enemyBoard.getLocation(column, row).isSunk()){
+
+            enemyBoard.getLocation(column, row).domTargets.forEach((e) => e.classList.add('sunk'))
+        }
+    }
+
     const location = enemyBoard.getLocation(column, row)
     if (location.isShip) {
         cell.classList.add('hit')
     } else {
         cell.classList.add('miss')
     }
+
 }
 
 const handleAttack = (column, row, enemyBoard, player) =>
@@ -107,15 +117,15 @@ const listOfRandomCoordinates = (column, row, playerBoard) => {
 // renders attack for p2 (AI)
 export async function renderAttackP2(p1, p2, pos1, pos2, playerBoard, enemyBoard) {
   let isSunk = false;
-  let e = document.querySelector(
+  const e = document.querySelector(
         `.player-board > .cell[column='${pos1}'][row='${pos2}']`
     )
 
-  let attack = p2.attack(pos1, pos2, playerBoard);
+  const attack = p2.attack(pos1, pos2, playerBoard);
 
     console.log(playerBoard.getLocation(pos1, pos2))
   if (attack === "You have already hit this spot!") {
-    let repeat = true;
+    const repeat = true;
     aiPlay(repeat, p1, p2, undefined, playerBoard, enemyBoard);
   }
   if (attack === "It's a hit!") {
@@ -138,7 +148,7 @@ export async function renderAttackP2(p1, p2, pos1, pos2, playerBoard, enemyBoard
     return aiPlay(false, p1, p2, isSunk, playerBoard, enemyBoard);
   }
 
-  //p1.isTurn(p2); // gives turn to P1
+  // p1.isTurn(p2); // gives turn to P1
 }
 // https://jsmanifest.com/the-publish-subscribe-pattern-in-javascript/
 
@@ -334,7 +344,7 @@ export const attack = ({
     // human player attacking computer
     attackEnemyCell(column, row, enemyBoard, playerBoard, player, enemy)
     // computer attacking human
-    //const { elementColumn, elementRow } = playerBoard.makeRandomCoordinates()
-    //renderAttackP2(player, enemy, elementColumn, elementRow, playerBoard, enemyBoard)
-    //aiPlay(false, player, enemy, undefined, playerBoard, enemyBoard)
+    // const { elementColumn, elementRow } = playerBoard.makeRandomCoordinates()
+    // renderAttackP2(player, enemy, elementColumn, elementRow, playerBoard, enemyBoard)
+    // aiPlay(false, player, enemy, undefined, playerBoard, enemyBoard)
 }
