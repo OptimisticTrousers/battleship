@@ -18,9 +18,10 @@ const renderAttacks = (player, column, row, enemyBoard) => {
 const handleAttack = (column, row, enemyBoard, player) =>
     player.attack(column, row, enemyBoard)
 
-const attackEnemyCell = (column, row, enemyBoard, playerBoard, player, enemy) => {
+const attackEnemyCell = async (column, row, enemyBoard, playerBoard, player, enemy) => {
 
 
+    await delay(700)
     handleAttack(column, row, enemyBoard, player)
     renderAttacks('enemy', column, row, enemyBoard)
 }
@@ -103,7 +104,7 @@ const listOfRandomCoordinates = (column, row, playerBoard) => {
 }
 
 // renders attack for p2 (AI)
-export function renderAttackP2(p1, p2, pos1, pos2, playerBoard, enemyBoard) {
+export async function renderAttackP2(p1, p2, pos1, pos2, playerBoard, enemyBoard) {
   let isSunk = false;
   let e = document.querySelector(
         `.player-board > .cell[column='${pos1}'][row='${pos2}']`
@@ -131,6 +132,7 @@ export function renderAttackP2(p1, p2, pos1, pos2, playerBoard, enemyBoard) {
       isSunk = true;
       if (playerBoard.checkIfAllShipsHaveSunk() === true) return checkIfGameOver(playerBoard, enemyBoard);
     }
+    await delay(1000)
     return aiPlay(false, p1, p2, isSunk, playerBoard, enemyBoard);
   }
 
