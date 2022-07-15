@@ -115,6 +115,10 @@ button.randomize:hover{
 .not-available {
   background-color: #ff004c17;
 }
+.rotated {
+  transition: 0.2s ease-in-out;
+  flex-direction: column;
+}
 .sunk::after {
 
     content: "✕";
