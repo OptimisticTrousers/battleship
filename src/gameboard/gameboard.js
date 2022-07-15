@@ -215,6 +215,29 @@ const createGameBoard = () => {
         return { elementColumn, elementRow, randomDirection }
     }
 
+    let randomShip = (length) => {
+        let pos1 = Math.floor(Math.random() * 10)
+        let pos2 = Math.floor(Math.random() * 10)
+        let dir = Math.round(Math.random())
+
+        if(dir === 0) {
+            dir = "h"
+            if(gameBoard.placeShip(pos1, pos2, dir, createShip(length))) return false
+        }
+
+        if(dir === 1) {
+            dir = "v"
+            if(gameBoard.placeShip(pos1, pos2, dir, createShip(length))) return false
+        }
+    }
+
+    let randomFleet = () => {
+        for(let i = 0; i < 2;) {
+            if(randomShip(1) === false) continue 
+            i++
+        }
+    }
+
     const randomlyPlaceShips = () => {
         const shipDetails = []
         for (let i = 0; i < ships.length; i += 1) {
