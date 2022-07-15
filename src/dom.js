@@ -109,11 +109,10 @@ export function renderAttackP2(p1, p2, pos1, pos2, playerBoard, enemyBoard) {
         `.player-board > .cell[column='${pos1}'][row='${pos2}']`
     )
 
-    console.log(pos1, pos2)
-    console.log(p1, p2)
   let attack = p2.attack(pos1, pos2, playerBoard);
 
-  if (attack === "You hit a ship!") {
+    console.log(playerBoard.getLocation(pos1, pos2))
+  if (attack === "You have already hit this spot!") {
     let repeat = true;
     aiPlay(repeat, p1, p2, undefined, playerBoard, enemyBoard);
   }
@@ -121,7 +120,7 @@ export function renderAttackP2(p1, p2, pos1, pos2, playerBoard, enemyBoard) {
     setWasHit(false);
     e.classList.add("miss");
   }
-  if (attack === "You have already hit this spot!") {
+  if (attack === "You hit a ship!") {
     setWasHit(true, true, pos1, pos2);
     e.classList.add("hit");
     // if ship is sunk, add "sunk" class
