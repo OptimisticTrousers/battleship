@@ -119,6 +119,27 @@ button.randomize:hover{
   transition: 0.2s ease-in-out;
   flex-direction: column;
 }
+.ship {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  align-items: center;
+  cursor: grab;
+  border: solid 2px #0065d8;
+}
+.ship:active {
+    cursor: grabbing;
+
+}
+.ships {
+  height: 10rem;
+  width: 15rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
 .ship-container {
   position: absolute;
   background: rgb(255, 255, 255);

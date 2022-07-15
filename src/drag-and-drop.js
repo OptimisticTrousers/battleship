@@ -1,7 +1,9 @@
 import {renderPlayerShips} from './dom'
+import createShip from './ship/ship'
+
 let totalAmountShips = 0
 
-function shipDrag(player, shipName, playerBoard) {
+function shipDrag(shipName, playerBoard) {
     let amountLeft = 2
 
     const ship = document.querySelector(shipName)
@@ -10,7 +12,7 @@ function shipDrag(player, shipName, playerBoard) {
     const child = ship.childNodes
     let dragSelection;
     let offset;
-    let dir = "h"
+    let dir = "horizontal"
 
     if(child[0]) child[0].addEventListener('mouseenter', () => (offset = 0))
     if(child[1]) child[1].addEventListener('mouseenter', () => (offset = -1))
@@ -22,7 +24,7 @@ function shipDrag(player, shipName, playerBoard) {
     ship.addEventListener("dragstart", (e) => {
         for(let i = 0; i < 10; i++)
             playerBoard.gameBoard[i].forEach((e, j) => {
-                if(e === "res")
+                if(e.offLimits || e.isShip)
                 document.querySelector(`.player-board > .cell[column='${e}'][row='${j}']`).classList.toggle("not-available")
             })
     })
@@ -35,7 +37,7 @@ function shipDrag(player, shipName, playerBoard) {
 
         let pos1;
         let pos2;
-        let pos = "" + dragSelection
+        let pos = `${  dragSelection}`
 
         if(dragSelection < 10) {
             pos1 = 0;
@@ -46,25 +48,25 @@ function shipDrag(player, shipName, playerBoard) {
             pos2 = pos[1] * 1
         }
 
-        if(dir === "h") pos2 += offset
+        if(dir === "horizontal") pos2 += offset
         if(dir === "v") pos1 += offset
 
         if(pos2 < 0) return
 
         if(shipName === ".ship-1"){
-            if(playerBoard.placeShip(pos1, pos2, 1, dir) === false) return
+            if(playerBoard.placeShip(pos1, pos2, dir, createShip(1)) === false) return
             }
         if(shipName === ".ship-2"){
 
-            if(playerBoard.placeShip(pos1, pos2, 2, dir) === false) return
+            if(playerBoard.placeShip(pos1, pos2, dir, createShip(2)) === false) return
         }
         if(shipName === ".ship-3") {
 
-            if(playerBoard.placeShip(pos1, pos2, 3, dir) === false) return
+            if(playerBoard.placeShip(pos1, pos2, dir, createShip(3)) === false) return
         }
         if(shipName === ".ship-4") {
 
-            if(playerBoard.placeShip(pos1, pos2, 4, dir) === false) return
+            if(playerBoard.placeShip(pos1, pos2, dir, createShip(4)) === false) return
         }
 
         renderPlayerShips(playerBoard)
@@ -73,7 +75,7 @@ function shipDrag(player, shipName, playerBoard) {
         totalAmountShips++
 
         if(totalAmountShips === 8) playerBoard.isStartAllowed.set(true)
-        ship.parentNode.firstChild.textContent = amountLeft + "x"
+        ship.parentNode.firstChild.textContent = `${amountLeft}x`
         if(amountLeft === 0) ship.parentNode.style.display = "none"
     })
 
@@ -89,11 +91,11 @@ function shipDrag(player, shipName, playerBoard) {
     })
 
     function changeDir(e) {
-        if(dir === "h") {
-            dir = "v"
+        if(dir === "horizontal") {
+            dir = "vertical"
             e.target.parentNode.classList.toggle("rotated")
         } else {
-            dir = "h";
+            dir = "horizontal";
             e.target.parentNode.classList.toggle("rotated")
         }
     }

@@ -1,4 +1,4 @@
-import { addListenersToEnemyBoard, renderPlayerShips,pubSub, randomizeListener, attack} from './dom'
+import { addListenersToEnemyBoard, renderPlayerShips,pubSub, randomizeListener, attack, createDragAndDropFleet} from './dom'
 
 import createGameBoard from './gameboard/gameboard'
 import createShip from './ship/ship'
@@ -15,6 +15,8 @@ randomizeButton.addEventListener('click', () => {
 
     randomizeListener(enemyBoard)
 })
+
+createDragAndDropFleet(playerBoard)
 
 enemyBoard.placeShip(0, 0, 'horizontal', createShip(5))
 enemyBoard.placeShip(3, 4, 'horizontal', createShip(3))

@@ -1,6 +1,7 @@
 import createGameBoard from "./gameboard/gameboard"
 import createShip from "./ship/ship"
 import { aiPlay, getWasHit, setWasHit, surroundingPos } from "./bot";
+import { shipDrag } from "./drag-and-drop";
 
 const renderAttacks = (player, column, row, enemyBoard) => {
     const cell = document.querySelector(
@@ -241,16 +242,37 @@ const checkIfGameOver = (playerBoard, enemyBoard) => {
     }
 }
 
-function createDragAndDropFleet(playerBoard) {
+export function createDragAndDropFleet(playerBoard) {
     renderShipSelect(1, 1)
     renderShipSelect(2, 2)
     renderShipSelect(3, 3)
     renderShipSelect(4, 4)
 
     function renderShipSelect(i, length) {
-        const container = document.querySelector(".ships")
-        const
+        const container = document.querySelector(`.player:nth-child(1)`)
+        const shipContainer = document.createElement('div')
+        shipContainer.classList.add('ship-container')
+        container.appendChild(shipContainer)
+
+        const shipInfo = document.createElement("span")
+        shipInfo.classList.add(`info-${i}`)
+        shipInfo.textContent = "2x"
+        shipContainer.appendChild(shipInfo)
+
+        const ship = document.createElement("div")
+        ship.classList.add("ship")
+        ship.classList.add(`ship-${i}`)
+        ship.setAttribute("draggable", "true")
+        shipContainer.appendChild(ship)
+
+        for(let i = 0; i < length; i++) {
+            const cell = document.createElement("div")
+            cell.classList.add("cell")
+            ship.appendChild(cell)
+        }
     }
+
+    for(let i = 1; i < 5; i++) shipDrag(`.ship-${i}`, playerBoard)
 }
 
 export const addListenersToEnemyBoard = (
