@@ -144,6 +144,23 @@ const createGameBoard = () => {
         return false
     }
 
+      // makes tiles around ship "reserved"
+  let reserveAround = (pos1, pos2) => {
+    function cell(n1, n2) {
+      if (pos1 + n1 > 9 || pos1 + n1 < 0) return;
+      if (gameBoard[pos1 + n1][pos2 + n2] === false)
+        gameBoard[pos1 + n1][pos2 + n2] = "res";
+    }
+    function reserveCell(row) {
+      cell(row, -1);
+      cell(row, 0);
+      cell(row, 1);
+    }
+    reserveCell(-1);
+    reserveCell(0);
+    reserveCell(1);
+  };
+
     const placeShip = (column, row, direction, ship) => {
         const shipLength = ship.getLength()
         if (checkIfLocationIsAShipOrOffLimits(getLocation(column, row, direction, shipLength)))

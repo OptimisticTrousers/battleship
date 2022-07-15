@@ -15,7 +15,7 @@ randomizeButton.addEventListener('click', () => {
 
     playerBoard.randomFleet()
 })
-playerBoard.placeShip(0, 0, 'horizontal', createShip(5))
+    playerBoard.randomFleet()
 
 enemyBoard.placeShip(0, 0, 'horizontal', createShip(5))
 enemyBoard.placeShip(3, 4, 'horizontal', createShip(3))
