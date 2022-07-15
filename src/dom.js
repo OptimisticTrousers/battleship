@@ -129,7 +129,7 @@ export function renderAttackP2(p1, p2, pos1, pos2, playerBoard, enemyBoard) {
         //e.classList.add("sunk")
       //);
       isSunk = true;
-      if (p1.checkIfAllShipsHaveSunk() === true) return checkIfGameOver(playerBoard, enemyBoard);
+      if (playerBoard.checkIfAllShipsHaveSunk() === true) return checkIfGameOver(playerBoard, enemyBoard);
     }
     return aiPlay(false, p1, p2, isSunk, playerBoard, enemyBoard);
   }
@@ -330,8 +330,9 @@ export const attack = ({
     // human player attacking computer
     attackEnemyCell(column, row, enemyBoard, playerBoard, player, enemy)
     // computer attacking human
-    const { elementColumn, elementRow } = playerBoard.makeRandomCoordinates()
-    renderAttackP2(player, enemy, elementColumn, elementRow, playerBoard, enemyBoard)
+    //const { elementColumn, elementRow } = playerBoard.makeRandomCoordinates()
+    //renderAttackP2(player, enemy, elementColumn, elementRow, playerBoard, enemyBoard)
+    aiPlay(false, player, enemy, undefined, playerBoard, enemyBoard)
 
     checkIfGameOver(playerBoard, enemyBoard)
 }
