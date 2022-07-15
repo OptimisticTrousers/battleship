@@ -1,5 +1,6 @@
 import createGameBoard from "./gameboard/gameboard"
 import createShip from "./ship/ship"
+import { aiPlay, getWasHit, setWasHit, surroundingPos } from "./botAI";
 
 const renderAttacks = (player, column, row, enemyBoard) => {
     const cell = document.querySelector(
@@ -99,7 +100,40 @@ const listOfRandomCoordinates = (column, row, playerBoard) => {
         return directions
 }
 
+// renders attack for p2 (AI)
+async function renderAttackP2(playerBoard, enemyBoard, p1, p2, pos1, pos2) {
+  let isSunk = false;
+  let e = document.querySelector(
+        `.player-board > .cell[column='${pos2}'][row='${pos1}']`
+    )
+  let attack = p2.attack(pos1, pos2, playerBoard);
 
+  if (!attack) {
+    let repeat = true;
+    aiPlay(repeat, p1, p2);
+  }
+  if (attack === "miss") {
+    setWasHit(false);
+    e.classList.add("miss");
+  }
+  if (attack === "hit") {
+    setWasHit(true, true, pos1, pos2);
+    e.classList.add("hit");
+    p1.board.board[pos1][pos2].ship.domTargets.push(e);
+    // if ship is sunk, add "sunk" class
+    if (p1.board.board[pos1][pos2].ship.isSunk()) {
+      p1.board.board[pos1][pos2].ship.domTargets.forEach((e) =>
+        e.classList.add("sunk")
+      );
+      isSunk = true;
+      if (p1.board.areAllSunk(p1.board.board) === true) return checkIfGameOver(playerBoard, enemyBoard);
+    }
+    await delay(1000);
+    return aiPlay(false, p1, p2, isSunk);
+  }
+
+  p1.isTurn(p2); // gives turn to P1
+}
 // https://jsmanifest.com/the-publish-subscribe-pattern-in-javascript/
 
 export const pubSub = () => {
@@ -131,6 +165,15 @@ export const pubSub = () => {
         publish,
         subscribe,
     }
+}
+
+// creates a delay to be used in an async function
+function delay(delayInMs) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(2);
+    }, delayInMs);
+  });
 }
 
 export const renderPlayerShips = ({ getLocation }) => {
@@ -286,7 +329,7 @@ export const attack = ({
     attackEnemyCell(column, row, enemyBoard, player)
     // computer attacking human
     const { elementColumn, elementRow } = playerBoard.makeRandomCoordinates()
-    attackPlayerCell(playerBoard, enemy, elementColumn, elementRow)
+    renderAttackP2(playerBoard, enemyBoard, player, enemy, elementColumn, elementRow)
 
     checkIfGameOver(playerBoard, enemyBoard)
 }

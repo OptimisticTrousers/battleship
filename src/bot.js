@@ -34,14 +34,6 @@ function registerSurroundingPos(pos1, pos2) {
   return surroundingPos;
 }
 
-function delay(delayInMs) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(2);
-    }, delayInMs);
-  });
-}
-
 function aiPlay(repeat, p1, p2, isSunk) {
   let pos, pos1, pos2;
   if (isSunk === true) {
@@ -105,3 +97,4 @@ function attackTowards(dir) {
 }
 
 export { aiPlay, getWasHit, setWasHit, lastHitPos, surroundingPos };
+
