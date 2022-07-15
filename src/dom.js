@@ -34,7 +34,7 @@ const attackEnemyCell = async (column, row, enemyBoard, playerBoard, player, ene
     handleAttack(column, row, enemyBoard, player)
     renderAttacks('enemy', column, row, enemyBoard)
     await delay(700)
-    return enemyBoard.checkIfAllShipsHaveSunk() ? checkIfGameOver() : aiPlay(false, player, enemy, undefined, playerBoard, enemyBoard)
+    return enemyBoard.checkIfAllShipsHaveSunk() ? checkIfGameOver(playerBoard, enemyBoard) : aiPlay(false, player, enemy, undefined, playerBoard, enemyBoard)
 }
 
 const isSpaceAroundHit = (column, row, playerBoard) => {
