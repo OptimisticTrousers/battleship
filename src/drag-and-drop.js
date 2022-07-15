@@ -77,7 +77,8 @@ function shipDrag(shipName, playerBoard) {
 
         if(totalAmountShips === 8) playerBoard.isStartAllowed.set(true)
         ship.parentNode.firstChild.textContent = `${amountLeft}x`
-        if(amountLeft === 0) ship.parentNode.style.display = "none"
+        if(amountLeft === 0) ship.parentNode.style.display = "none" 
+        console.log(ship.parentNode.style)
     })
 
     cells.forEach((e, i) => {

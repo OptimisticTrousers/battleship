@@ -248,7 +248,7 @@ export function createDragAndDropFleet(playerBoard) {
     renderShipSelect(4, 4)
 
     function renderShipSelect(i, length) {
-        const container = document.querySelector(`.player:nth-child(1)`)
+        const container = document.querySelector("body > main > div.player > div:nth-child(4)")
         const shipContainer = document.createElement('div')
         shipContainer.classList.add('ship-container')
         container.appendChild(shipContainer)
