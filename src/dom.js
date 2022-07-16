@@ -322,7 +322,7 @@ export const randomizeBoard = (gameBoard) => {
         case 6:
             gameBoard.placeShip(0, 0, 'vertical', createShip(4))
             gameBoard.placeShip(0, 6, 'vertical', createShip(4))
-            gameBoard.placeShip(0, 2, 'horizontal', createShip(3))
+            gameBoard.placeShip(2, 2, 'horizontal', createShip(3))
             gameBoard.placeShip(6, 1, 'horizontal', createShip(3))
             gameBoard.placeShip(8, 3, 'horizontal', createShip(2))
             gameBoard.placeShip(9, 5, 'vertical', createShip(2))
@@ -369,8 +369,10 @@ export function addButtonListeners(playerBoard) {
     randomizeButton.addEventListener('click', () => {
     
         location.reload()
-        randomizeListener(playerBoard)
+        randomizeBoard(playerBoard)
     })
+
+    randomizeBoard(playerBoard)
 
     const resetButton = document.querySelector('button.reset')
 
