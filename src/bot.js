@@ -69,7 +69,7 @@ function aiPlay(repeat, p1, p2, isSunk, playerBoard, enemyBoard) {
     attackDirection = "";
   }
   if (!status && !wasHit) {
-    pos = p1.randomPos();
+    pos = playerBoard.makeRandomCoordinates()
 
     return renderAttackP2(p1, p2, pos[0], pos[1], playerBoard, enemyBoard);
   } else if (secondHitPos.length !== 0 && wasHit && !repeat) {
