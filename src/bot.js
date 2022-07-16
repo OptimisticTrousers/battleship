@@ -1,3 +1,6 @@
+/* eslint-disable import/no-mutable-exports */
+/* eslint-disable consistent-return */
+/* eslint-disable import/no-cycle */
 /* eslint-disable no-else-return */
 import {renderAttackP2 } from './dom'
 
@@ -9,14 +12,34 @@ let secondHitPos = [];
 let surroundingPos = [];
 let attackDirection;
 
+// get pos of attack based on direction
+function attackTowards(dir) {
+  if (dir === "left") {
+    attackDirection = "left";
+    return [lastHitPos[0], lastHitPos[1] - 1];
+  }
+  if (dir === "right") {
+    attackDirection = "right";
+    return [lastHitPos[0], lastHitPos[1] + 1];
+  }
+  if (dir === "down") {
+    attackDirection = "down";
+    return [lastHitPos[0] + 1, lastHitPos[1]];
+  }
+  if (dir === "up") {
+    attackDirection = "up";
+    return [lastHitPos[0] - 1, lastHitPos[1]];
+  }
+}
+
 function setWasHit(value, stat, pos1, pos2) {
   wasHit = value;
   if (stat !== undefined) status = stat;
   if (pos1 !== undefined) lastHitPos = [pos1, pos2];
-  if (firstHitPos.length == 0 && pos1 !== undefined) firstHitPos = [pos1, pos2];
+  if (firstHitPos.length === 0 && pos1 !== undefined) firstHitPos = [pos1, pos2];
   else if (
     firstHitPos.length !== 0 &&
-    secondHitPos.length == 0 &&
+    secondHitPos.length === 0 &&
     pos1 !== undefined
   )
     secondHitPos = [pos1, pos2];
@@ -35,7 +58,7 @@ function registerSurroundingPos(pos1, pos2) {
 }
 
 function aiPlay(repeat, p1, p2, isSunk, playerBoard, enemyBoard) {
-  let pos; let pos1; let pos2;
+  let pos; 
   if (isSunk === true) {
     lastHitPos = [];
     firstHitPos = [];
@@ -51,10 +74,10 @@ function aiPlay(repeat, p1, p2, isSunk, playerBoard, enemyBoard) {
     return renderAttackP2(p1, p2, pos[0], pos[1], playerBoard, enemyBoard);
   } else if (secondHitPos.length !== 0 && wasHit && !repeat) {
     let newPos;
-    if (firstHitPos[0] == secondHitPos[0] - 1) newPos = attackTowards("down");
-    if (firstHitPos[0] == secondHitPos[0] + 1) newPos = attackTowards("up");
-    if (firstHitPos[1] == secondHitPos[1] - 1) newPos = attackTowards("right");
-    if (firstHitPos[1] == secondHitPos[1] + 1) newPos = attackTowards("left");
+    if (firstHitPos[0] === secondHitPos[0] - 1) newPos = attackTowards("down");
+    if (firstHitPos[0] === secondHitPos[0] + 1) newPos = attackTowards("up");
+    if (firstHitPos[1] === secondHitPos[1] - 1) newPos = attackTowards("right");
+    if (firstHitPos[1] === secondHitPos[1] + 1) newPos = attackTowards("left");
     if (newPos[0] >= 0 && newPos[0] <= 9 && newPos[1] >= 0 && newPos[1] <= 9)
       return renderAttackP2(p1, p2, newPos[0], newPos[1], playerBoard, enemyBoard);
   } else if (secondHitPos.length !== 0 && status && !wasHit) {
@@ -68,31 +91,12 @@ function aiPlay(repeat, p1, p2, isSunk, playerBoard, enemyBoard) {
     if (newPos[0] >= 0 && newPos[0] <= 9 && newPos[1] >= 0 && newPos[1] <= 9)
       return renderAttackP2(p1, p2, newPos[0], newPos[1], playerBoard, enemyBoard);
   } else if (status) {
-    if (surroundingPos.length == 0)
+    if (surroundingPos.length === 0)
       registerSurroundingPos(lastHitPos[0], lastHitPos[1]);
-    if (surroundingPos.length == 0 && status == true)
+    if (surroundingPos.length === 0 && status === true)
       registerSurroundingPos(firstHitPos[0], firstHitPos[1]);
     const newPos = surroundingPos.pop();
     return renderAttackP2(p1, p2, newPos[0], newPos[1], playerBoard, enemyBoard);
-  }
-}
-// get pos of attack based on direction
-function attackTowards(dir) {
-  if (dir === "left") {
-    attackDirection = "left";
-    return [lastHitPos[0], lastHitPos[1] - 1];
-  }
-  if (dir === "right") {
-    attackDirection = "right";
-    return [lastHitPos[0], lastHitPos[1] + 1];
-  }
-  if (dir === "down") {
-    attackDirection = "down";
-    return [lastHitPos[0] + 1, lastHitPos[1]];
-  }
-  if (dir === "up") {
-    attackDirection = "up";
-    return [lastHitPos[0] - 1, lastHitPos[1]];
   }
 }
 
