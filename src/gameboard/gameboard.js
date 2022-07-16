@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 
 /* eslint-disable no-multi-assign */
 /* eslint-disable no-unused-expressions */
@@ -292,32 +293,104 @@ const placeShip = (column, row, direction, ship) => {
     const randomPossibility = Math.floor(Math.random() * 4)
     switch(randomPossibility){
         case 0:
-        gameBoard.placeShip(9, 1, 'vertical', createShip(5))
-        gameBoard.placeShip(0, 3, 'horizontal', createShip(3))
-        gameBoard.placeShip(3, 6, 'horizontal', createShip(2))
-        gameBoard.placeShip(6, 5, 'horizontal', createShip(3))
-        gameBoard.placeShip(3, 9, 'horizontal', createShip(4))
+            gameBoard.placeShip(1, 1, 'horizontal',createShip(4))
+            gameBoard.placeShip(1, 4, 'horizontal', createShip(4))
+            gameBoard.placeShip(7, 3, 'horizontal', createShip(3))
+            gameBoard.placeShip(2, 7, 'horizonal', createShip(3))
+            gameBoard.placeShip(6, 7, 'horizontal', createShip(2))
+            gameBoard.placeShip(5, 9, 'horizontal', createShip(2))
+            gameBoard.placeShip(8, 1, 'vertical', createShip(1))
+            gameBoard.placeShip(9, 5, 'vertical', createShip(1))
             break;
         case 1:
-        gameBoard.placeShip(0, 2, 'horizontal', createShip(5))
-        gameBoard.placeShip(4, 5, 'horizontal', createShip(3))
-        gameBoard.placeShip(8, 7, 'horizontal', createShip(2))
-        gameBoard.placeShip(5, 9, 'horizontal', createShip(3))
-        gameBoard.placeShip(6, 3, 'horizontal', createShip(4))
+            gameBoard.placeShip(0, 1, 'vertical', createShip(4))
+            gameBoard.placeShip(8, 1, 'vertical', createShip(4))
+            gameBoard.placeShip(3, 1, 'horizontal', createShip(3))
+            gameBoard.placeShip(0, 7, 'vertical', createShip(3))
+            gameBoard.placeShip(3, 6, 'horizontal', createShip(2))
+            gameBoard.placeShip(8, 7, 'horizontal', createShip(2))
+            gameBoard.placeShip(4, 8, 'vertical', createShip(1))
+            gameBoard.placeShip(6, 7, 'vertical', createShip(1))
             break;
         case 2:
-        gameBoard.placeShip(5, 1, 'horizontal', createShip(5))
-        gameBoard.placeShip(3, 3, 'vertical', createShip(3))
-        gameBoard.placeShip(0, 0, 'vertical', createShip(2))
-        gameBoard.placeShip(6, 5, 'horizontal', createShip(3))
-        gameBoard.placeShip(5, 9, 'horizontal', createShip(4))
-            break;
-        default:
-            gameBoard.placeShip(0, 0, 'horizontal', createShip(5))
-            gameBoard.placeShip(3, 4, 'horizontal', createShip(3))
-            gameBoard.placeShip(6, 7, 'horizontal', createShip(2))
+            gameBoard.placeShip(0, 1, 'horizontal', createShip(4))
+            gameBoard.placeShip(0, 3, 'horizontal', createShip(4))
             gameBoard.placeShip(9, 1, 'vertical', createShip(3))
-            gameBoard.placeShip(5, 9, 'horizontal', createShip(4))
+            gameBoard.placeShip(2, 8, 'horizontal', createShip(3))
+            gameBoard.placeShip(5, 3, 'vertical', createShip(2))
+            gameBoard.placeShip(0, 6, 'vertical', createShip(2))
+            gameBoard.placeShip(1, 6, 'vertical', createShip(1))
+            gameBoard.placeShip(7, 4, 'vertical', createShip(1))
+            break;
+        case 3:
+            gameBoard.placeShip(0, 0, 'vertical', createShip(4))
+            gameBoard.placeShip(9, 0, 'vertical', createShip(4))
+            gameBoard.placeShip(0, 5, 'vertical', createShip(3))
+            gameBoard.placeShip(3, 1, 'vertical', createShip(3))
+            gameBoard.placeShip(5, 1, 'vertical', createShip(2))
+            gameBoard.placeShip(7, 1, 'vertical', createShip(2))
+            gameBoard.placeShip(4, 7, 'vertical', createShip(1))
+            gameBoard.placeShip(8, 7, 'vertical', createShip(1))
+            break;
+        case 4:
+            gameBoard.placeShip(2, 4, 'horizontal', createShip(4))
+            gameBoard.placeShip(0, 6, 'vertical', createShip(4))
+            gameBoard.placeShip(2, 7, 'horizontal', createShip(3))
+            gameBoard.placeShip(6, 6, 'horizontal', createShip(3))
+            gameBoard.placeShip(7, 1, 'horizontal', createShip(2))
+            gameBoard.placeShip(6, 8, 'horizontal', createShip(2))
+            gameBoard.placeShip(2, 1, 'horizontal', createShip(1))
+            gameBoard.placeShip(4, 1, 'horizontal', createShip(1))
+            break;
+        case 5:
+            gameBoard.placeShip(1, 3, 'horizontal', createShip(4))
+            gameBoard.placeShip(6, 2, 'vertical', createShip(4))
+            gameBoard.placeShip(0, 6, 'vertical', createShip(3))
+            gameBoard.placeShip(8, 2, 'vertical', createShip(3))
+            gameBoard.placeShip(0, 0, 'horizontal', createShip(2))
+            gameBoard.placeShip(2, 6, 'horizontal', createShip(2))
+            gameBoard.placeShip(9, 6, 'vertical', createShip(1))
+            gameBoard.placeShip(5, 9, 'vertical', createShip(1))
+            break;
+        case 6:
+            gameBoard.placeShip(0, 0, 'vertical', createShip(4))
+            gameBoard.placeShip(0, 6, 'vertical', createShip(4))
+            gameBoard.placeShip(0, 2, 'horizontal', createShip(3))
+            gameBoard.placeShip(6, 1, 'horizontal', createShip(3))
+            gameBoard.placeShip(8, 3, 'horizontal', createShip(2))
+            gameBoard.placeShip(9, 5, 'vertical', createShip(2))
+            gameBoard.placeShip(9, 8, 'vertical', createShip(1))
+            gameBoard.placeShip(7, 9, 'vertical', createShip(1))
+            break;
+        case 7:
+            gameBoard.placeShip(0, 1, 'vertical', createShip(4))
+            gameBoard.placeShip(0, 6, 'vertical', createShip(4))
+            gameBoard.placeShip(2, 0, 'horizontal', createShip(3))
+            gameBoard.placeShip(6, 0, 'horizontal', createShip(3))
+            gameBoard.placeShip(9, 2, 'vertical', createShip(2))
+            gameBoard.placeShip(9, 6, 'vertical', createShip(2))
+            gameBoard.placeShip(9, 9, 'vertical', createShip(1))
+            gameBoard.placeShip(7, 9, 'vertical', createShip(1))
+            break;
+        case 8:
+            gameBoard.placeShip(2, 0, 'vertical', createShip(4))
+            gameBoard.placeShip(7, 1, 'vertical', createShip(4))
+            gameBoard.placeShip(2, 5, 'horizontal', createShip(3))
+            gameBoard.placeShip(6, 7, 'vertical', createShip(3))
+            gameBoard.placeShip(1, 9, 'horizontal', createShip(2))
+            gameBoard.placeShip(2, 7, 'horizontal', createShip(2))
+            gameBoard.placeShip(9, 6, 'vertical', createShip(1))
+            gameBoard.placeShip(8, 9, 'vertical', createShip(1))
+            break;
+        case 9:
+            gameBoard.placeShip(0, 0, 'horizontal', createShip(4))
+            gameBoard.placeShip(5, 2, 'vertical', createShip(1))
+            gameBoard.placeShip(2, 6, 'vertical', createShip(1))
+            gameBoard.placeShip(0, 8, 'horizontal', createShip(3))
+            gameBoard.placeShip(4, 5, 'vertical', createShip(4))
+            gameBoard.placeShip(7, 4, 'horizontal', createShip(2))
+            gameBoard.placeShip(6, 6, 'horizontal', createShip(2))
+            gameBoard.placeShip(7, 8, 'horizontal', createShip(3))
             break;
 
 }
