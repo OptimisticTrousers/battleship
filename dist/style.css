@@ -162,6 +162,7 @@ body > main > div.player > div:nth-child(4) {
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
+  border-radius: 40px;
 }
 body > main > div.player > div:nth-child(4) span {
 
@@ -172,6 +173,7 @@ body > main > div.player > div:nth-child(4) span {
   background: rgb(255, 255, 255);
   height: inherit;
   width: inherit;
+  border-radius: 40px;
   display: flex;
   gap: 0.5rem;
   flex-direction: column;
