@@ -222,17 +222,31 @@ export const addListenersToEnemyBoard = (
             cell.addEventListener(
                 'click',
                 () => {
-                    delay(1100).then(() => {
+                    if(playerBoard.isStartAllowed.get()){
 
-                        ps.publish('click', {
-                            column,
-                            row,
-                            playerBoard,
-                            enemyBoard,
-                            player,
-                            enemy,
+                        if(player.turn.get()){
+
+                            ps.publish('click', {
+                                column,
+                                row,
+                                playerBoard,
+                                enemyBoard,
+                                player,
+                                enemy,
+                            })
+                        }
+                        delay(1100).then(() => {
+
+                            ps.publish('click', {
+                                column,
+                                row,
+                                playerBoard,
+                                enemyBoard,
+                                player,
+                                enemy,
+                            })
                         })
-                    })
+                    }
                 },
             )
         }
