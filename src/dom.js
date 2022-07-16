@@ -1,8 +1,50 @@
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-restricted-globals */
+/* eslint-disable consistent-return */
+/* eslint-disable import/no-cycle */
 /* eslint-disable default-case */
-import createGameBoard from "./gameboard/gameboard"
 import createShip from "./ship/ship"
-import { aiPlay, getWasHit, setWasHit, surroundingPos } from "./bot";
+import { aiPlay, setWasHit } from "./bot";
 import { shipDrag } from "./drag-and-drop";
+
+// creates a delay to be used in an async function
+function delay(delayInMs) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(2);
+    }, delayInMs);
+  });
+}
+
+const checkIfGameOver = (playerBoard, enemyBoard) => {
+    if (playerBoard.checkIfAllShipsHaveSunk()) {
+        const modal = document.querySelector('.modal')
+        const modalWinner = document.querySelector('.modal-content > p')
+        const playAgainButton = document.querySelector(
+            '.modal-content > button'
+        )
+
+        modal.style.display = 'block'
+        playAgainButton.addEventListener('click', () => {
+            location.reload()
+        })
+
+        modalWinner.textContent = 'You lose!'
+    }
+    if (enemyBoard.checkIfAllShipsHaveSunk()) {
+        const modal = document.querySelector('.modal')
+        const modalWinner = document.querySelector('.modal-content > p')
+        const playAgainButton = document.querySelector(
+            '.modal-content > button'
+        )
+
+        modal.style.display = 'block'
+        modalWinner.textContent = 'You win!'
+        playAgainButton.addEventListener('click', () => {
+            location.reload()
+        })
+    }
+}
 
 const renderAttacks = (player, column, row, enemyBoard) => {
     const cell = document.querySelector(
@@ -39,83 +81,6 @@ const attackEnemyCell = async (column, row, enemyBoard, playerBoard, player, ene
     return enemyBoard.checkIfAllShipsHaveSunk() ? checkIfGameOver(playerBoard, enemyBoard) : aiPlay(false, player, enemy, undefined, playerBoard, enemyBoard)
 }
 
-const isSpaceAroundHit = (column, row, playerBoard) => {
-
-    const nextColumn = playerBoard.getLocation(column + 1, row)
-    const previousColumn = playerBoard.getLocation(column - 1, row)
-    const nextRow = playerBoard.getLocation(column, row + 1)
-    const previousRow = playerBoard.getLocation(column, row - 1)
-
-    const spacesHit = []
-
-    if(nextColumn && !nextColumn.hasBeenHit){
-        spacesHit.push(nextColumn)
-    }
-    if(previousColumn && !previousColumn.hasBeenHit){
-        spacesHit.push(previousColumn)
-    }
-    if(nextRow && !nextRow.hasBeenHit){
-        spacesHit.push(nextRow)
-    }
-    if(previousRow && !previousRow.hasBeenHit){
-        spacesHit.push(previousRow)
-    }
-
-    return spacesHit
-
-}
-
-const randomDirectionAttack = (column, row, playerBoard) => {
-
-    const spacesHit = isSpaceAroundHit(column, row, playerBoard)
-
-    const randomIndex = Math.floor(Math.random() * spacesHit.length)
-
-    if(!spacesHit[randomIndex]) return randomDirectionAttack(column, row , playerBoard)
-
-    return spacesHit[randomIndex]
-}
-
-const isRandomColumnGreaterThanCurrentColumn = (column, randomColumn) => 
-    randomColumn > column
-
-const isRandomRowGreaterThanCurrentColumn = (row, randomRow) => 
-    randomRow > row
-
-const listOfRandomCoordinates = (column, row, playerBoard) => {
-
-        const locationPrototype = {
-            location() {
-                return playerBoard.getLocation(this.column, this.row)
-            }
-        }
-
-        const top = Object.assign(Object.create(locationPrototype), {
-            column,
-            row: row - 1,
-        })
-        const bottom = Object.assign(Object.create(locationPrototype), {
-            column,
-            row: row + 1,
-        })
-        const right = Object.assign(Object.create(locationPrototype), {
-            column: column + 1,
-            row,
-        })
-        const left = Object.assign(Object.create(locationPrototype), {
-            column: column - 1,
-            row,
-        })
-        const directions = []
-
-        directions.push(top)
-        directions.push(bottom)
-        directions.push(right)
-        directions.push(left)
-
-        return directions
-}
-
 // renders attack for p2 (AI)
 export async function renderAttackP2(p1, p2, pos1, pos2, playerBoard, enemyBoard) {
   let isSunk = false;
@@ -139,8 +104,8 @@ export async function renderAttackP2(p1, p2, pos1, pos2, playerBoard, enemyBoard
     playerBoard.getLocation(pos1, pos2).domTargets.push(e)
     // if ship is sunk, add "sunk" class
     if (playerBoard.getLocation(pos1, pos2).isSunk()) {
-      playerBoard.getLocation(pos1, pos2).domTargets.forEach((e) =>
-        e.classList.add("sunk")
+      playerBoard.getLocation(pos1, pos2).domTargets.forEach((location) =>
+        location.classList.add("sunk")
       );
       isSunk = true;
       if (playerBoard.checkIfAllShipsHaveSunk() === true) return checkIfGameOver(playerBoard, enemyBoard);
@@ -184,14 +149,6 @@ export const pubSub = () => {
     }
 }
 
-// creates a delay to be used in an async function
-function delay(delayInMs) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(2);
-    }, delayInMs);
-  });
-}
 
 export const renderPlayerShips = ({ getLocation }) => {
     const playerBoardArea = document.querySelector('div.player-board')
@@ -209,36 +166,6 @@ export const renderPlayerShips = ({ getLocation }) => {
                 cell.setAttribute('ship-name', location.getName())
             }
         }
-    }
-}
-
-const checkIfGameOver = (playerBoard, enemyBoard) => {
-    if (playerBoard.checkIfAllShipsHaveSunk()) {
-        const modal = document.querySelector('.modal')
-        const modalWinner = document.querySelector('.modal-content > p')
-        const playAgainButton = document.querySelector(
-            '.modal-content > button'
-        )
-
-        modal.style.display = 'block'
-        playAgainButton.addEventListener('click', () => {
-            location.reload()
-        })
-
-        modalWinner.textContent = 'You lose!'
-    }
-    if (enemyBoard.checkIfAllShipsHaveSunk()) {
-        const modal = document.querySelector('.modal')
-        const modalWinner = document.querySelector('.modal-content > p')
-        const playAgainButton = document.querySelector(
-            '.modal-content > button'
-        )
-
-        modal.style.display = 'block'
-        modalWinner.textContent = 'You win!'
-        playAgainButton.addEventListener('click', () => {
-            location.reload()
-        })
     }
 }
 
@@ -265,14 +192,14 @@ export function createDragAndDropFleet(playerBoard) {
         ship.setAttribute("draggable", "true")
         shipContainer.appendChild(ship)
 
-        for(let i = 0; i < length; i++) {
+        for(let j= 0; j< length; j+= 1) {
             const cell = document.createElement("div")
             cell.classList.add("cell")
             ship.appendChild(cell)
         }
     }
 
-    for(let i = 1; i < 5; i++) shipDrag(`.ship-${i}`, playerBoard)
+    for(let i = 1; i < 5; i += 1) shipDrag(`.ship-${i}`, playerBoard)
 }
 
 export const addListenersToEnemyBoard = (
@@ -298,7 +225,6 @@ export const addListenersToEnemyBoard = (
                 () => {
                     if(playerBoard.isStartAllowed.get() === false) return
                     ps.publish('click', {
-                        cell,
                         column,
                         row,
                         playerBoard,
@@ -438,7 +364,6 @@ export const randomizeListener = (gameBoard) => {
 }
 
 export const attack = ({
-    cell,
     column,
     row,
     playerBoard,
@@ -447,10 +372,5 @@ export const attack = ({
     enemy,
 }) => {
 
-    // human player attacking computer
     attackEnemyCell(column, row, enemyBoard, playerBoard, player, enemy)
-    // computer attacking human
-    // const { elementColumn, elementRow } = playerBoard.makeRandomCoordinates()
-    // renderAttackP2(player, enemy, elementColumn, elementRow, playerBoard, enemyBoard)
-    // aiPlay(false, player, enemy, undefined, playerBoard, enemyBoard)
 }
