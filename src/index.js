@@ -13,9 +13,11 @@ const randomizeButton = document.querySelector('button.randomize')
 
 randomizeButton.addEventListener('click', () => {
 
-    playerBoard.randomlyPlaceShips()
-    clearBoardDOM()
+    location.reload()
+    randomizeListener(playerBoard)
 })
+
+randomizeListener(playerBoard)
 
 const resetButton = document.querySelector('button.reset')
 
@@ -26,11 +28,7 @@ resetButton.addEventListener('click', () => {
 
 createDragAndDropFleet(playerBoard)
 
-enemyBoard.placeShip(0, 0, 'horizontal', createShip(5))
-enemyBoard.placeShip(3, 4, 'horizontal', createShip(3))
-enemyBoard.placeShip(6, 7, 'horizontal', createShip(2))
-enemyBoard.placeShip(9, 1, 'vertical', createShip(3))
-enemyBoard.placeShip(5, 9, 'horizontal', createShip(4))
+    randomizeListener(enemyBoard)
 
 const ps = pubSub()
 

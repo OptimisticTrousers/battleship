@@ -1,5 +1,5 @@
 /* eslint-disable default-case */
-
+// eslint-disable-next-line import/no-cycle
 /* eslint-disable no-multi-assign */
 /* eslint-disable no-unused-expressions */
 const createShip = require('../ship/ship')
@@ -83,7 +83,7 @@ const createGameBoard = () => {
         setLocation(column + shipLength, row + 1)
         // top-right
         setLocation(column + shipLength, row - 1)
-        //left
+        // left
         setLocation(column -1, row)
     }
 
@@ -151,7 +151,7 @@ const createGameBoard = () => {
     }
 
       // makes tiles around ship "reserved"
-  let reserveAround = (pos1, pos2) => {
+  const reserveAround = (pos1, pos2) => {
     function cell(n1, n2) {
       if (pos1 + n1 > 9 || pos1 + n1 < 0) return;
       if (Object.is(gameBoard[pos1 + n1][pos2 + n2], emptyCell))
@@ -176,7 +176,7 @@ const placeShip = (column, row, direction, ship) => {
             if (checkIfRowCoordinateIsValid(row, shipLength)) {
                 for (let i = 0; i < shipLength; i += 1) {
                     setLocation(column, row + i, {...ship, position: i})
-                    //reserveAround(column, row + i)
+                    // reserveAround(column, row + i)
                     setLocation(column + 1, row + i)
                     setLocation(column - 1, row + i)
                 }
@@ -191,7 +191,7 @@ const placeShip = (column, row, direction, ship) => {
             if (checkIfColumnCoordinateIsValid(column, shipLength)) {
                 for (let i = 0; i < shipLength; i += 1) {
                     setLocation(column + i , row, {...ship, position: i})
-                    //reserveAround(column + i, row)
+                    // reserveAround(column + i, row)
                     setLocation(column + i, row + 1)
                     setLocation(column + i, row - 1)
                 }
@@ -239,15 +239,15 @@ const placeShip = (column, row, direction, ship) => {
 
         return { elementColumn, elementRow, randomDirection }
     }
-      let randomPos = () => {
-    let pos1 = Math.floor(Math.random() * 10);
-    let pos2 = Math.floor(Math.random() * 10);
+      const randomPos = () => {
+    const pos1 = Math.floor(Math.random() * 10);
+    const pos2 = Math.floor(Math.random() * 10);
     return [pos1, pos2];
   };
   // creates a ship with random pos and orientation
-  let randomShip = (length) => {
-    let pos1 = Math.floor(Math.random() * 10);
-    let pos2 = Math.floor(Math.random() * 10);
+  const randomShip = (length) => {
+    const pos1 = Math.floor(Math.random() * 10);
+    const pos2 = Math.floor(Math.random() * 10);
     let dir = Math.round(Math.random());
 
     if (dir === 0) {
@@ -260,8 +260,8 @@ const placeShip = (column, row, direction, ship) => {
       if (placeShip(pos1, pos2, dir, createShip(length)) == false) return false;
     }
   };
-  //creates a random fleet of 8 ships
-  let randomFleet = () => {
+  // creates a random fleet of 8 ships
+  const randomFleet = () => {
     // create 2 ships of length 1
     for (let i = 0; i < 2; ) {
       if (randomShip(1) == false) continue;
@@ -287,110 +287,109 @@ const placeShip = (column, row, direction, ship) => {
 
     const randomlyPlaceShips = () => {
 
-    gameBoard.clearBoard()
-    clearBoardDOM()
+    clearBoard()
 
-    const randomPossibility = Math.floor(Math.random() * 4)
+    const randomPossibility = Math.floor(Math.random() * 10)
     switch(randomPossibility){
         case 0:
-            gameBoard.placeShip(1, 1, 'horizontal',createShip(4))
-            gameBoard.placeShip(1, 4, 'horizontal', createShip(4))
-            gameBoard.placeShip(7, 3, 'horizontal', createShip(3))
-            gameBoard.placeShip(2, 7, 'horizonal', createShip(3))
-            gameBoard.placeShip(6, 7, 'horizontal', createShip(2))
-            gameBoard.placeShip(5, 9, 'horizontal', createShip(2))
-            gameBoard.placeShip(8, 1, 'vertical', createShip(1))
-            gameBoard.placeShip(9, 5, 'vertical', createShip(1))
+            placeShip(1, 1, 'horizontal',createShip(4))
+            placeShip(1, 4, 'horizontal', createShip(4))
+            placeShip(7, 3, 'horizontal', createShip(3))
+            placeShip(2, 7, 'horizonal', createShip(3))
+            placeShip(6, 7, 'horizontal', createShip(2))
+            placeShip(5, 9, 'horizontal', createShip(2))
+            placeShip(8, 1, 'vertical', createShip(1))
+            placeShip(9, 5, 'vertical', createShip(1))
             break;
         case 1:
-            gameBoard.placeShip(0, 1, 'vertical', createShip(4))
-            gameBoard.placeShip(8, 1, 'vertical', createShip(4))
-            gameBoard.placeShip(3, 1, 'horizontal', createShip(3))
-            gameBoard.placeShip(0, 7, 'vertical', createShip(3))
-            gameBoard.placeShip(3, 6, 'horizontal', createShip(2))
-            gameBoard.placeShip(8, 7, 'horizontal', createShip(2))
-            gameBoard.placeShip(4, 8, 'vertical', createShip(1))
-            gameBoard.placeShip(6, 7, 'vertical', createShip(1))
+            placeShip(0, 1, 'vertical', createShip(4))
+            placeShip(8, 1, 'vertical', createShip(4))
+            placeShip(3, 1, 'horizontal', createShip(3))
+            placeShip(0, 7, 'vertical', createShip(3))
+            placeShip(3, 6, 'horizontal', createShip(2))
+            placeShip(8, 7, 'horizontal', createShip(2))
+            placeShip(4, 8, 'vertical', createShip(1))
+            placeShip(6, 7, 'vertical', createShip(1))
             break;
         case 2:
-            gameBoard.placeShip(0, 1, 'horizontal', createShip(4))
-            gameBoard.placeShip(0, 3, 'horizontal', createShip(4))
-            gameBoard.placeShip(9, 1, 'vertical', createShip(3))
-            gameBoard.placeShip(2, 8, 'horizontal', createShip(3))
-            gameBoard.placeShip(5, 3, 'vertical', createShip(2))
-            gameBoard.placeShip(0, 6, 'vertical', createShip(2))
-            gameBoard.placeShip(1, 6, 'vertical', createShip(1))
-            gameBoard.placeShip(7, 4, 'vertical', createShip(1))
+            placeShip(0, 1, 'horizontal', createShip(4))
+            placeShip(0, 3, 'horizontal', createShip(4))
+            placeShip(9, 1, 'vertical', createShip(3))
+            placeShip(2, 8, 'horizontal', createShip(3))
+            placeShip(5, 3, 'vertical', createShip(2))
+            placeShip(0, 6, 'vertical', createShip(2))
+            placeShip(1, 6, 'vertical', createShip(1))
+            placeShip(7, 4, 'vertical', createShip(1))
             break;
         case 3:
-            gameBoard.placeShip(0, 0, 'vertical', createShip(4))
-            gameBoard.placeShip(9, 0, 'vertical', createShip(4))
-            gameBoard.placeShip(0, 5, 'vertical', createShip(3))
-            gameBoard.placeShip(3, 1, 'vertical', createShip(3))
-            gameBoard.placeShip(5, 1, 'vertical', createShip(2))
-            gameBoard.placeShip(7, 1, 'vertical', createShip(2))
-            gameBoard.placeShip(4, 7, 'vertical', createShip(1))
-            gameBoard.placeShip(8, 7, 'vertical', createShip(1))
+            placeShip(0, 0, 'vertical', createShip(4))
+            placeShip(9, 0, 'vertical', createShip(4))
+            placeShip(0, 5, 'vertical', createShip(3))
+            placeShip(3, 1, 'vertical', createShip(3))
+            placeShip(5, 1, 'vertical', createShip(2))
+            placeShip(7, 1, 'vertical', createShip(2))
+            placeShip(4, 7, 'vertical', createShip(1))
+            placeShip(8, 7, 'vertical', createShip(1))
             break;
         case 4:
-            gameBoard.placeShip(2, 4, 'horizontal', createShip(4))
-            gameBoard.placeShip(0, 6, 'vertical', createShip(4))
-            gameBoard.placeShip(2, 7, 'horizontal', createShip(3))
-            gameBoard.placeShip(6, 6, 'horizontal', createShip(3))
-            gameBoard.placeShip(7, 1, 'horizontal', createShip(2))
-            gameBoard.placeShip(6, 8, 'horizontal', createShip(2))
-            gameBoard.placeShip(2, 1, 'horizontal', createShip(1))
-            gameBoard.placeShip(4, 1, 'horizontal', createShip(1))
+            placeShip(2, 4, 'horizontal', createShip(4))
+            placeShip(0, 6, 'vertical', createShip(4))
+            placeShip(2, 7, 'horizontal', createShip(3))
+            placeShip(6, 6, 'horizontal', createShip(3))
+            placeShip(7, 1, 'horizontal', createShip(2))
+            placeShip(6, 8, 'horizontal', createShip(2))
+            placeShip(2, 1, 'horizontal', createShip(1))
+            placeShip(4, 1, 'horizontal', createShip(1))
             break;
         case 5:
-            gameBoard.placeShip(1, 3, 'horizontal', createShip(4))
-            gameBoard.placeShip(6, 2, 'vertical', createShip(4))
-            gameBoard.placeShip(0, 6, 'vertical', createShip(3))
-            gameBoard.placeShip(8, 2, 'vertical', createShip(3))
-            gameBoard.placeShip(0, 0, 'horizontal', createShip(2))
-            gameBoard.placeShip(2, 6, 'horizontal', createShip(2))
-            gameBoard.placeShip(9, 6, 'vertical', createShip(1))
-            gameBoard.placeShip(5, 9, 'vertical', createShip(1))
+            placeShip(1, 3, 'horizontal', createShip(4))
+            placeShip(6, 2, 'vertical', createShip(4))
+            placeShip(0, 6, 'vertical', createShip(3))
+            placeShip(8, 2, 'vertical', createShip(3))
+            placeShip(0, 0, 'horizontal', createShip(2))
+            placeShip(2, 6, 'horizontal', createShip(2))
+            placeShip(9, 6, 'vertical', createShip(1))
+            placeShip(5, 9, 'vertical', createShip(1))
             break;
         case 6:
-            gameBoard.placeShip(0, 0, 'vertical', createShip(4))
-            gameBoard.placeShip(0, 6, 'vertical', createShip(4))
-            gameBoard.placeShip(0, 2, 'horizontal', createShip(3))
-            gameBoard.placeShip(6, 1, 'horizontal', createShip(3))
-            gameBoard.placeShip(8, 3, 'horizontal', createShip(2))
-            gameBoard.placeShip(9, 5, 'vertical', createShip(2))
-            gameBoard.placeShip(9, 8, 'vertical', createShip(1))
-            gameBoard.placeShip(7, 9, 'vertical', createShip(1))
+            placeShip(0, 0, 'vertical', createShip(4))
+            placeShip(0, 6, 'vertical', createShip(4))
+            placeShip(0, 2, 'horizontal', createShip(3))
+            placeShip(6, 1, 'horizontal', createShip(3))
+            placeShip(8, 3, 'horizontal', createShip(2))
+            placeShip(9, 5, 'vertical', createShip(2))
+            placeShip(9, 8, 'vertical', createShip(1))
+            placeShip(7, 9, 'vertical', createShip(1))
             break;
         case 7:
-            gameBoard.placeShip(0, 1, 'vertical', createShip(4))
-            gameBoard.placeShip(0, 6, 'vertical', createShip(4))
-            gameBoard.placeShip(2, 0, 'horizontal', createShip(3))
-            gameBoard.placeShip(6, 0, 'horizontal', createShip(3))
-            gameBoard.placeShip(9, 2, 'vertical', createShip(2))
-            gameBoard.placeShip(9, 6, 'vertical', createShip(2))
-            gameBoard.placeShip(9, 9, 'vertical', createShip(1))
-            gameBoard.placeShip(7, 9, 'vertical', createShip(1))
+            placeShip(0, 1, 'vertical', createShip(4))
+            placeShip(0, 6, 'vertical', createShip(4))
+            placeShip(2, 0, 'horizontal', createShip(3))
+            placeShip(6, 0, 'horizontal', createShip(3))
+            placeShip(9, 2, 'vertical', createShip(2))
+            placeShip(9, 6, 'vertical', createShip(2))
+            placeShip(9, 9, 'vertical', createShip(1))
+            placeShip(7, 9, 'vertical', createShip(1))
             break;
         case 8:
-            gameBoard.placeShip(2, 0, 'vertical', createShip(4))
-            gameBoard.placeShip(7, 1, 'vertical', createShip(4))
-            gameBoard.placeShip(2, 5, 'horizontal', createShip(3))
-            gameBoard.placeShip(6, 7, 'vertical', createShip(3))
-            gameBoard.placeShip(1, 9, 'horizontal', createShip(2))
-            gameBoard.placeShip(2, 7, 'horizontal', createShip(2))
-            gameBoard.placeShip(9, 6, 'vertical', createShip(1))
-            gameBoard.placeShip(8, 9, 'vertical', createShip(1))
+            placeShip(2, 0, 'vertical', createShip(4))
+            placeShip(7, 1, 'vertical', createShip(4))
+            placeShip(2, 5, 'horizontal', createShip(3))
+            placeShip(6, 7, 'vertical', createShip(3))
+            placeShip(1, 9, 'horizontal', createShip(2))
+            placeShip(2, 7, 'horizontal', createShip(2))
+            placeShip(9, 6, 'vertical', createShip(1))
+            placeShip(8, 9, 'vertical', createShip(1))
             break;
         case 9:
-            gameBoard.placeShip(0, 0, 'horizontal', createShip(4))
-            gameBoard.placeShip(5, 2, 'vertical', createShip(1))
-            gameBoard.placeShip(2, 6, 'vertical', createShip(1))
-            gameBoard.placeShip(0, 8, 'horizontal', createShip(3))
-            gameBoard.placeShip(4, 5, 'vertical', createShip(4))
-            gameBoard.placeShip(7, 4, 'horizontal', createShip(2))
-            gameBoard.placeShip(6, 6, 'horizontal', createShip(2))
-            gameBoard.placeShip(7, 8, 'horizontal', createShip(3))
+            placeShip(0, 0, 'horizontal', createShip(4))
+            placeShip(5, 2, 'vertical', createShip(1))
+            placeShip(2, 6, 'vertical', createShip(1))
+            placeShip(0, 8, 'horizontal', createShip(3))
+            placeShip(4, 5, 'vertical', createShip(4))
+            placeShip(7, 4, 'horizontal', createShip(2))
+            placeShip(6, 6, 'horizontal', createShip(2))
+            placeShip(7, 8, 'horizontal', createShip(3))
             break;
 
 }
@@ -442,10 +441,10 @@ const placeShip = (column, row, direction, ship) => {
         randomFleet,
         gameBoard,
         isStartAllowed : {
-            get: function() {
+            get() {
                 return isStartAllowed
             },
-            set: function(value) {
+            set(value) {
                 isStartAllowed = value
             }
         }
