@@ -60,6 +60,18 @@ main {
     color: white;
     background-color: #004F2D;
 }
+.rules {
+    display: flex;
+      flex-direction: column;
+      width: 80%;
+      background-color: rgb(235, 235, 235);
+      padding: 2rem;
+      border-radius: 2rem;
+      line-height: 1.25;
+      font-size: 1.25rem;
+      box-shadow: rgba(0, 0, 0, 0.158) 0 5px 5px;
+      margin: 0 auto;
+}
 
 .randomize:hover, .reset:hover{
 
