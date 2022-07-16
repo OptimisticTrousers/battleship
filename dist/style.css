@@ -136,7 +136,7 @@ main {
     z-index: 1;
 }
 .not-available {
-  background-color: red;
+  background-color: #C42021;
 }
 .rotated {
   transition: 0.2s ease-in-out;

@@ -372,7 +372,6 @@ export function addButtonListeners(playerBoard) {
         randomizeBoard(playerBoard)
     })
 
-    randomizeBoard(playerBoard)
 
     const resetButton = document.querySelector('button.reset')
 
