@@ -113,7 +113,7 @@ button.randomize:hover{
     z-index: 1;
 }
 .not-available {
-  background-color: #ff004c17;
+  background-color: red;
 }
 .rotated {
   transition: 0.2s ease-in-out;
