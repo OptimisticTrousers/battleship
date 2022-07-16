@@ -305,6 +305,22 @@ const placeShip = (column, row, direction, ship) => {
     const clearBoard  = () => {
         gameBoard = initializeBoard()
     }
+     
+    const checkIfBoardHasBeenFullyPopulated = () => {
+
+        const flattenedGameBoard = gameBoard.flat()
+
+        let numOfShipCells = 0
+
+        flattenedGameBoard.forEach((location) => {
+
+            if(location.isShip){
+                numOfShipCells++
+            }
+        })
+
+        return numOfShipCells === 20
+    }
 
     const getBoard = () => gameBoard
 
@@ -318,6 +334,7 @@ const placeShip = (column, row, direction, ship) => {
         placeShip,
         randomlyPlaceShips,
         makeRandomCoordinates,
+        checkIfBoardHasBeenFullyPopulated,
         randomFleet,
         gameBoard,
         isStartAllowed : {
