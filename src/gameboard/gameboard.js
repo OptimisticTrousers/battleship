@@ -238,7 +238,11 @@ const placeShip = (column, row, direction, ship) => {
 
         return { elementColumn, elementRow, randomDirection }
     }
-
+      let randomPos = () => {
+    let pos1 = Math.floor(Math.random() * 10);
+    let pos2 = Math.floor(Math.random() * 10);
+    return [pos1, pos2];
+  };
   // creates a ship with random pos and orientation
   let randomShip = (length) => {
     let pos1 = Math.floor(Math.random() * 10);
@@ -247,49 +251,76 @@ const placeShip = (column, row, direction, ship) => {
 
     if (dir === 0) {
       dir = "horizontal";
-      if (placeShip(pos1, pos2, dir, createShip(length)) === false) return false;
+      if (placeShip(pos1, pos2, dir, createShip(length)) == false) return false;
     }
 
     if (dir === 1) {
       dir = "vertical";
-      if (placeShip(pos1, pos2, dir, createShip(length)) === false) return false;
+      if (placeShip(pos1, pos2, dir, createShip(length)) == false) return false;
     }
   };
-
-    let randomFleet = () => {
-        gameBoard = initializeBoard()
-        for(let i = 0; i < 2;) {
-            if(randomShip(1) === false) continue 
-            i++
-        }
-
-        for(let i = 0; i < 2;) {
-            if(randomShip(2) === false) continue 
-            i++
-        }
-        for(let i = 0; i < 2;) {
-            if(randomShip(3) === false) continue 
-            i++
-        }
-        for(let i = 0; i < 2;) {
-            if(randomShip(4) === false) continue 
-            i++
-        }
+  //creates a random fleet of 8 ships
+  let randomFleet = () => {
+    // create 2 ships of length 1
+    for (let i = 0; i < 2; ) {
+      if (randomShip(1) == false) continue;
+      i++;
     }
+    // create 2 ships of length 2
+    for (let i = 0; i < 2; ) {
+      if (randomShip(2) == false) continue;
+      i++;
+    }
+    // create 2 ships of length 3
+    for (let i = 0; i < 2; ) {
+      if (randomShip(3) == false) continue;
+      i++;
+    }
+    // create 1 ship of length 4
+    for (let i = 0; i < 2; ) {
+      if (randomShip(4) == false) continue;
+      i++;
+    }
+    isStartAllowed = true
+  };
 
     const randomlyPlaceShips = () => {
-        const shipDetails = []
-        for (let i = 0; i < ships.length; i += 1) {
-            const ship = ships[i]
-            const { randomColumn, randomRow, randomDirection } =
-                makeRandomCoordinates(ship.getLength())
-            if (placeShip(randomColumn, randomRow, randomDirection, ship)) {
-                shipDetails.push({ randomColumn, randomRow, randomDirection })
-            } else {
-                i -= 1
-            }
-        }
-        return shipDetails
+
+    gameBoard.clearBoard()
+    clearBoardDOM()
+
+    const randomPossibility = Math.floor(Math.random() * 4)
+    switch(randomPossibility){
+        case 0:
+        gameBoard.placeShip(9, 1, 'vertical', createShip(5))
+        gameBoard.placeShip(0, 3, 'horizontal', createShip(3))
+        gameBoard.placeShip(3, 6, 'horizontal', createShip(2))
+        gameBoard.placeShip(6, 5, 'horizontal', createShip(3))
+        gameBoard.placeShip(3, 9, 'horizontal', createShip(4))
+            break;
+        case 1:
+        gameBoard.placeShip(0, 2, 'horizontal', createShip(5))
+        gameBoard.placeShip(4, 5, 'horizontal', createShip(3))
+        gameBoard.placeShip(8, 7, 'horizontal', createShip(2))
+        gameBoard.placeShip(5, 9, 'horizontal', createShip(3))
+        gameBoard.placeShip(6, 3, 'horizontal', createShip(4))
+            break;
+        case 2:
+        gameBoard.placeShip(5, 1, 'horizontal', createShip(5))
+        gameBoard.placeShip(3, 3, 'vertical', createShip(3))
+        gameBoard.placeShip(0, 0, 'vertical', createShip(2))
+        gameBoard.placeShip(6, 5, 'horizontal', createShip(3))
+        gameBoard.placeShip(5, 9, 'horizontal', createShip(4))
+            break;
+        default:
+            gameBoard.placeShip(0, 0, 'horizontal', createShip(5))
+            gameBoard.placeShip(3, 4, 'horizontal', createShip(3))
+            gameBoard.placeShip(6, 7, 'horizontal', createShip(2))
+            gameBoard.placeShip(9, 1, 'vertical', createShip(3))
+            gameBoard.placeShip(5, 9, 'horizontal', createShip(4))
+            break;
+
+}
     }
 
     const receiveAttack = (column, row) => {

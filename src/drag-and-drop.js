@@ -79,9 +79,9 @@ function shipDrag(shipName, playerBoard) {
         ship.parentNode.firstChild.textContent = `${amountLeft}x`
         if(amountLeft === 0) ship.parentNode.style.display = "none" 
         if(playerBoard.checkIfBoardHasBeenFullyPopulated()) {
-            const container = document.querySelector("body > main > div:nth-child(4)")
-            const randomButton = document.querySelector('.randomize')
+            const container = document.querySelector("body > main > div.player > div:nth-child(4)")
             container.style.display ="none"
+            const randomButton = document.querySelector('.randomize')
             randomButton.style.display = "none"
             playerBoard.isStartAllowed.set(true)
         }

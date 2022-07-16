@@ -1,4 +1,4 @@
-import { addListenersToEnemyBoard, renderPlayerShips,pubSub, randomizeListener, attack, createDragAndDropFleet} from './dom'
+import { addListenersToEnemyBoard, renderPlayerShips,pubSub, randomizeListener, attack, createDragAndDropFleet, clearBoardDOM} from './dom'
 
 import createGameBoard from './gameboard/gameboard'
 import createShip from './ship/ship'
@@ -13,7 +13,8 @@ const randomizeButton = document.querySelector('button.randomize')
 
 randomizeButton.addEventListener('click', () => {
 
-    randomizeListener(enemyBoard)
+    playerBoard.randomlyPlaceShips()
+    clearBoardDOM()
 })
 
 const resetButton = document.querySelector('button.reset')
