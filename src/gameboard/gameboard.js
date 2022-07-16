@@ -201,8 +201,6 @@ const placeShip = (column, row, direction, ship) => {
 
         }
     const makeRandomCoordinates = () => {
-        const randomDirection =
-            Math.floor(Math.random() * 2) === 0 ? 'vertical' : 'horizontal'
         const randomLocation = Math.floor(Math.random() * 100)
         const flattenedGameBoard = availableSpaces()
 
@@ -216,7 +214,7 @@ const placeShip = (column, row, direction, ship) => {
         const elementRow = location.row
 
 
-        return { elementColumn, elementRow, randomDirection }
+        return [elementColumn, elementRow]
     }
   // creates a ship with random pos and orientation
   const randomShip = (length) => {
