@@ -243,6 +243,8 @@ export function addButtonListeners(playerBoard) {
 
     randomizeButton.addEventListener('click', () => {
 
+        const ships = document.querySelector('.player > div:nth-child(4)')
+        ships.style.display = "none"
         playerBoard.randomlyPlaceShips()
         playerBoard.isStartAllowed.set(true)
         renderPlayerShips(playerBoard)
