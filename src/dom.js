@@ -252,7 +252,7 @@ const clearBoardDOM = () => {
 
 }
 
-export const randomizeListener = (gameBoard) => {
+export const randomizeBoard = (gameBoard) => {
 
     gameBoard.clearBoard()
     clearBoardDOM()
@@ -361,6 +361,23 @@ export const randomizeListener = (gameBoard) => {
             break;
     }
 
+}
+
+export function addButtonListeners(playerBoard) {
+    const randomizeButton = document.querySelector('button.randomize')
+
+    randomizeButton.addEventListener('click', () => {
+    
+        location.reload()
+        randomizeListener(playerBoard)
+    })
+
+    const resetButton = document.querySelector('button.reset')
+
+    resetButton.addEventListener('click', () => {
+
+        location.reload()
+    })
 }
 
 export const attack = ({
