@@ -16,11 +16,11 @@ const createPlayer = (name = 'player') => {
         return 'You have already hit this spot!'
     }
 
-      let randomPos = () => {
-    let pos1 = Math.floor(Math.random() * 10);
-    let pos2 = Math.floor(Math.random() * 10);
-    return [pos1, pos2];
-  };
+    const randomPos = () => {
+        const pos1 = Math.floor(Math.random() * 10);
+        const pos2 = Math.floor(Math.random() * 10);
+        return [pos1, pos2];
+    };
 
     return {
         getName,
