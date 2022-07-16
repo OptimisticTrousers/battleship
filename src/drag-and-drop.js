@@ -1,3 +1,6 @@
+/* eslint-disable import/no-cycle */
+/* eslint-disable import/no-mutable-exports */
+/* eslint-disable no-return-assign */
 import {renderPlayerShips} from './dom'
 import createShip from './ship/ship'
 
@@ -19,11 +22,21 @@ function shipDrag(shipName, playerBoard) {
     if(child[2]) child[2].addEventListener('mouseenter', () => (offset = -2))
     if(child[3]) child[3].addEventListener('mouseenter', () => (offset = -3))
 
+    function changeDir(e) {
+        if(dir === "horizontal") {
+            dir = "vertical"
+            e.target.parentNode.classList.toggle("rotated")
+        } else {
+            dir = "horizontal";
+            e.target.parentNode.classList.toggle("rotated")
+        }
+    }
+
     ship.addEventListener("click", (e) => changeDir(e))
 
-    ship.addEventListener("dragstart", (e) => {
-        for(let i = 0; i < 10; i++){
-            playerBoard.gameBoard[i].forEach((e, j) => {
+    ship.addEventListener("dragstart", () => {
+        for(let i = 0; i < 10; i += 1){
+            playerBoard.gameBoard[i].forEach((e) => {
                 if(e.offLimits || e.isShip)
                 document.querySelector(`.player-board > .cell[column='${e.column}'][row='${e.row}']`).classList.toggle("not-available")
             })
@@ -73,7 +86,7 @@ function shipDrag(shipName, playerBoard) {
         renderPlayerShips(playerBoard)
 
         amountLeft -= 1
-        totalAmountShips++
+        totalAmountShips += 1
 
         if(totalAmountShips === 8) playerBoard.isStartAllowed.set(true)
         ship.parentNode.firstChild.textContent = `${amountLeft}x`
@@ -88,8 +101,8 @@ function shipDrag(shipName, playerBoard) {
     })
 
     cells.forEach((e, i) => {
-        e.addEventListener("dragover", (e) => {
-            e.preventDefault()
+        e.addEventListener("dragover", (event) => {
+            event.preventDefault()
             dragSelection = i 
         })
     })
@@ -97,16 +110,6 @@ function shipDrag(shipName, playerBoard) {
     body.addEventListener("dragenter", () => {
         dragSelection = -1
     })
-
-    function changeDir(e) {
-        if(dir === "horizontal") {
-            dir = "vertical"
-            e.target.parentNode.classList.toggle("rotated")
-        } else {
-            dir = "horizontal";
-            e.target.parentNode.classList.toggle("rotated")
-        }
-    }
 }
 
 export {shipDrag, totalAmountShips}
