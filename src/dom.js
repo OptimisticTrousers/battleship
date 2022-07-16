@@ -5,7 +5,6 @@
 /* eslint-disable default-case */
 import { aiPlay, setWasHit } from "./bot";
 import { shipDrag } from "./drag-and-drop";
-import createShip from './ship/ship'
 
 // creates a delay to be used in an async function
 function delay(delayInMs) {
@@ -237,17 +236,6 @@ export const addListenersToEnemyBoard = (
             )
         }
     }
-}
-
-const clearBoardDOM = () => {
-    const cells = document.querySelectorAll('.player-board > .cell')
-
-    cells.forEach(cell => {
-        cell.removeAttribute("ship-name")
-        cell.classList.remove('ship')
-        cell.classList.remove('hit')
-        cell.classList.remove('miss')
-    })
 }
 
 export function addButtonListeners(playerBoard) {
