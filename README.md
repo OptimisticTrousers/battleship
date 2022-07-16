@@ -8,10 +8,10 @@ Utilizing factory functions to make Ship and Gameboard objects, utilizing babel 
 
 bug.png shows a bug where the function, randomlyPlaceShips, would coincidentally create a grid of ships that prevents a ship of length 5 from rendering. Not fixed yet
 
-    * [ ] Need to fix AI by making it smarter and preventing it from cheating
-    * [ ] Adding an actual game loop
-    * [ ] Allowing for users to place their ships manually instead of use the 'Randomize' button
-    * [ ] Add drag and drop functionality
-    * [ ] Cleaning up code
-    * [ ] Add a pause to prevent the user from clicking before the enemy attacks
+    * [x] Need to fix AI by making it smarter and preventing it from cheating
+    * [x] Adding an actual game loop
+    * [x] Allowing for users to place their ships manually instead of use the 'Randomize' button
+    * [x] Add drag and drop functionality
+    * [x] Cleaning up code
+    * [x] Add a pause to prevent the user from clicking before the enemy attacks
     
