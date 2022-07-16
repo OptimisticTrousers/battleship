@@ -82,6 +82,8 @@ const createGameBoard = () => {
         setLocation(column + shipLength, row + 1)
         // top-right
         setLocation(column + shipLength, row - 1)
+        //left
+        setLocation(column -1, row)
     }
 
     const addOffLimitAreaForVerticallyPositionedShip = (
@@ -98,6 +100,7 @@ const createGameBoard = () => {
         setLocation(column + 1, row + shipLength)
         // bottom-left
         setLocation(column - 1, row + shipLength)
+        console.log(column -1, row+shipLength)
         // top-right
         setLocation(column + 1, row - 1)
     }
