@@ -262,7 +262,6 @@ const placeShip = (column, row, direction, ship) => {
     const randomlyPlaceShips = () => {
 
     clearBoard()
-
     const randomPossibility = Math.floor(Math.random() * 10)
     switch(randomPossibility){
         case 0:
@@ -366,7 +365,7 @@ const placeShip = (column, row, direction, ship) => {
             placeShip(7, 8, 'horizontal', createShip(3))
             break;
 
-}
+        }
     }
 
     const receiveAttack = (column, row) => {

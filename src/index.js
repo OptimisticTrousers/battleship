@@ -1,4 +1,4 @@
-import { addListenersToEnemyBoard, renderPlayerShips, pubSub, randomizeBoard, attack, createDragAndDropFleet, addButtonListeners} from './dom'
+import { addListenersToEnemyBoard, renderPlayerShips, pubSub, attack, createDragAndDropFleet, addButtonListeners} from './dom'
 
 import createGameBoard from './gameboard/gameboard'
 import createPlayer from './player/player'
@@ -12,7 +12,7 @@ addButtonListeners(playerBoard)
 
 createDragAndDropFleet(playerBoard)
 
-randomizeBoard(enemyBoard)
+enemyBoard.randomlyPlaceShips()
 
 const ps = pubSub()
 
