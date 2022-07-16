@@ -1,6 +1,6 @@
 const createShip = (length, name = 'ship') => {
 
-    let domTargets = []
+    const domTargets = []
 
     const status = Array(length).fill('unhit')
 
