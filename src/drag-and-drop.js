@@ -43,7 +43,7 @@ function shipDrag(shipName, playerBoard) {
         }
     })
 
-    ship.addEventListener('dragend', (e, i) => {
+    ship.addEventListener('dragend', () => {
 
         document.querySelectorAll(".not-available").forEach((e) => e.classList.remove("not-available"))
 
