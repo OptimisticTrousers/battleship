@@ -1,4 +1,6 @@
 const createPlayer = (name = 'player') => {
+
+    let turn = false
     const getName = () => name
 
     const attack = (column, row, { getLocation, receiveAttack }) => {
@@ -16,10 +18,24 @@ const createPlayer = (name = 'player') => {
         return 'You have already hit this spot!'
     }
 
+    const isTurn = (enemy) => {
+        turn = true
+        enemy.turn.set(false)
+    }
+
     return {
         getName,
         attack,
-    }
+        turn: {
+            get () {
+                return turn;
+            },
+            set (value) {
+                turn = value;
+            },
+        },
+        isTurn,
+        }
 }
 
 module.exports = createPlayer

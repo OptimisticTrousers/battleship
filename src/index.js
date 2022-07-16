@@ -5,8 +5,10 @@ import createPlayer from './player/player'
 
 const playerBoard = createGameBoard()
 const enemyBoard = createGameBoard()
-const player = createPlayer()
-const computer = createPlayer()
+const player = createPlayer('player')
+const computer = createPlayer('computer')
+
+player.isTurn(computer)
 
 addButtonListeners(playerBoard)
 

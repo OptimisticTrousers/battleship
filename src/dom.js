@@ -45,39 +45,39 @@ const checkIfGameOver = (playerBoard, enemyBoard) => {
     }
 }
 
-const renderAttacks = (player, column, row, enemyBoard) => {
+const renderAttacks = async (player, column, row, enemyBoard, human, enemy, playerBoard) => {
     const cell = document.querySelector(
         `.${player}-board > .cell[column='${column}'][row='${row}']`
     )
 
     if(enemyBoard.getLocation(column, row)?.isShip){
 
+        cell.classList.add('hit')
         enemyBoard.getLocation(column, row).domTargets.push(cell)
         if(enemyBoard.getLocation(column, row).isSunk()){
 
             enemyBoard.getLocation(column, row).domTargets.forEach((e) => e.classList.add('sunk'))
         }
+        return
     }
+    
 
-    const location = enemyBoard.getLocation(column, row)
-    if (location.isShip) {
-        cell.classList.add('hit')
-    } else {
         cell.classList.add('miss')
-    }
+        enemy.isTurn(human)
+        await delay(700)
+
+    return enemyBoard.checkIfAllShipsHaveSunk() ? checkIfGameOver(playerBoard, enemyBoard) : aiPlay(false, human, enemy, undefined, playerBoard, enemyBoard)
 
 }
 
 const handleAttack = (column, row, enemyBoard, player) =>
     player.attack(column, row, enemyBoard)
 
-const attackEnemyCell = async (column, row, enemyBoard, playerBoard, player, enemy) => {
+const attackEnemyCell = (column, row, enemyBoard, playerBoard, player, enemy) => {
 
 
     handleAttack(column, row, enemyBoard, player)
-    renderAttacks('enemy', column, row, enemyBoard)
-    await delay(700)
-    return enemyBoard.checkIfAllShipsHaveSunk() ? checkIfGameOver(playerBoard, enemyBoard) : aiPlay(false, player, enemy, undefined, playerBoard, enemyBoard)
+    renderAttacks('enemy', column, row, enemyBoard, player, enemy, playerBoard)
 }
 
 // renders attack for p2 (AI)
@@ -113,7 +113,7 @@ export async function renderAttackP2(p1, p2, pos1, pos2, playerBoard, enemyBoard
     return aiPlay(false, p1, p2, isSunk, playerBoard, enemyBoard);
   }
 
-  // p1.isTurn(p2); // gives turn to P1
+  p1.isTurn(p2); // gives turn to P1
 }
 // https://jsmanifest.com/the-publish-subscribe-pattern-in-javascript/
 
@@ -222,7 +222,6 @@ export const addListenersToEnemyBoard = (
             cell.addEventListener(
                 'click',
                 () => {
-                    if(playerBoard.isStartAllowed.get() === false) return
                     ps.publish('click', {
                         column,
                         row,
