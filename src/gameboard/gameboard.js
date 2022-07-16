@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-continue */
 /* eslint-disable default-case */
 // eslint-disable-next-line import/no-cycle
 /* eslint-disable no-multi-assign */
@@ -12,8 +14,8 @@ const createGameBoard = () => {
     
     const initializeBoard = () => {
         const gameBoard = Array(10).fill().map(() => Array(10).fill())
-        for(let column= 0; column < 10; column++){
-            for(let row= 0; row < 10; row++){
+        for(let column= 0; column < 10; column += 1){
+            for(let row= 0; row < 10; row += 1){
                 gameBoard[column][row] = {...emptyCell, column, row}
             }
         }
@@ -23,14 +25,9 @@ const createGameBoard = () => {
 
     let gameBoard = initializeBoard()
 
-    const ships = [
-        createShip(5, 'Carrier'),
-        createShip(4, 'Battleship'),
-        createShip(3, 'Destroyer'),
-        createShip(3, 'Submarine'),
-        createShip(2, 'Patrol Boat'),
-    ]
-
+    const clearBoard  = () => {
+        gameBoard = initializeBoard()
+    }
 
     const createOffLimitLocation = () =>
         Object.assign(emptyCell, { offLimits: true })
@@ -47,8 +44,8 @@ const createGameBoard = () => {
     const checkIfAllShipsHaveSunk = () => {
 
         let haveAllShipsSunk =true  
-    for (let i = 0; i < 10; i++) {
-      for (let j = 0; j < 10; j++) {
+    for (let i = 0; i < 10; i += 1) {
+      for (let j = 0; j < 10; j += 1) {
         const location = getLocation(i, j)
         if(location.isShip === false) continue
         if(location.isShip && location.isSunk() === false){
@@ -101,7 +98,6 @@ const createGameBoard = () => {
         setLocation(column + 1, row + shipLength)
         // bottom-left
         setLocation(column - 1, row + shipLength)
-        console.log(column -1, row+shipLength)
         // top-right
         setLocation(column + 1, row - 1)
     }
@@ -120,7 +116,7 @@ const createGameBoard = () => {
         shipLength
     ) => {
         if (direction === 'vertical') {
-            for (let i = 0; i < shipLength; i++) {
+            for (let i = 0; i < shipLength; i += 1) {
                 const location = getLocation(column, row + i)
                 if (location) {
                     if (
@@ -134,7 +130,7 @@ const createGameBoard = () => {
         }
 
         if (direction === 'horizontal') {
-            for (let i = 0; i < shipLength; i++) {
+            for (let i = 0; i < shipLength; i += 1) {
                 const location = getLocation(column + i, row)
                 if (location) {
                     if (
@@ -149,23 +145,6 @@ const createGameBoard = () => {
 
         return false
     }
-
-      // makes tiles around ship "reserved"
-  const reserveAround = (pos1, pos2) => {
-    function cell(n1, n2) {
-      if (pos1 + n1 > 9 || pos1 + n1 < 0) return;
-      if (Object.is(gameBoard[pos1 + n1][pos2 + n2], emptyCell))
-        gameBoard[pos1 + n1][pos2 + n2].offLimits = true;
-    }
-    function reserveCell(row) {
-      cell(row, -1);
-      cell(row, 0);
-      cell(row, 1);
-    }
-    reserveCell(-1);
-    reserveCell(0);
-    reserveCell(1);
-  };
 
 const placeShip = (column, row, direction, ship) => {
     if(gameBoard[column][row].isShip || gameBoard[column][row].offLimits) return false
@@ -239,11 +218,6 @@ const placeShip = (column, row, direction, ship) => {
 
         return { elementColumn, elementRow, randomDirection }
     }
-      const randomPos = () => {
-    const pos1 = Math.floor(Math.random() * 10);
-    const pos2 = Math.floor(Math.random() * 10);
-    return [pos1, pos2];
-  };
   // creates a ship with random pos and orientation
   const randomShip = (length) => {
     const pos1 = Math.floor(Math.random() * 10);
@@ -252,35 +226,35 @@ const placeShip = (column, row, direction, ship) => {
 
     if (dir === 0) {
       dir = "horizontal";
-      if (placeShip(pos1, pos2, dir, createShip(length)) == false) return false;
+      if (placeShip(pos1, pos2, dir, createShip(length)) === false) return false;
     }
 
     if (dir === 1) {
       dir = "vertical";
-      if (placeShip(pos1, pos2, dir, createShip(length)) == false) return false;
+      if (placeShip(pos1, pos2, dir, createShip(length)) === false) return false;
     }
   };
   // creates a random fleet of 8 ships
   const randomFleet = () => {
     // create 2 ships of length 1
     for (let i = 0; i < 2; ) {
-      if (randomShip(1) == false) continue;
-      i++;
+      if (randomShip(1) === false) continue;
+      i += 1;
     }
     // create 2 ships of length 2
     for (let i = 0; i < 2; ) {
-      if (randomShip(2) == false) continue;
-      i++;
+      if (randomShip(2) === false) continue;
+      i += 1;
     }
     // create 2 ships of length 3
     for (let i = 0; i < 2; ) {
-      if (randomShip(3) == false) continue;
-      i++;
+      if (randomShip(3) === false) continue;
+      i += 1;
     }
     // create 1 ship of length 4
     for (let i = 0; i < 2; ) {
-      if (randomShip(4) == false) continue;
-      i++;
+      if (randomShip(4) === false) continue;
+      i += 1;
     }
     isStartAllowed = true
   };
@@ -405,9 +379,6 @@ const placeShip = (column, row, direction, ship) => {
         shipLength + 2
     // adding shipLength plus two because for every increase in the size of ship, the zones covered increase by 2 units
 
-    const clearBoard  = () => {
-        gameBoard = initializeBoard()
-    }
      
     const checkIfBoardHasBeenFullyPopulated = () => {
 
@@ -418,14 +389,12 @@ const placeShip = (column, row, direction, ship) => {
         flattenedGameBoard.forEach((location) => {
 
             if(location.isShip){
-                numOfShipCells++
+                numOfShipCells += 1
             }
         })
 
         return numOfShipCells === 20
     }
-
-    const getBoard = () => gameBoard
 
     return {
         clearBoard,
