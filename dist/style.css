@@ -52,7 +52,7 @@ main {
     font-size: 3rem;
 }
 
-button.randomize{
+.randomize, .reset{
     border: 1px solid black;
     font-family: Proto-Sans-32;
     border-radius: 20px;
@@ -61,7 +61,7 @@ button.randomize{
     background-color: #004F2D;
 }
 
-button.randomize:hover{
+.randomize:hover, .reset:hover{
 
     cursor: pointer;
     transition: all ease-in 0.4s;

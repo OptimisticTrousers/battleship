@@ -16,6 +16,13 @@ randomizeButton.addEventListener('click', () => {
     randomizeListener(enemyBoard)
 })
 
+const resetButton = document.querySelector('button.reset')
+
+resetButton.addEventListener('click', () => {
+
+    location.reload()
+})
+
 createDragAndDropFleet(playerBoard)
 
 enemyBoard.placeShip(0, 0, 'horizontal', createShip(5))
