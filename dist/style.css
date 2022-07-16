@@ -28,6 +28,7 @@ h1 {
     font-family: Stereonic-XS;
     padding-top: 2rem;
     font-size: 5rem;
+    margin: 0;
     text-align: center;
 }
 
@@ -46,7 +47,10 @@ main {
     flex-direction: column;
     justify-items: center;
     align-items: center;
-    row-gap: 32px;
+}
+.player-buttons {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 .player > p, .enemy > p{
     font-size: 3rem;
