@@ -105,6 +105,11 @@ main {
     width: 3rem;
     height: 3rem;
     border: 2px solid #14b267;
+    cursor: pointer;
+}
+
+.cell:hover {
+    background-color: rgb(221, 221, 221);
 }
 
 .cell.ship {
@@ -121,7 +126,12 @@ main {
 }
 
 .cell.miss{
-    background-color: blue;
+    background-color: rgb(0, 0, 117);
+}
+
+.cursor-disable {
+    pointer-events: none;
+    cursor: not-allowed;
 }
 
 .sunk::before {
@@ -173,7 +183,7 @@ body > main > div.player > div:nth-child(4) span {
   background: rgb(255, 255, 255);
   height: inherit;
   width: inherit;
-  border-radius: 40px;
+  border-radius: 8px;
   display: flex;
   gap: 0.5rem;
   flex-direction: column;
