@@ -5,31 +5,36 @@
 
 html {
     height: 100%;
+    font-family: 'Vujahday Script', cursive;
 }
 
-@font-face{
+@font-face {
     font-family: Proto-Sans-32;
-    src: url('./fonts/proto-sans-32.otf')
+    src: url('./fonts/proto-sans-32.otf');
 }
 
-@font-face{
+@font-face {
     font-family: Stereonic-XS;
-    src: url('./fonts/Mint\ Type\ -\ Stereonic-XS.otf')
+    src: url('./fonts/Mint\ Type\ -\ Stereonic-XS.otf');
+}
+
+@font-face {
+    font-family: 'Vujahday Script';
+    src: url('./fonts/VujahdayScript-Regular.ttf');
 }
 body {
-    min-height: 100vh;
-    font-family: Proto-Sans-32, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
-        sans-serif;
-    background-image: url('./images/background.jpg');
+    min-height: 100%;
+    background: linear-gradient(to right, #242582, #5959e3);
+    color: #fff;
+    text-shadow: 0 0 0.05vw #fff, 0 0 0.1vw #fff, 0 0 0.3vw #fff, 0 0 0.8vw;
 }
 
 h1 {
-    font-family: Stereonic-XS;
     padding-top: 2rem;
-    font-size: 5rem;
+    font-size: 5vw;
     margin: 0;
     text-align: center;
+    letter-spacing: 3px;
 }
 
 main {
@@ -42,7 +47,8 @@ main {
     flex-wrap: wrap;
 }
 
-.player, .enemy{
+.player,
+.enemy {
     display: flex;
     flex-direction: column;
     justify-items: center;
@@ -52,30 +58,38 @@ main {
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
-.player > p, .enemy > p{
-    font-size: 3rem;
+.player > p,
+.enemy > p {
+    font-size: 4rem;
     margin-bottom: 1rem;
 }
 
-.randomize, .reset{
-    border: 1px solid black;
-    font-family: Proto-Sans-32;
-    border-radius: 20px;
+.randomize,
+.reset {
+    font-family: 'Vujahday Script', cursive;
+    color: #fff;
+    text-shadow: 0 0 0.05vw #fff, 0 0 0.1vw #fff, 0 0 0.4vw #fff, 0 0 1vw;
+    background-color: rgba(255, 255, 255, 0);
+    border: 2px solid #fff;
+    box-shadow: 0 0 0.05rem #fff, 0 0 0.05rem #fff, 0 0 0.05rem #fff,
+        0 0 0.05rem #fff, 0 0 0.5rem #fff, inset 0 0 0.5rem #fff;
+    cursor: pointer;
     padding: 1.5rem 3rem;
-    color: white;
-    background-color: #004F2D;
+    font-size: 2.5rem;
 }
 .rules {
     display: flex;
-      flex-direction: column;
-      width: 80%;
-      background-color: rgb(235, 235, 235);
-      padding: 2rem;
-      border-radius: 2rem;
-      line-height: 1.25;
-      font-size: 1.25rem;
-      box-shadow: rgba(0, 0, 0, 0.158) 0 5px 5px;
-      margin: 0 auto;
+    flex-direction: column;
+    width: 80%;
+    padding: 2rem;
+    border-radius: 2rem;
+    line-height: 1.5;
+    font-family: sans-serif;
+    font-size: 1.5rem;
+    margin: 0 auto;
+}
+.rules li {
+    text-shadow: none;
 }
 .player-buttons {
     display: flex;
@@ -84,13 +98,16 @@ main {
     width: 100%;
 }
 
-.randomize:hover, .reset:hover{
-
-    cursor: pointer;
-    transition: all ease-in 0.4s;
-    background-color: white;
-    color: #004F2D;
-
+.randomize:hover,
+.reset:hover {
+    font-family: 'Vujahday Script', cursive;
+    color: #88df6e;
+    text-shadow: 0 0 0.05vw #88df6e, 0 0 0.1vw #88df6e, 0 0 0.4vw #88df6e,
+        0 0 1vw;
+    background-color: rgba(255, 255, 255, 0);
+    border: 2px solid #88df6e;
+    box-shadow: 0 0 0.1rem #88df6e, 0 0 0.1rem #88df6e, 0 0 0.1rem #88df6e,
+        0 0 0.1rem #88df6e, 0 0 1rem #88df6e, inset 0 0 1rem #88df6e;
 }
 
 .player-board,
@@ -98,14 +115,16 @@ main {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
-    border: 3px solid #08f51b;
+    gap: 3px;
 }
 
 .cell {
     width: 3rem;
     height: 3rem;
-    border: 2px solid #14b267;
     cursor: pointer;
+    border: 2px solid #f64c72;
+    box-shadow: 0 0 0.05vw #f64c72, 0 0 0.05vw #fff, 0 0 0.05vw #f64c72,
+        0 0 0.05rem #f64c72, 0 0 0.5rem #f64c72, inset 0 0 0.5rem #f64c72;
 }
 
 .cell:hover {
@@ -113,20 +132,33 @@ main {
 }
 
 .cell.ship {
-    background-color: #ddd9bc;
-    cursor: move;
+    background-color: #f64c72;
 }
 
-.cell.hit{
-    background-color: red;
+.ship {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    cursor: grab;
 }
 
-.cell.sunk{
+.cell.hit {
+    background-color: #88df6e;
+    border: 2px solid #88df6e;
+    box-shadow: 0 0 0.05rem #88df6e, 0 0 0.05rem #fff, 0 0 0.05rem #88df6e,
+        0 0 0.05rem #88df6e, 0 0 0.5rem #88df6e, inset 0 0 0.5rem #88df6e;
+}
+
+.cell.sunk {
     background-color: green;
 }
 
-.cell.miss{
-    background-color: rgb(0, 0, 117);
+.cell.miss {
+    background-color: #ffffff54;
+    border: 2px solid #ffffff54;
+    box-shadow: 0 0 0.05rem #ffffff54, 0 0 0.05rem #fff, 0 0 0.05rem #ffffff54,
+        0 0 0.05rem #ffffff54, 0 0 0.5rem #ffffff54, inset 0 0 0.5rem #ffffff54;
 }
 
 .cursor-disable {
@@ -135,7 +167,7 @@ main {
 }
 
 .sunk::before {
-    content: "";
+    content: '';
     text-align: center;
     position: absolute;
     top: 0;
@@ -146,58 +178,48 @@ main {
     z-index: 1;
 }
 .not-available {
-  background-color: #C42021;
+    background-color: #c42021;
 }
 .rotated {
-  transition: 0.2s ease-in-out;
-  flex-direction: column;
+    transition: 0.2s ease-in-out;
+    flex-direction: column;
 }
-.ship {
-  display: flex;
-  justify-content: center;
-  align-self: center;
-  align-items: center;
-  cursor: grab;
-  border: solid 2px #0065d8;
-}
+
 .ship:active {
     cursor: grabbing;
-
 }
 body > main > div.player > div:nth-child(4) {
-  height: 17rem;
-  width: 15rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  border-radius: 40px;
+    height: 17rem;
+    width: 15rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    border-radius: 40px;
 }
 body > main > div.player > div:nth-child(4) span {
-
     margin-top: 1rem;
 }
 .ship-container {
-  position: absolute;
-  background: rgb(255, 255, 255);
-  height: inherit;
-  width: inherit;
-  border-radius: 8px;
-  display: flex;
-  gap: 0.5rem;
-  flex-direction: column;
-  align-items: center;
+    position: absolute;
+    background-color: #5959e3;
+    height: inherit;
+    width: inherit;
+    border-radius: 8px;
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.3rem;
 }
 .ship.container span {
-
     cursor: default;
     justify-self: flex-start;
     color: #273547e7;
 }
 .sunk::after {
-
-    content: "✕";
+    content: '✕';
     color: white;
     font-size: 1.5em;
     height: 100%;
@@ -209,16 +231,15 @@ body > main > div.player > div:nth-child(4) span {
     z-index: 2;
 }
 .sunk:active {
-
     cursor: not-allowed;
 }
 .sunk {
-  position: relative;
-  z-index: auto;
-  border: none;
-  cursor: default;
+    position: relative;
+    z-index: auto;
+    border: none;
+    cursor: default;
 }
-.modal{
+.modal {
     display: none;
     position: fixed;
     z-index: 3;
@@ -229,92 +250,83 @@ body > main > div.player > div:nth-child(4) span {
     background-color: rgba(0, 0, 0, 0.4);
     transition: 200ms ease-in-out;
 }
-.modal-content{
-        display: flex;
+.modal-content {
+    display: flex;
     flex-direction: column;
     padding: 20px;
     border: 1px solid green;
     border-radius: 10px;
     width: 300px;
     height: 300px;
-    margin:0 auto;
+    margin: 0 auto;
     background-color: white;
     align-items: center;
     transform: translateY(50%);
 }
 
-.gameover-button{
-        padding: 1rem 2rem;
+.gameover-button {
+    padding: 1rem 2rem;
     margin: 0 auto;
     border-radius: 6px;
     border: 2px solid green;
     margin-top: auto;
     background-color: green;
-    color:white;
-
+    color: white;
 }
 
-.cell.dragging{
-    opacity: .5;
+.cell.dragging {
+    opacity: 0.5;
 }
 
-footer{
-
+footer {
     display: flex;
     flex-direction: column;
-text-align: center;
+    text-align: center;
 }
 
-footer > a:nth-child(1){
-
-font-size: 32px;
-color: white;
-padding: 14px 16px;
-text-decoration: none;
+footer > a:nth-child(1) {
+    font-size: 32px;
+    color: white;
+    padding: 14px 16px;
+    text-decoration: none;
 }
 
-footer > a:nth-child(2){
-
-font-size: 12px;
-color: white;
-padding: 14px 16px;
-text-decoration: none;
+footer > a:nth-child(2) {
+    font-size: 12px;
+    color: white;
+    padding: 14px 16px;
+    text-decoration: none;
 }
 
-footer > a:hover{
+footer > a:hover {
     transition: all ease-in 0.5s;
-    color:#08f51b;
+    color: #08f51b;
 }
-.modal img{
-
+.modal img {
     mix-blend-mode: multiply;
-    width:75%;
+    width: 75%;
     filter: brightness(1.25);
     margin-top: 0.5rem;
     border-radius: 10px;
     border: 1px solid green;
     margin-bottom: 0.5rem;
-    
 }
-
 @media (max-width: 580px) {
-    .cell{
+    .cell {
         width: 2rem;
         height: 2rem;
     }
-
 }
 
 @media (max-width: 400px) {
-    .cell{
+    .cell {
         width: 1.5rem;
         height: 1.5rem;
     }
-
 }
 
 @media (max-width: 330px) {
-    .cell{
+    .cell {
         width: 1rem;
         height: 1rem;
     }
@@ -338,4 +350,3 @@ footer > a:hover{
         display: none;
     }
 }
-
