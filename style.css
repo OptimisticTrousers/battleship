@@ -43,7 +43,6 @@ main {
     width: inherit;
     height: inherit;
     justify-content: space-evenly;
-    row-gap: 32px;
     flex-wrap: wrap;
 }
 
@@ -65,7 +64,7 @@ main {
 }
 
 .randomize,
-.reset {
+.reset, .rules-button {
     font-family: 'Vujahday Script', cursive;
     color: #fff;
     text-shadow: 0 0 0.05vw #fff, 0 0 0.1vw #fff, 0 0 0.4vw #fff, 0 0 1vw;
@@ -76,6 +75,9 @@ main {
     cursor: pointer;
     padding: 1.5rem 3rem;
     font-size: 2.5rem;
+}
+.rules-button {
+    align-self: flex-start;
 }
 .rules {
     display: flex;
@@ -90,6 +92,9 @@ main {
 }
 .rules li {
     text-shadow: none;
+}
+.list {
+    display: none;
 }
 .player-buttons {
     display: flex;
@@ -188,7 +193,7 @@ main {
 .ship:active {
     cursor: grabbing;
 }
-body > main > div.player > div:nth-child(4) {
+.ships {
     height: 17rem;
     width: 15rem;
     display: flex;
@@ -198,7 +203,7 @@ body > main > div.player > div:nth-child(4) {
     flex-wrap: wrap;
     border-radius: 40px;
 }
-body > main > div.player > div:nth-child(4) span {
+.ships span {
     margin-top: 1rem;
 }
 .ship-container {
@@ -311,10 +316,20 @@ footer > a:hover {
     border: 1px solid green;
     margin-bottom: 0.5rem;
 }
-@media (max-width: 580px) {
+
+@media(max-width: 1230px) {
     .cell {
-        width: 2rem;
-        height: 2rem;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}
+@media (max-width: 1080px) {
+    .cell {
+        width: 1.7rem;
+        height: 1.7rem;
+    }
+    .player p, .enemy p {
+        margin: 0;
     }
 }
 
