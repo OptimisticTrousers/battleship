@@ -345,14 +345,20 @@ main {
     background-color: rgba(0, 0, 0, 0.4);
     transition: 200ms ease-in-out;
 }
+.modal p {
+    font-family: 'Vujahday Script', cursive;
+    color: black;
+    font-size: 1.5rem;
+    text-shadow: none;
+}
 .modal-content {
     display: flex;
     flex-direction: column;
     padding: 20px;
     border: 1px solid green;
     border-radius: 10px;
-    width: 300px;
-    height: 300px;
+    width: 320px;
+    height: 320px;
     margin: 0 auto;
     background-color: white;
     align-items: center;
@@ -360,13 +366,26 @@ main {
 }
 
 .gameover-button {
-    padding: 1rem 2rem;
+    padding: 0.5rem 1rem;
     margin: 0 auto;
     border-radius: 6px;
-    border: 2px solid green;
+    background: linear-gradient(to right, #242582, #5959e3);
     margin-top: auto;
-    background-color: green;
+    font-family: 'Montserrat';
     color: white;
+    border: 2px solid black;
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+.gameover-button:hover {
+    color: #88df6e;
+    text-shadow: 0 0 0.05vw #88df6e, 0 0 0.1vw #88df6e, 0 0 0.4vw #88df6e,
+        0 0 1vw;
+    background-color: rgba(255, 255, 255, 0);
+    border: 2px solid #88df6e;
+    box-shadow: 0 0 0.1rem #88df6e, 0 0 0.1rem #88df6e, 0 0 0.1rem #88df6e,
+        0 0 0.1rem #88df6e, 0 0 1rem #88df6e, inset 0 0 1rem #88df6e;
 }
 
 .cell.dragging {
@@ -408,7 +427,7 @@ footer > a:hover {
 }
 
 @media (max-width: 1230px) {
-    .cell {
+    .cell:not(.ships .cell) {
         width: 2.5rem;
         height: 2.5rem;
     }
