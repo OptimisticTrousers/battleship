@@ -35,6 +35,7 @@ h1 {
     margin: 0;
     text-align: center;
     letter-spacing: 3px;
+    margin-bottom: 1.25rem;
 }
 
 main {
@@ -52,6 +53,7 @@ main {
     flex-direction: column;
     justify-items: center;
     align-items: center;
+    flex: 1;
 }
 .player-buttons {
     margin-top: 2rem;
@@ -64,7 +66,8 @@ main {
 }
 
 .randomize,
-.reset, .rules-button {
+.reset,
+.rules-button {
     font-family: 'Vujahday Script', cursive;
     color: #fff;
     text-shadow: 0 0 0.05vw #fff, 0 0 0.1vw #fff, 0 0 0.4vw #fff, 0 0 1vw;
@@ -79,7 +82,99 @@ main {
 .rules-button {
     align-self: flex-start;
 }
-.rules {
+
+.collapsible-list li.collapsible-description {
+    list-style-type: disc;
+    margin-left: 28px;
+    padding: 0;
+}
+
+.collapsible {
+    max-width: 80%;
+    overflow: hidden;
+    font-weight: 500;
+    align-self: flex-start;
+    margin: 0 auto;
+    color: black;
+    text-shadow: none;
+}
+
+.collapsible-head {
+    font-family: inherit;
+}
+
+.collapsible input {
+    display: none;
+}
+
+.collapsible-label {
+    position: relative;
+    font-weight: 600;
+    background: #fff;
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.1),
+        0 4px 11px 0 rgba(0, 0, 0, 0.08);
+    color: #1c1c6b;
+    display: block;
+    margin-bottom: 10px;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 4px;
+    z-index: 1;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    letter-spacing: 4px;
+    color: #1c1c6b;
+}
+.collapsible-label:after {
+    content: '';
+    position: absolute;
+    right: 15px;
+    top: 40%;
+    width: 18px;
+    height: 18px;
+    background: url('./images/arrow.svg') no-repeat 0 0;
+    transition: all 0.3s ease;
+}
+
+.collapsible input:checked + label:after {
+    transform: rotate(90deg);
+}
+
+.collapsible-text {
+    max-height: 1px;
+    overflow: hidden;
+    border-radius: 4px;
+    line-height: 1.4;
+    position: relative;
+    top: -100%;
+    opacity: 0.5s;
+    transition: all 0.3s ease;
+}
+
+.collapsible input:checked ~ .collapsible-text {
+    max-height: 500px;
+    padding-bottom: 25px;
+    background: #fff;
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.1),
+        0 4px 11px 0 rgba(0, 0, 0, 0.08);
+    opacity: 1;
+    top: 0;
+}
+
+.collapsible-title {
+    margin-bottom: 10px;
+    padding: 15px 15px 0;
+    color: #1c1c6b;
+}
+
+.collapsible-description {
+    font-family: 'Montserrat';
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 1.25rem;
+}
+/* .rules {
     display: flex;
     flex-direction: column;
     width: 80%;
@@ -89,13 +184,7 @@ main {
     font-family: sans-serif;
     font-size: 1.5rem;
     margin: 0 auto;
-}
-.rules li {
-    text-shadow: none;
-}
-.list {
-    display: none;
-}
+} */
 .player-buttons {
     display: flex;
     justify-content: center;
@@ -201,6 +290,7 @@ main {
     align-items: center;
     gap: 1rem;
     flex-wrap: wrap;
+    margin-top: 2rem;
     border-radius: 40px;
 }
 .ships span {
@@ -317,39 +407,62 @@ footer > a:hover {
     margin-bottom: 0.5rem;
 }
 
-@media(max-width: 1230px) {
+@media (max-width: 1230px) {
     .cell {
         width: 2.5rem;
         height: 2.5rem;
     }
 }
 @media (max-width: 1080px) {
-    .cell {
+    main {
+        padding: 0;
+    }
+    .cell:not(.ships .cell) {
         width: 1.7rem;
         height: 1.7rem;
     }
-    .player p, .enemy p {
+    .player p,
+    .enemy p {
         margin: 0;
     }
 }
 
+@media (max-width: 832px) {
+    main {
+        flex-direction: column-reverse;
+    }
+    .collapsible {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 560px) {
+    .player-buttons {
+        flex-direction: column;
+    }
+    .randomize,
+    .reset {
+        margin: 0rem 1rem;
+    }
+}
+
 @media (max-width: 400px) {
-    .cell {
+    .cell:not(.ships .cell) {
         width: 1.5rem;
         height: 1.5rem;
     }
 }
 
 @media (max-width: 330px) {
-    .cell {
-        width: 1rem;
-        height: 1rem;
+    .cell:not(.ships .cell) {
+        width: 1.3rem;
+        height: 1.3rem;
     }
     body {
-        padding: 0 1rem;
+        padding: 0;
     }
     h1 {
-        font-size: 2.5rem;
+        font-size: 3.5rem;
     }
     main {
         width: 100%;
@@ -358,7 +471,6 @@ footer > a:hover {
         flex-wrap: wrap;
     }
     .rules {
-        width: 90%;
         margin: 0 auto;
     }
     footer {

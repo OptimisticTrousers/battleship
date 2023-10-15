@@ -7,6 +7,12 @@
         <title>Battleship</title>
         <link rel="stylesheet" href="style.css" />
         <link rel="icon" type="image/x-icon" href="./images/battleship.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+            rel="stylesheet"
+        />
         <script src="main.js" defer></script>
     </head>
     <body>
@@ -18,36 +24,45 @@
             </div>
         </div>
         <h1 class="title">Battleship</h1>
-        <div class="rules">
-            <h2>Rules</h2>
-            <ul>
-                <li>
-                    Drag the ships at the bottom to your board. Click on a ship
-                    to change directions! If you want to reset your board,
-                    simply click the "Reset" button at the bottom.
-                </li>
-                <li>
-                    For maximum enjoyment, wait until the AI finishes attacking
-                    before playing.
-                </li>
-                <li>
-                    The objective of Battleship is to try and sink all of the
-                    opponent's ships before they sink all of yours. Players take
-                    turns firing shots to attempt to hit the enemy ships.
-                </li>
-                <li>
-                    Both players can not see the fleet of the other, you have to
-                    guess where is the ideal position to shoot at!
-                </li>
-                <li>
-                    When a player hits a tile that holds a ship, they can replay
-                    until they miss a shot.
-                </li>
-                <li>
-                    First player to sink all the opponent's ships wins the game!
-                </li>
-                <li>Each player has 8 ships in total!</li>
-            </ul>
+        <div class="collapsible">
+            <input type="checkbox" id="collapsible-head" />
+            <label for="collapsible-head" class="collapsible-label"
+                >Rules</label
+            >
+            <div class="collapsible-text">
+                <ul class="collapsible-list">
+                    <li class="collapsible-description">
+                        Drag the ships at the bottom to your board. Click on a
+                        ship to rotate the ship! If you want to reset your
+                        board, simply click the "Reset" button at the bottom.
+                    </li>
+                    <li class="collapsible-description">
+                        For maximum enjoyment, wait until the AI finishes
+                        attacking before playing.
+                    </li>
+                    <li class="collapsible-description">
+                        The objective of Battleship is to try and sink all of
+                        the opponent's ships before they sink all of yours.
+                        Players take turns firing shots to attempt to hit the
+                        enemy ships.
+                    </li>
+                    <li class="collapsible-description">
+                        Both players can not see the fleet of the other, you
+                        have to guess where is the ideal position to shoot at!
+                    </li>
+                    <li class="collapsible-description">
+                        When a player hits a tile that holds a ship, they can
+                        replay until they miss a shot.
+                    </li>
+                    <li class="collapsible-description">
+                        First player to sink all the opponent's ships wins the
+                        game!
+                    </li>
+                    <li class="collapsible-description">
+                        Each player has 8 ships in total!
+                    </li>
+                </ul>
+            </div>
         </div>
         <main>
             <div class="player">
@@ -271,11 +286,6 @@
         <footer>
             <a href="https://github.com/OptimisticTrousers"
                 >Created by Tony Isern</a
-            >
-            <a
-                href="https://www.flaticon.com/free-icons/battleship"
-                title="battleship icons"
-                >Battleship icons created by smalllikeart - Flaticon</a
             >
         </footer>
     </body>
