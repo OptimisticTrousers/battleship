@@ -212,7 +212,7 @@ export function createDragAndDropFleet(playerBoard) {
 
     function renderShipSelect(i, length) {
         const container = document.querySelector(
-            'body > main > div.player > div:nth-child(3)'
+            '.ships'
         )
         const shipContainer = document.createElement('div')
         shipContainer.classList.add('ship-container')
@@ -291,7 +291,7 @@ export function addButtonListeners(playerBoard) {
     const randomizeButton = document.querySelector('button.randomize')
 
     randomizeButton.addEventListener('click', () => {
-        const ships = document.querySelector('.player > div:nth-child(3)')
+        const ships = document.querySelector('.ships')
         ships.style.display = 'none'
         playerBoard.randomlyPlaceShips()
         playerBoard.isStartAllowed.set(true)
