@@ -344,6 +344,7 @@ main {
     background-color: rgb(0, 0, 0);
     background-color: rgba(0, 0, 0, 0.4);
     transition: 200ms ease-in-out;
+    animation: scale-down 0.1s;
 }
 .modal p {
     font-family: 'Vujahday Script', cursive;
@@ -424,6 +425,16 @@ footer > a:hover {
     border-radius: 10px;
     border: 1px solid green;
     margin-bottom: 0.5rem;
+}
+
+@keyframes scale-down {
+    0% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 @media (max-width: 1230px) {
