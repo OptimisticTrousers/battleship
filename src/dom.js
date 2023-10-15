@@ -258,7 +258,7 @@ export const addListenersToEnemyBoard = (
             cell.setAttribute('row', row)
 
             cell.addEventListener('click', () => {
-                disableCursor()
+                // disableCursor()
                 if (playerBoard.isStartAllowed.get()) {
                     if (player.turn.get()) {
                         ps.publish('click', {
@@ -270,17 +270,17 @@ export const addListenersToEnemyBoard = (
                             enemy,
                         })
                     }
-                    delay(1100).then(() => {
-                        ps.publish('click', {
-                            column,
-                            row,
-                            playerBoard,
-                            enemyBoard,
-                            player,
-                            enemy,
-                        })
-                        enableCursor()
-                    })
+                    // delay(1100).then(() => {
+                    //     ps.publish('click', {
+                    //         column,
+                    //         row,
+                    //         playerBoard,
+                    //         enemyBoard,
+                    //         player,
+                    //         enemy,
+                    //     })
+                    //     enableCursor()
+                    // })
                 }
             })
         }

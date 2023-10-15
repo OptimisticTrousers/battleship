@@ -98,13 +98,19 @@ function shipDrag(shipName, playerBoard) {
         ship.parentNode.firstChild.textContent = `${amountLeft}x`
         if (amountLeft === 0) ship.parentNode.style.display = 'none'
         if (playerBoard.checkIfBoardHasBeenFullyPopulated()) {
-            const container = document.querySelector(
-                '.ships'
-            )
+            const container = document.querySelector('.ships')
             container.style.display = 'none'
             const randomButton = document.querySelector('.randomize')
             randomButton.style.display = 'none'
             playerBoard.isStartAllowed.set(true)
+        }
+
+        // If a ship is successfully placed, remove the 'Randomize' button
+        if (amountLeft > 0) {
+            const randomButton = document.querySelector('.randomize')
+            if (randomButton) {
+                randomButton.remove()
+            }
         }
     })
 
