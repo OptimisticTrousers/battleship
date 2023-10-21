@@ -1,4 +1,4 @@
-# TOP-battleship
+# battleship
 
 Using test-driven development to make a battleship game with Jest. Read more about the rules here: https://en.wikipedia.org/wiki/Battleship_(game) or play the game here: http://en.battleship-game.org/.
 
